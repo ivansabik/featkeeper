@@ -1,0 +1,6 @@
+[Agent]-(Create ticket with feature request)
+(Create feature request)>(Automatically reassign priority level)
+[Agent]-(View feature requests)
+[Agent]-(Modify feature request)
+(Modify feature request)>(Automatically reassign priority level)
+[Agent]-(Close ticket for feature request)

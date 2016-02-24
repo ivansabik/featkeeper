@@ -1,0 +1,5 @@
+[FeatureRequest|title:string;description:string;client:Client;client_priority_level:int;target_date:date;ticket_url:string;product_area:string;agent:Agent;created_date:date;modified_date:date;status:string|_reassign_client_priority()]
+[FeatureRequest]0..*-1[Client|name:string]
+[Client|name:string;feature_requests:FeatureRequest]
+[FeatureRequest]0..*-1[Agent|name:string;feature_requests:FeatureRequest]
+[Agent|name:string;feature_requests:<FeatureRequest>]

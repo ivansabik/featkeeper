@@ -9,21 +9,20 @@ Featkeeper is a web app for creating and tracking feature requests from clients 
 - Flask
 - PyMongo
 - Jinja
+- Boostrap
 - Pandas
 
-## Users
+## Use cases
+
+![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/use_cases.png)
 
 ## Agent user stories (specs)
 
+- As an agent I should be able to ...
+
 ## Models
 
-### Feature
-
-### Client
-
-### Ticket
-
-### Product
+![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/models.png)
 
 ## Routes
 
