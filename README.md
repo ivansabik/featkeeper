@@ -8,9 +8,7 @@ Featkeeper is a web app for creating and tracking feature requests from clients 
 
 - Flask
 - PyMongo
-- Jinja
 - Boostrap
-- Pandas
 
 ## Use cases
 
