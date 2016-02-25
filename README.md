@@ -20,16 +20,28 @@ Featkeeper is a web app for creating and tracking feature requests from clients 
 
 - As an agent I should be able to create a new feature requests
 - As an agent I should be able to view feature requests created by me
-- As an agent I should be able to modify a feature requests
+- As an agent I should be able to edit a feature requests
 - As an agent I should be able to close a new feature request
 
 ## Models
 
 ![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/models.png)
 
-## Routes
+## API endpoints
 
-## Views
+- /api/v1/feature-request
+- /api/v1/agent
+- /api/v1/client
+
+### Example for FeatureRequest
+
+### Example for Agent
+
+### Example for Client
+
+## Routes in client app
+
+## Views in client app
 
 Login
 
@@ -54,6 +66,17 @@ http://
 
 ## Deploy
 
-venv
-requirements -r
-python 
+```
+$ git clone http://git.enable.mx/ivansabik/featkeeper.git
+$ cd featkeeper
+$ virtualenv venv
+$ . venv/bin/activate
+(venv)$  pip install -r requirements.txt
+(venv)$ python api.py
+```
+
+## Run tests
+
+```
+$ python -m unittest discover
+```
