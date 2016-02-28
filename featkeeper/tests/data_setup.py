@@ -1,16 +1,13 @@
-from pymongo import MongoClient
-
-def populate_test_feature_requests(client):
+def populate_test_feature_requests():
     pass
 
-def populate_test_agents(client):
+def populate_test_agents():
     pass
 
-def populate_test_clients(client):
+def populate_test_clients():
     pass
 
 if __name__ == '__main__':
-    client = MongoClient()
-    populate_test_feature_requests(client)
-    populate_test_agents(client)
-    populate_test_clients(client)
+    populate_test_feature_requests()
+    populate_test_agents()
+    populate_test_clients()
