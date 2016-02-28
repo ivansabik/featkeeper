@@ -4,16 +4,13 @@ sys.path.append('/home/ivansabik/Desktop/featkeeper')
 from featkeeper import api
 import unittest
 from flask import json
-from featkeeper.tests.data_setup import *
 
 API_ROOT_URL = '/api/v1'
 
 class FeatkeeperApiTest(unittest.TestCase):
     def setUp(self):
         self.app = api.app.test_client()
-        populate_test_feature_requests()
-        populate_test_agents()
-        populate_test_clients()
+        _populate_test_feature_requests()
 
     def tearDown(self):
         # drop db
@@ -42,6 +39,10 @@ class FeatkeeperApiTest(unittest.TestCase):
         response = self.app.post(API_ROOT_URL + '/feature-request')
         response_test = json.loads(response.data)
         self.assertEqual(expected, response_test)
+
+    def _populate_test_feature_requests(self):
+        # setup test data
+        pass
 
 if __name__ == '__main__':
     unittest.main()

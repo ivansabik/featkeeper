@@ -8,7 +8,7 @@ Featkeeper is a web app for creating and tracking feature requests from clients 
 
 - Flask
 - MongoDb
-- PyMongo
+- Mongothon
 - Boostrap
 - Pandas
 
@@ -66,7 +66,7 @@ http://
 
 ## Deploy
 
-```
+```shell
 $ git clone http://git.enable.mx/ivansabik/featkeeper.git
 $ cd featkeeper
 $ virtualenv venv
@@ -77,6 +77,6 @@ $ . venv/bin/activate
 
 ## Run tests
 
-```
+```shell
 $ python -m unittest discover
 ```
