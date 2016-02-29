@@ -6,8 +6,6 @@ from featkeeper import schemas
 import unittest
 
 class FeatureRequestUnitTest(unittest.TestCase):
-    pass
-
     def test_create_feature_request(self):
         pass
 
