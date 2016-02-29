@@ -1,17 +1,16 @@
 # test_funcional_api.py
 import sys
-sys.path.append('/home/ivansabik/Desktop/featkeeper')
+sys.path.append('/home/enivanrodrig/Desktop/featkeeper')
 from featkeeper import api
 import unittest
-from flask import json
-from featkeeper.schemas import *
 from pymongo import MongoClient
-from bson.objectid import ObjectId
+from featkeeper.models import FeatureRequest
+from bson import json_util, ObjectId
+from flask import json
 
 API_ROOT_URL = '/api/v1'
 
 class FeatkeeperApiTest(unittest.TestCase):
-
     # Create client, db and collection for tests
     def setUp(self):
         self.app = api.app.test_client()
@@ -62,13 +61,13 @@ class FeatkeeperApiTest(unittest.TestCase):
     # Test for GET /feature-request, should get a single feature request
     def test_api_read_feature_request(self):
         expected = {
-            '_id': 1,
+            '_id': '56d3d524402e5f1cfc273340',
             'title': 'Support custom themes',
             'description': 'Client wants to be able to choose different colors, fonts, and layouts for each module',
             'client_name': 'Mandel Jamesdottir',
             'client_priority': 1,
             'target_date': '2016-08-21',
-            'ticket_url': 'http://localhost:5000/56d3d524402e5f1cfc273340',
+            'ticket_url': 'http://localhost:5000/LhPnCk',
             'product_area': 'Policies',
             'agent_name': 'Eleuthere',
             'created_at': '2016-02-28 23:35:19',
@@ -110,30 +109,30 @@ class FeatkeeperApiTest(unittest.TestCase):
 
     # Setup test data
     def _populate_test_feature_requests(self):
-        FeatureRequest = create_model(
-            feature_request_schema(), self.collection)
-        feature_request_1 = FeatureRequest({
+        FeatureRequestModel = FeatureRequest()
+        FeatureRequestModel = FeatureRequestModel.feature_request_model()
+        feature_request_1 = FeatureRequestModel({
             '_id': ObjectId('56d3d524402e5f1cfc273340'),
             'title': 'Support custom themes',
             'description': 'Client wants to be able to choose different colors, fonts, and layouts for each module',
             'client_name': 'Mandel Jamesdottir',
             'client_priority': 1,
             'target_date': '2016-08-21',
-            'ticket_url': 'http://localhost:5000/56d3d524402e5f1cfc273340',
+            'ticket_url': 'http://localhost:5000/8VZuWu',
             'product_area': 'Policies',
             'agent_name': 'Eleuthere',
             'created_at': '2016-02-28 23:35:19',
             'is_open': 1
         })
         feature_request_1.save()
-        feature_request_2 = FeatureRequest({
+        feature_request_2 = FeatureRequestModel({
             '_id': ObjectId('56d3d524402e5f1cfc273342'),
             'title': 'Support Google account auth',
             'description': 'Client wants to be able to login using Google accounts restricted to users in corporate domain',
             'client_name': 'Carlo Fibonacci',
             'client_priority': 2,
             'target_date': '2016-06-15',
-            'ticket_url': 'http://localhost:5000/56d3d524402e5f1cfc273342',
+            'ticket_url': 'http://localhost:5000/8VZuWu',
             'product_area': 'Billing',
             'agent_name': 'Eleonor',
             'created_at': '2015-12-20 09:15:20',

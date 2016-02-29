@@ -1,7 +1,11 @@
 # api.py
-from flask import Flask, jsonify
-from schemas import feature_request_schema
+from flask import Flask, jsonify, Response
+from models import FeatureRequest
 import shortuuid
+from pymongo import MongoClient
+from mongothon import create_model
+from bson import json_util, ObjectId
+import json
 
 API_ROOT_URL = '/api/v1'
 
@@ -9,12 +13,15 @@ app = Flask(__name__)
 
 @app.route(API_ROOT_URL + '/feature-request', methods=['GET'])
 def feature_requests_all_read():
-    return jsonify({})
-
+    feature_request = FeatureRequest()
+    feature_requests = feature_requests.find_all(response_type='dict')
+    return jsonify(feature_requests)
 
 @app.route(API_ROOT_URL + '/feature-request/<feature_request_id>', methods=['GET'])
 def feature_request_by_id_read(feature_request_id):
-    return jsonify({})
+    feature_request = FeatureRequest()
+    feature_request = feature_request.find_by_id(feature_request_id, response_type='dict')
+    return jsonify(feature_request)
 
 
 @app.route(API_ROOT_URL + '/feature-request', methods=['PUT'])
