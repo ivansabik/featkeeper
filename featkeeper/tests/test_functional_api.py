@@ -12,6 +12,7 @@ API_ROOT_URL = '/api/v1'
 
 class FeatkeeperApiTest(unittest.TestCase):
 
+    # Create client, db and collection for tests
     def setUp(self):
         self.app = api.app.test_client()
         self.client = MongoClient()
@@ -19,10 +20,11 @@ class FeatkeeperApiTest(unittest.TestCase):
         self.collection = self.db.feature_requests
         self._populate_test_feature_requests()
 
+    # Delete test db
     def tearDown(self):
-        # drop db
         self.client.drop_database('featkeeper_test')
 
+    # Test for GET /feature-request, should output get existing feature requests
     def test_api_read_feature_requests(self):
         expected = [
             {
@@ -32,7 +34,7 @@ class FeatkeeperApiTest(unittest.TestCase):
                 'client_name': 'Mandel Jamesdottir',
                 'client_priority': 1,
                 'target_date': '2016-08-21',
-                'ticket_url': 'http://localhost:5000/1',
+                'ticket_url': 'http://localhost:5000/LhPnCk',
                 'product_area': 'Policies',
                 'agent_name': 'Eleuthere',
                 'created_at': '2016-02-28 23:35:19',
@@ -45,7 +47,7 @@ class FeatkeeperApiTest(unittest.TestCase):
                 'client_name': 'Carlo Fibonacci',
                 'client_priority': 2,
                 'target_date': '2016-06-15',
-                'ticket_url': 'http://localhost:5000/2',
+                'ticket_url': 'http://localhost:5000/8VZuWu',
                 'product_area': 'Billing',
                 'agent_name': 'Eleonor',
                 'created_at': '2015-12-20 09:15:20',
@@ -57,6 +59,7 @@ class FeatkeeperApiTest(unittest.TestCase):
         response_test = json.loads(response.data)
         self.assertEqual(expected, response_test)
 
+    # Test for GET /feature-request, should get a single feature request
     def test_api_read_feature_request(self):
         expected = {
             '_id': 1,
@@ -65,7 +68,7 @@ class FeatkeeperApiTest(unittest.TestCase):
             'client_name': 'Mandel Jamesdottir',
             'client_priority': 1,
             'target_date': '2016-08-21',
-            'ticket_url': 'http://localhost:5000/1',
+            'ticket_url': 'http://localhost:5000/56d3d524402e5f1cfc273340',
             'product_area': 'Policies',
             'agent_name': 'Eleuthere',
             'created_at': '2016-02-28 23:35:19',
@@ -75,6 +78,7 @@ class FeatkeeperApiTest(unittest.TestCase):
         response_test = json.loads(response.data)
         self.assertEqual(expected, response_test)
 
+    # Test for PUT /feature-request, should output success message
     def test_api_create_feature_requests(self):
         expected = {
             'status': 'success',
@@ -84,6 +88,7 @@ class FeatkeeperApiTest(unittest.TestCase):
         response_test = json.loads(response.data)
         self.assertEqual(expected, response_test)
 
+    # Test for POST /feature-request, should output success message
     def test_api_update_feature_requests(self):
         expected = {
             'status': 'success',
@@ -93,8 +98,18 @@ class FeatkeeperApiTest(unittest.TestCase):
         response_test = json.loads(response.data)
         self.assertEqual(expected, response_test)
 
+    # Test for non-existent API endpoint request should output error
+    def test_api_non_existent_endpoint(self):
+        expected = {
+            'status': 'error',
+            'message': 'Endpoint does not exist'
+        }
+        response = self.app.post(API_ROOT_URL + '/je-nexiste-pas')
+        response_test = json.loads(response.data)
+        self.assertEqual(expected, response_test)
+
+    # Setup test data
     def _populate_test_feature_requests(self):
-        # setup test data
         FeatureRequest = create_model(
             feature_request_schema(), self.collection)
         feature_request_1 = FeatureRequest({
@@ -104,7 +119,7 @@ class FeatkeeperApiTest(unittest.TestCase):
             'client_name': 'Mandel Jamesdottir',
             'client_priority': 1,
             'target_date': '2016-08-21',
-            'ticket_url': 'http://localhost:5000/1',
+            'ticket_url': 'http://localhost:5000/56d3d524402e5f1cfc273340',
             'product_area': 'Policies',
             'agent_name': 'Eleuthere',
             'created_at': '2016-02-28 23:35:19',
@@ -118,7 +133,7 @@ class FeatkeeperApiTest(unittest.TestCase):
             'client_name': 'Carlo Fibonacci',
             'client_priority': 2,
             'target_date': '2016-06-15',
-            'ticket_url': 'http://localhost:5000/2',
+            'ticket_url': 'http://localhost:5000/56d3d524402e5f1cfc273342',
             'product_area': 'Billing',
             'agent_name': 'Eleonor',
             'created_at': '2015-12-20 09:15:20',

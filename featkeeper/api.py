@@ -1,6 +1,7 @@
 # api.py
 from flask import Flask, jsonify
 from schemas import feature_request_schema
+import shortuuid
 
 API_ROOT_URL = '/api/v1'
 
@@ -28,7 +29,10 @@ def feature_requests_update():
 
 @app.errorhandler(404)
 def not_found(error):
-    return jsonify({'error': 'Endpoint does no texist'}), 404
+    return jsonify({
+        'status': 'error',
+        'message': 'Endpoint does not exist'
+    }), 404
 
 if __name__ == '__main__':
     app.debug = True
