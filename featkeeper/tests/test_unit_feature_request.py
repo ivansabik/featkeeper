@@ -3,11 +3,13 @@ import sys
 sys.path.append('/home/enivanrodrig/Desktop/featkeeper')
 from featkeeper import schemas
 import unittest
+from pymongo import MongoClient
+from featkeeper.models import FeatureRequest
+from bson import ObjectId
 
 class FeatureRequestUnitTest(unittest.TestCase):
     # Create client, db and collection for tests
     def setUp(self):
-        self.app = api.app.test_client()
         self.client = MongoClient()
         self.db = self.client.featkeeper_test
         self.collection = self.db.feature_requests
@@ -17,7 +19,7 @@ class FeatureRequestUnitTest(unittest.TestCase):
     def tearDown(self):
         self.client.drop_database('featkeeper_test')
 
-    def find_feature_requests(self):
+    def test_find_feature_requests(self):
         expected = [
             {
                 '_id': '56d3d524402e5f1cfc273340',
@@ -47,10 +49,10 @@ class FeatureRequestUnitTest(unittest.TestCase):
             }
         ]
         feature_request = FeatureRequest()
-        feature_requests = feature_requests.find_all()
-        self.assertEqual(expected, response_test)
+        feature_requests = feature_request.find_all()
+        self.assertEqual(expected, feature_requests)
 
-    def find_feature_request_by_id(self):
+    def test_find_feature_request_by_id(self):
         expected = {
             '_id': '56d3d524402e5f1cfc273340',
             'title': 'Support custom themes',
@@ -65,17 +67,17 @@ class FeatureRequestUnitTest(unittest.TestCase):
             'is_open': 1
         }
         feature_request = FeatureRequest()
-        feature_request = feature_request.find_by_id(feature_request_id)
-        self.assertEqual(expected, response_test)
+        feature_request = feature_request.find_by_id('56d3d524402e5f1cfc273340')
+        self.assertEqual(expected, feature_request)
 
-    def test_create_feature_request(self):
-        pass
+    def test_test_create_feature_request(self):
+        self.fail('test_test_create_feature_request Not finished')
 
-    def update_feature_request(self):
-        pass
+    def test_update_feature_request(self):
+        self.fail('test_update_feature_request Not finished')
 
-    def set_ticket_url(self):
-        pass
+    def test_set_ticket_url(self):
+        self.fail('test_set_ticket_url Not finished')
 
     '''
     A numbered priority according to the client (1...n).
@@ -83,13 +85,14 @@ class FeatureRequestUnitTest(unittest.TestCase):
     so if a priority is set on a new feature as "1",
     then all other feature requests for that client should be reordered.
     '''
-    def reassign_new_feature_request_client_priority(self):
-        pass
+    def test_reassign_new_feature_request_client_priority(self):
+        self.fail('test_edit_feature Not finished')
 
     # Setup test data
     def _populate_test_feature_requests(self):
-        FeatureRequest = create_model(feature_request_schema(), self.collection)
-        feature_request_1 = FeatureRequest({
+        FeatureRequestModel = FeatureRequest()
+        FeatureRequestModel = FeatureRequestModel.feature_request_model()
+        feature_request_1 = FeatureRequestModel({
             '_id': ObjectId('56d3d524402e5f1cfc273340'),
             'title': 'Support custom themes',
             'description': 'Client wants to be able to choose different colors, fonts, and layouts for each module',
@@ -103,7 +106,7 @@ class FeatureRequestUnitTest(unittest.TestCase):
             'is_open': 1
         })
         feature_request_1.save()
-        feature_request_2 = FeatureRequest({
+        feature_request_2 = FeatureRequestModel({
             '_id': ObjectId('56d3d524402e5f1cfc273342'),
             'title': 'Support Google account auth',
             'description': 'Client wants to be able to login using Google accounts restricted to users in corporate domain',
