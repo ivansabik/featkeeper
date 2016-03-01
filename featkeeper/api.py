@@ -10,6 +10,10 @@ API_ROOT_URL = '/api/v1'
 
 app = Flask(__name__)
 
+@app.route('/')
+def client_app():
+    return app.send_static_file('index.html')
+
 @app.route(API_ROOT_URL + '/feature-request', methods=['GET'])
 def feature_requests_all_read():
     feature_request = FeatureRequest()
