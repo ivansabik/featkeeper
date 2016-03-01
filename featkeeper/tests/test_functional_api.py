@@ -56,7 +56,7 @@ class FeatkeeperApiTest(unittest.TestCase):
 
         response = self.app.get(API_ROOT_URL + '/feature-request')
         response_test = json.loads(response.data)
-        self.assertEqual(expected, response_test)
+        self.assertItemsEqual(expected, response_test)
 
     # Test for GET /feature-request, should get a single feature request
     def test_api_read_feature_request(self):

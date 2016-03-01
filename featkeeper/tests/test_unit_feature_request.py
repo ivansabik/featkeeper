@@ -14,12 +14,13 @@ class FeatureRequestUnitTest(unittest.TestCase):
         self.db = self.client.featkeeper_test
         self.collection = self.db.feature_requests
         self._populate_test_feature_requests()
-        self.maxDiff = 2000
+        self.maxDiff = 7000
 
     # Delete test db
     def tearDown(self):
         self.client.drop_database('featkeeper_test')
 
+    # Test find all feature requests
     def test_find_feature_requests(self):
         expected = [
             {
@@ -49,10 +50,11 @@ class FeatureRequestUnitTest(unittest.TestCase):
                 'is_open': 1
             }
         ]
-        feature_request = FeatureRequest()
+        feature_request = FeatureRequest(test=True)
         feature_requests = feature_request.find_all()
         self.assertEqual(expected, feature_requests)
 
+    # Test find specific feature request by id
     def test_find_feature_request_by_id(self):
         expected = {
             '_id': '56d3d524402e5f1cfc273340',
@@ -67,16 +69,19 @@ class FeatureRequestUnitTest(unittest.TestCase):
             'created_at': '2016-02-28 23:35:19',
             'is_open': 1
         }
-        feature_request = FeatureRequest()
+        feature_request = FeatureRequest(test=True)
         feature_request = feature_request.find_by_id('56d3d524402e5f1cfc273340')
         self.assertEqual(expected, feature_request)
 
+    # Test create new feature request
     def test_test_create_feature_request(self):
         self.fail('test_test_create_feature_request Not finished')
 
+    # Test edit an existing feature request
     def test_update_feature_request(self):
         self.fail('test_update_feature_request Not finished')
 
+    # Test generate random ticket url and set as ticket URL
     def test_set_ticket_url(self):
         self.fail('test_set_ticket_url Not finished')
 
@@ -91,7 +96,7 @@ class FeatureRequestUnitTest(unittest.TestCase):
 
     # Setup test data
     def _populate_test_feature_requests(self):
-        feature_request = FeatureRequest()
+        feature_request = FeatureRequest(test=True)
         FeatureRequestModel = feature_request.FeatureRequestModel
         feature_request_1 = FeatureRequestModel({
             '_id': ObjectId('56d3d524402e5f1cfc273340'),

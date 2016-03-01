@@ -1,12 +1,16 @@
 # models.py
+# Classes: FeatureRequest
 from mongothon import *
 from datetime import datetime
 from pymongo import MongoClient
 
 class FeatureRequest:
-    def __init__(self):
+    def __init__(self,test=False):
         self.client = MongoClient()
-        self.db = self.client.featkeeper
+        if test:
+            self.db = self.client.featkeeper
+        else:
+            self.db = self.client.featkeeper_test
         self.collection = self.db.feature_requests
         self.FeatureRequestModel = create_model(self.feature_request_schema(), self.collection)
 
@@ -37,7 +41,10 @@ class FeatureRequest:
         })
 
     def _decode_feature_requests(self, feature_requests):
-        return feature_requests
+        feature_requests_dict = []
+        for feature_request in feature_requests:
+            feature_requests_dict.append(self._decode_feature_request(feature_request))
+        return feature_requests_dict
 
     def _decode_feature_request(self, feature_request):
         feature_request_dict = {
@@ -53,6 +60,7 @@ class FeatureRequest:
             'created_at': feature_request['created_at'],
             'is_open': feature_request['is_open']
         }
+        # Modified at is optional, if document not edited will no be set, assign separately
         try:
             feature_request_dict['modified_at'] = feature_request['modified_at']
         except KeyError:
