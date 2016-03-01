@@ -57,7 +57,7 @@ class FeatureRequest:
             feature_request_dict['modified_at'] = feature_request['modified_at']
         except KeyError:
             pass
-        return self._remove_empty_keys(feature_request)
+        return self._remove_empty_keys(feature_request_dict)
 
     # http://stackoverflow.com/questions/14813396/python-elegant-way-to-delete-empty-lists-from-python-dict
     def _remove_empty_keys(self, d):

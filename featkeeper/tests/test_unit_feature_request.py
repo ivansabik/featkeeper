@@ -1,6 +1,6 @@
 # test_unit_feature.py
 import sys
-sys.path.append('/home/enivanrodrig/Desktop/featkeeper')
+sys.path.append('/home/ivansabik/Desktop/featkeeper')
 from featkeeper import schemas
 import unittest
 from pymongo import MongoClient
@@ -14,6 +14,7 @@ class FeatureRequestUnitTest(unittest.TestCase):
         self.db = self.client.featkeeper_test
         self.collection = self.db.feature_requests
         self._populate_test_feature_requests()
+        self.maxDiff = 2000
 
     # Delete test db
     def tearDown(self):
@@ -28,20 +29,20 @@ class FeatureRequestUnitTest(unittest.TestCase):
                 'client_name': 'Mandel Jamesdottir',
                 'client_priority': 1,
                 'target_date': '2016-08-21',
-                'ticket_url': 'http://localhost:5000/LhPnCk',
+                'ticket_url': 'http://localhost:5000/8VZuWu',
                 'product_area': 'Policies',
                 'agent_name': 'Eleuthere',
                 'created_at': '2016-02-28 23:35:19',
                 'is_open': 1
             },
             {
-                '_id': '56d3d524402e5f1cfc273344',
+                '_id': '56d3d524402e5f1cfc273342',
                 'title': 'Support Google account auth',
                 'description': 'Client wants to be able to login using Google accounts restricted to users in corporate domain',
                 'client_name': 'Carlo Fibonacci',
                 'client_priority': 2,
                 'target_date': '2016-06-15',
-                'ticket_url': 'http://localhost:5000/8VZuWu',
+                'ticket_url': 'http://localhost:5000/LhPnCk',
                 'product_area': 'Billing',
                 'agent_name': 'Eleonor',
                 'created_at': '2015-12-20 09:15:20',
@@ -60,7 +61,7 @@ class FeatureRequestUnitTest(unittest.TestCase):
             'client_name': 'Mandel Jamesdottir',
             'client_priority': 1,
             'target_date': '2016-08-21',
-            'ticket_url': 'http://localhost:5000/LhPnCk',
+            'ticket_url': 'http://localhost:5000/8VZuWu',
             'product_area': 'Policies',
             'agent_name': 'Eleuthere',
             'created_at': '2016-02-28 23:35:19',
@@ -113,7 +114,7 @@ class FeatureRequestUnitTest(unittest.TestCase):
             'client_name': 'Carlo Fibonacci',
             'client_priority': 2,
             'target_date': '2016-06-15',
-            'ticket_url': 'http://localhost:5000/8VZuWu',
+            'ticket_url': 'http://localhost:5000/LhPnCk',
             'product_area': 'Billing',
             'agent_name': 'Eleonor',
             'created_at': '2015-12-20 09:15:20',

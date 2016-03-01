@@ -1,6 +1,6 @@
 # test_funcional_api.py
 import sys
-sys.path.append('/home/enivanrodrig/Desktop/featkeeper')
+sys.path.append('/home/ivansabik/Desktop/featkeeper')
 from featkeeper import api
 import unittest
 from pymongo import MongoClient
@@ -33,7 +33,7 @@ class FeatkeeperApiTest(unittest.TestCase):
                 'client_name': 'Mandel Jamesdottir',
                 'client_priority': 1,
                 'target_date': '2016-08-21',
-                'ticket_url': 'http://localhost:5000/LhPnCk',
+                'ticket_url': 'http://localhost:5000/8VZuWu',
                 'product_area': 'Policies',
                 'agent_name': 'Eleuthere',
                 'created_at': '2016-02-28 23:35:19',
@@ -46,7 +46,7 @@ class FeatkeeperApiTest(unittest.TestCase):
                 'client_name': 'Carlo Fibonacci',
                 'client_priority': 2,
                 'target_date': '2016-06-15',
-                'ticket_url': 'http://localhost:5000/8VZuWu',
+                'ticket_url': 'http://localhost:5000/LhPnCk',
                 'product_area': 'Billing',
                 'agent_name': 'Eleonor',
                 'created_at': '2015-12-20 09:15:20',
@@ -67,7 +67,7 @@ class FeatkeeperApiTest(unittest.TestCase):
             'client_name': 'Mandel Jamesdottir',
             'client_priority': 1,
             'target_date': '2016-08-21',
-            'ticket_url': 'http://localhost:5000/LhPnCk',
+            'ticket_url': 'http://localhost:5000/8VZuWu',
             'product_area': 'Policies',
             'agent_name': 'Eleuthere',
             'created_at': '2016-02-28 23:35:19',
@@ -132,7 +132,7 @@ class FeatkeeperApiTest(unittest.TestCase):
             'client_name': 'Carlo Fibonacci',
             'client_priority': 2,
             'target_date': '2016-06-15',
-            'ticket_url': 'http://localhost:5000/8VZuWu',
+            'ticket_url': 'http://localhost:5000/LhPnCk',
             'product_area': 'Billing',
             'agent_name': 'Eleonor',
             'created_at': '2015-12-20 09:15:20',
