@@ -14,7 +14,6 @@ class FeatureRequestUnitTest(unittest.TestCase):
         self.db = self.client.featkeeper_test
         self.collection = self.db.feature_requests
         self._populate_test_feature_requests()
-        self.maxDiff = 7000
 
     # Delete test db
     def tearDown(self):
@@ -74,16 +73,12 @@ class FeatureRequestUnitTest(unittest.TestCase):
         self.assertEqual(expected, feature_request)
 
     # Test create new feature request
-    def test_test_create_feature_request(self):
+    def test_create_feature_request(self):
         self.fail('test_test_create_feature_request Not finished')
 
     # Test edit an existing feature request
     def test_update_feature_request(self):
         self.fail('test_update_feature_request Not finished')
-
-    # Test generate random ticket url and set as ticket URL
-    def test_set_ticket_url(self):
-        self.fail('test_set_ticket_url Not finished')
 
     '''
     A numbered priority according to the client (1...n).

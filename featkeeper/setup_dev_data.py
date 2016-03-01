@@ -1,7 +1,7 @@
 # setup_dev_data.py
-from schemas import *
 from pymongo import MongoClient
 import shortuuid
+from models import FeatureRequest
 
 # Product areas: Policies, Billing, Claims, Reports
 # Clients: A, B, C
@@ -9,10 +9,9 @@ import shortuuid
 
 def _insert_feature_requests(client):
     client.drop_database('featkeeper')
-    db = client.featkeeper
-    collection = db.feature_requests
-    FeatureRequest = create_model(feature_request_schema(), collection)
-    feature_request = FeatureRequest({
+    feature_request = FeatureRequest()
+    FeatureRequestModel = feature_request.FeatureRequestModel
+    feature_request = FeatureRequestModel({
         'title': 'Support custom themes',
         'description': 'Client wants to be able to choose different colors, fonts, and layouts for each module',
         'client_name': 'A',
@@ -23,7 +22,7 @@ def _insert_feature_requests(client):
         'ticket_url': 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)
     })
     feature_request.save()
-    feature_request = FeatureRequest({
+    feature_request = FeatureRequestModel({
         'title': 'CSV export',
         'description': 'Client wants to be able to export their monthly payments to CSV file',
         'client_name': 'A',
@@ -34,7 +33,7 @@ def _insert_feature_requests(client):
         'ticket_url': 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)
     })
     feature_request.save()
-    feature_request = FeatureRequest({
+    feature_request = FeatureRequestModel({
         'title': 'Batch excel import',
         'description': 'Client wants to be able to batch import Claims from an xlsx file',
         'client_name': 'A',
@@ -45,7 +44,7 @@ def _insert_feature_requests(client):
         'ticket_url': 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)
     })
     feature_request.save()
-    feature_request = FeatureRequest({
+    feature_request = FeatureRequestModel({
         'title': 'Add sales channel field',
         'description': 'Client wants to be able to see the sales channel associated',
         'client_name': 'B',
@@ -56,7 +55,7 @@ def _insert_feature_requests(client):
         'ticket_url': 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)
     })
     feature_request.save()
-    feature_request = FeatureRequest({
+    feature_request = FeatureRequestModel({
         'title': 'Implement claim workflow',
         'description': 'Client wants to be able to create new workflows and track them for each claim',
         'client_name': 'B',
@@ -67,7 +66,7 @@ def _insert_feature_requests(client):
         'ticket_url': 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)
     })
     feature_request.save()
-    feature_request = FeatureRequest({
+    feature_request = FeatureRequestModel({
         'title': 'Sales by product area mobile',
         'description': 'Client wants to be able to see sales by product area using mobile devices',
         'client_name': 'B',
@@ -78,7 +77,7 @@ def _insert_feature_requests(client):
         'ticket_url': 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)
     })
     feature_request.save()
-    feature_request = FeatureRequest({
+    feature_request = FeatureRequestModel({
         'title': 'Send e-mail on new claim',
         'description': 'Client wants to be able to send e-mail to client and agent when new claims get created',
         'client_name': 'C',
@@ -89,7 +88,7 @@ def _insert_feature_requests(client):
         'ticket_url': 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)
     })
     feature_request.save()
-    feature_request = FeatureRequest({
+    feature_request = FeatureRequestModel({
         'title': 'Send telegram message on new policy',
         'description': 'Client wants to be able to send a telegram message to client when new policies gets created',
         'client_name': 'C',
@@ -100,7 +99,7 @@ def _insert_feature_requests(client):
         'ticket_url': 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)
     })
     feature_request.save()
-    feature_request = FeatureRequest({
+    feature_request = FeatureRequestModel({
         'title': 'Add customer satisfaction survey',
         'description': 'Client wants to be able to send out a survey to evaluate customer satisfaction after issuing a new claim',
         'client_name': 'C',
@@ -111,7 +110,7 @@ def _insert_feature_requests(client):
         'ticket_url': 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)
     })
     feature_request.save()
-    feature_request = FeatureRequest({
+    feature_request = FeatureRequestModel({
         'title': 'Claims by status',
         'description': 'Client wants to be able to see a report showing claims by status where he can filter',
         'client_name': 'C',

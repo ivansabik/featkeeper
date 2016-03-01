@@ -3,13 +3,13 @@
 from mongothon import *
 from datetime import datetime
 from pymongo import MongoClient
+import shortuuid
 
 class FeatureRequest:
     def __init__(self,test=False):
         self.client = MongoClient()
-        if test:
-            self.db = self.client.featkeeper
-        else:
+        self.db = self.client.featkeeper
+        if test==True:
             self.db = self.client.featkeeper_test
         self.collection = self.db.feature_requests
         self.FeatureRequestModel = create_model(self.feature_request_schema(), self.collection)
@@ -31,7 +31,7 @@ class FeatureRequest:
             'client_name': {'type': basestring, 'required': True},
             'client_priority': {'type': int, 'required': True, 'default': 1},
             'target_date': {'type': basestring, 'required': True},
-            'ticket_url': {'type': basestring, 'required': True},
+            'ticket_url': {'type': basestring, 'required': True, 'default': 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)},
             'product_area': {'type': basestring, 'required': True},
             # String for now, eventually will be own Schema in future sprint
             'agent_name': {'type': basestring, 'required': True},
@@ -73,9 +73,3 @@ class FeatureRequest:
             if not d[k]:
                 del d[k]
         return d
-
-    def __eq__(self, other):
-        return (isinstance(other, self.__class__) and self.__dict__ == other.__dict__)
-
-    def __ne__(self, other):
-        return not self.__eq__(other)
