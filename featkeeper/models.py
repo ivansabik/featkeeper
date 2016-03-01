@@ -31,6 +31,7 @@ class FeatureRequest:
             'client_name': {'type': basestring, 'required': True},
             'client_priority': {'type': int, 'required': True, 'default': 1},
             'target_date': {'type': basestring, 'required': True},
+            # Currently ticket URL is generated, later a custom input filed can be added to track visits to that URL coming from the app (as goo.gl, bit.ly, etc)
             'ticket_url': {'type': basestring, 'required': True, 'default': 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)},
             'product_area': {'type': basestring, 'required': True},
             # String for now, eventually will be own Schema in future sprint

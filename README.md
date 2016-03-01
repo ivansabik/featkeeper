@@ -11,6 +11,8 @@ Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial
 - [mongothon](https://github.com/gamechanger/mongothon)
 - [shortuuid](https://github.com/stochastic-technologies/shortuuid)
 - [knockout.js](https://github.com/knockout/knockout)
+- [bootstrap](https://github.com/twbs/bootstrap)
+- [atom](https://atom.io/), the best text editor I have ever known, free and open source
 
 ## Use cases
 ![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/use_cases.png)
