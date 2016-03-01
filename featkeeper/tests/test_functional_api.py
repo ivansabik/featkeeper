@@ -109,8 +109,8 @@ class FeatkeeperApiTest(unittest.TestCase):
 
     # Setup test data
     def _populate_test_feature_requests(self):
-        FeatureRequestModel = FeatureRequest()
-        FeatureRequestModel = FeatureRequestModel.feature_request_model()
+        feature_request = FeatureRequest()
+        FeatureRequestModel = feature_request.FeatureRequestModel
         feature_request_1 = FeatureRequestModel({
             '_id': ObjectId('56d3d524402e5f1cfc273340'),
             'title': 'Support custom themes',

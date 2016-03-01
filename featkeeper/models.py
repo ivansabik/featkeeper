@@ -12,7 +12,7 @@ class FeatureRequest:
 
     def find_all(self):
         feature_requests = self.FeatureRequestModel.find()
-        return self._decode_feature_request(feature_requests)
+        return self._decode_feature_requests(feature_requests)
 
     def find_by_id(self, feature_request_id):
         feature_request = self.FeatureRequestModel.find_by_id(feature_request_id)
@@ -36,14 +36,35 @@ class FeatureRequest:
             'is_open': {'type': int, 'required': True, 'default': 1}
         })
 
-    def feature_request_model(self):
-        return self.FeatureRequestModel
-
     def _decode_feature_requests(self, feature_requests):
         return feature_requests
 
     def _decode_feature_request(self, feature_request):
-        return feature_request
+        feature_request_dict = {
+            '_id': str(feature_request['_id']),
+            'title': feature_request['title'],
+            'description': feature_request['description'],
+            'client_name': feature_request['client_name'],
+            'client_priority': feature_request['client_priority'],
+            'target_date': feature_request['target_date'],
+            'ticket_url': feature_request['ticket_url'],
+            'product_area': feature_request['product_area'],
+            'agent_name': feature_request['agent_name'],
+            'created_at': feature_request['created_at'],
+            'is_open': feature_request['is_open']
+        }
+        try:
+            feature_request_dict['modified_at'] = feature_request['modified_at']
+        except KeyError:
+            pass
+        return self._remove_empty_keys(feature_request)
+
+    # http://stackoverflow.com/questions/14813396/python-elegant-way-to-delete-empty-lists-from-python-dict
+    def _remove_empty_keys(self, d):
+        for k in d.keys():
+            if not d[k]:
+                del d[k]
+        return d
 
     def __eq__(self, other):
         return (isinstance(other, self.__class__) and self.__dict__ == other.__dict__)
