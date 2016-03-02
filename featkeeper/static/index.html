@@ -5,6 +5,7 @@
   <title>Featkeeper</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+  <link href="app.css" rel="stylesheet">
   <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
   <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
   <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
@@ -17,9 +18,6 @@
     </div>
   </div>
   <div id="main" class="container">
-    <p>
-      <button class="btn" data-bind="click: beginAdd">New feature request</button>
-    </p>
     <table class="table table-striped" id="feature-requests">
       <tr>
         <td style="width: 1px;"></td>
@@ -38,62 +36,30 @@
           <span>Client: </span><span data-bind="text: clientName"></span></br>
           <span>Priority: </span><span data-bind="text: clientPriority"></span></br>
           <span>Target date: </span><span data-bind="text: targetDate"></span></br>
-          <span>Ticket URL: </span><span data-bind="text: ticketUrl"></span></br>
+          <span>Ticket URL: </span>
+          <a data-bind="text: ticketUrl"></a>
+          </br>
           <span>Product area: </span><span data-bind="text: productArea"></span></br>
           <span>Agent name: </span><span data-bind="text: agentName"></span></br>
         </td>
         <td>
           <button data-bind="click: $parent.beginEdit" class="btn">Edit</button>
           <span data-bind="visible: !done()">
-                  <button data-bind="click: $parent.markDone" class="btn">Close request</button>
+                  <button data-bind="click: $parent.markDone" class="btn">Close</button>
               </span>
         </td>
       </tr>
       <!-- /ko -->
     </table>
-    <button class="btn" data-bind="click: beginAdd">New feature request</button>
   </div>
-  <script type="text/javascript">
-    function FeatureRequestViewModel() {
-      var self = this;
-      self.featureRequests = ko.observableArray();
-
-      self.featureRequests([{
-        title: ko.observable('Support custom themes'),
-        description: ko.observable('Client wants to be able to choose different colors, fonts, and layouts for each module'),
-        clientName: ko.observable('Mandel Jamesdottir'),
-        clientPriority: ko.observable('1'),
-        targetDate: ko.observable('2016-08-21'),
-        ticketUrl: ko.observable('http://localhost:5000/8VZuWu'),
-        productArea: ko.observable('Policies'),
-        agentName: ko.observable('Eleuthere'),
-        createdAt: ko.observable('2016-02-28 23:35:19'),
-        done: ko.observable(true)
-      }, {
-        title: ko.observable('Support Google account auth'),
-        description: ko.observable('Client wants to be able to login using Google accounts restricted to users in corporate domain'),
-        clientName: ko.observable('Carlo Fibonacci'),
-        clientPriority: ko.observable('2'),
-        targetDate: ko.observable('2016-06-15'),
-        ticketUrl: ko.observable('http://localhost:5000/LhPnCk'),
-        productArea: ko.observable('Billing'),
-        agentName: ko.observable('Eleonor'),
-        createdAt: ko.observable('2015-12-20 09:15:20'),
-        done: ko.observable(true)
-      }]);
-
-      self.beginAdd = function() {
-        alert("Add");
-      }
-      self.beginEdit = function(featureRequest) {
-        alert("Edit: " + featureRequest.title());
-      }
-      self.markDone = function(task) {
-        task.done(true);
-      }
-    }
-    ko.applyBindings(new FeatureRequestViewModel(), $('#main')[0]);
-  </script>
+  <div id="footer">
+    <div class="container">
+      <p>
+        <button class="btn" data-bind="click: beginAdd">New feature request</button>
+      </p>
+    </div>
+  </div>
+  <script src="app.js"></script>
 </body>
 
 </html>

@@ -109,7 +109,7 @@ $ cd featkeeper
 $ virtualenv venv
 $ . venv/bin/activate
 (venv)$  pip install -r requirements.txt
-(venv)$ python featkeeper/api.py
+(venv)$ python featkeeper/app.py
 ```
 
 Now the api is listening at [http://127.0.0.1:5000/api/v1/](http://127.0.0.1:5000/api/v1/)
