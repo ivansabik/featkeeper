@@ -18,7 +18,7 @@
     </div>
   </div>
   <div id="main" class="container">
-    <table class="table table-striped" id="feature-requests">
+    <table class="table table-striped table-responsive">
       <tr>
         <td style="width: 1px;"></td>
         <td><b>Feature request</b></td>
@@ -44,21 +44,85 @@
         </td>
         <td>
           <button data-bind="click: $parent.beginEdit" class="btn">Edit</button>
-          <span data-bind="visible: !done()">
+          <span class="close-req-btn" data-bind="visible: !done()">
                   <button data-bind="click: $parent.markDone" class="btn">Close</button>
-              </span>
+          </span>
         </td>
       </tr>
       <!-- /ko -->
     </table>
-  </div>
-  <div id="footer">
-    <div class="container">
-      <p>
-        <button class="btn" data-bind="click: beginAdd">New feature request</button>
-      </p>
+    <!-- Footer -->
+    <div id="footer">
+      <div class="container">
+        <p>
+          <button data-bind="click: beginNew" class="btn">New Feature request</button>
+        </p>
+      </div>
     </div>
   </div>
+  <!-- Add feature request -->
+  <div id="new" class="modal hide fade" tabindex="=1" role="dialog" aria-labelledby="addDialogLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="addDialogLabel">Add Feature request</h3>
+    </div>
+    <div class="modal-body">
+      <form class="form-horizontal">
+        <div class="control-group">
+          <label class="control-label" for="title">Title</label>
+          <div class="controls">
+            <input data-bind="value: title" type="text" id="title" placeholder="Eg. Add Google login" style="width: 150px;">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputDescription">Description</label>
+          <div class="controls">
+            <textarea class="form-control" rows="3" data-bind="value: description" type="text" id="inputDescription" placeholder="Eg. Client wants to be able to login using his GMail account restricted to the corporate domain" style="width: 250px;"></textarea>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="client-name">Client</label>
+          <select class="form-control" id="client-name">
+            <option selected="selected">Client A</option>
+            <option>Client B</option>
+            <option>Client C</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="client-priority">Priority</label>
+          <div class="controls">
+            <input data-bind="value: clientPriority" type="text" id="client-priority" placeholder="Eg. 1 is highest, 2 is lower than 1, etc." style="width: 150px;">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="target-date">Target date</label>
+          <div class="controls">
+            <input data-bind="value: targetDate" type="text" id="target-date" placeholder="Eg." style="width: 150px;">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="product-area">Product area</label>
+          <select class="form-control" id="product-area">
+            <option selected="selected">Policies</option>
+            <option>Billing</option>
+            <option>Claims</option>
+            <option>Reports</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="agent-name">Agent</label>
+          <div class="controls">
+            <input data-bind="value: agentName" type="text" id="agent-name" placeholder="Eg. Agata Britonsdottir" style="width: 150px;">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button data-bind="click: addTask" class="btn btn-primary">Save</button>
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    </div>
+  </div>
+  <!-- Edit feature request -->
   <script src="app.js"></script>
 </body>
 

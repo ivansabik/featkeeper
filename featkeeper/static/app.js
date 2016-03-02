@@ -36,8 +36,8 @@ function FeatureRequestViewModel() {
     }
   });
 
-  self.beginAdd = function() {
-    alert("Add");
+  self.beginNew = function() {
+    $('#new').modal('show');
   }
   self.beginEdit = function(featureRequest) {
     alert("Edit: " + featureRequest.title());
@@ -46,4 +46,47 @@ function FeatureRequestViewModel() {
     task.done(true);
   }
 }
-ko.applyBindings(new FeatureRequestViewModel(), $('#main')[0]);
+
+function NewFeatureRequestViewModel() {
+  var self = this;
+  self.title = ko.observable();
+  self.description = ko.observable();
+  self.clientName = ko.observable();
+  self.clientPriority = ko.observable();
+  self.ticketUrl = ko.observable();
+  self.targetDate = ko.observable();
+  self.productArea = ko.observable();
+  self.agentName = ko.observable();
+  self.createdAt = ko.observable();
+  self.done = ko.observable();
+
+  self.addTask = function() {
+    $('#new').modal('hide');
+    tasksViewModel.add({
+      title: self.title(),
+      description: self.description(),
+      clientName: self.clientName(),
+      clientPriority: self.clientPriority(),
+      ticketUrl: self.ticketUrl(),
+      targetDate: self.targetDate(),
+      productArea: self.productArea(),
+      agentName: self.agentName(),
+      createdAt: self.createdAt(),
+      done: self.done()
+    });
+    self.title("");
+    self.description("");
+    self.clientName("");
+    self.clientPriority("");
+    self.targetDate("");
+    self.productArea("");
+    self.agentName("");
+    self.createdAt("");
+    self.done("");
+  }
+}
+
+var tasksViewModel = new FeatureRequestViewModel();
+var addTaskViewModel = new NewFeatureRequestViewModel();
+ko.applyBindings(tasksViewModel, $('#main')[0]);
+ko.applyBindings(addTaskViewModel, $('#new')[0]);

@@ -19,7 +19,7 @@ Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial
 
 ## Agent user stories (specs)
 - As an agent I should be able to create a new feature requests
-- As an agent I should be able to view feature requests created by me
+- As an agent I should be able to view feature requests
 - As an agent I should be able to edit a feature requests
 - As an agent I should be able to close a new feature request
 
