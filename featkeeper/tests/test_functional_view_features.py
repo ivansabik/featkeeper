@@ -17,7 +17,7 @@ class ViewFeaturesTest(unittest.TestCase):
         self.assertEqual(feature_requests_list.get_attribute('class'), 'table table-striped table-responsive')
 
         # User can see exactly 2 feature requests
-        feature_requests_list = self.browser.find_element_by_xpath('//*[@id="main"]/table/tbody/tr')
+        feature_requests_list = self.browser.find_elements_by_xpath('//*[@id="main"]/table/tbody/tr')
         self.assertEqual(
             len(feature_requests_list),
             3
