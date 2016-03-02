@@ -17,7 +17,10 @@
     </div>
   </div>
   <div id="main" class="container">
-    <table class="table table-striped">
+    <p>
+      <button class="btn" data-bind="click: beginAdd">New feature request</button>
+    </p>
+    <table class="table table-striped" id="feature-requests">
       <tr>
         <td style="width: 1px;"></td>
         <td><b>Feature request</b></td>
@@ -25,21 +28,30 @@
       </tr>
       <!-- ko foreach: featureRequests -->
       <tr>
-          <td>
-              <span data-bind="visible: done" class="label label-success">Closed</span>
-              <span data-bind="visible: !done()" class="label label-important">In Progress</span>
-          </td>
-          <td><p><b data-bind="text: title"></b></p><p data-bind="text: description"></p></td>
-          <td>
-              <button data-bind="click: $parent.beginEdit" class="btn">Edit</button>
-              <span data-bind="visible: !done()">
+        <td>
+          <span data-bind="visible: done" class="label label-success">Closed</span>
+          <span data-bind="visible: !done()" class="label label-important">In Progress</span>
+        </td>
+        <td>
+          <p><b data-bind="text: title"></b></p>
+          <p data-bind="text: description"></p>
+          <span>Client: </span><span data-bind="text: clientName"></span></br>
+          <span>Priority: </span><span data-bind="text: clientPriority"></span></br>
+          <span>Target date: </span><span data-bind="text: targetDate"></span></br>
+          <span>Ticket URL: </span><span data-bind="text: ticketUrl"></span></br>
+          <span>Product area: </span><span data-bind="text: productArea"></span></br>
+          <span>Agent name: </span><span data-bind="text: agentName"></span></br>
+        </td>
+        <td>
+          <button data-bind="click: $parent.beginEdit" class="btn">Edit</button>
+          <span data-bind="visible: !done()">
                   <button data-bind="click: $parent.markDone" class="btn">Close request</button>
               </span>
-          </td>
+        </td>
       </tr>
       <!-- /ko -->
     </table>
-    <button class="btn">New feature request</button>
+    <button class="btn" data-bind="click: beginAdd">New feature request</button>
   </div>
   <script type="text/javascript">
     function FeatureRequestViewModel() {
@@ -47,12 +59,26 @@
       self.featureRequests = ko.observableArray();
 
       self.featureRequests([{
-        title: ko.observable('title #1'),
-        description: ko.observable('description #1'),
-        done: ko.observable(false)
+        title: ko.observable('Support custom themes'),
+        description: ko.observable('Client wants to be able to choose different colors, fonts, and layouts for each module'),
+        clientName: ko.observable('Mandel Jamesdottir'),
+        clientPriority: ko.observable('1'),
+        targetDate: ko.observable('2016-08-21'),
+        ticketUrl: ko.observable('http://localhost:5000/8VZuWu'),
+        productArea: ko.observable('Policies'),
+        agentName: ko.observable('Eleuthere'),
+        createdAt: ko.observable('2016-02-28 23:35:19'),
+        done: ko.observable(true)
       }, {
-        title: ko.observable('title #2'),
-        description: ko.observable('description #2'),
+        title: ko.observable('Support Google account auth'),
+        description: ko.observable('Client wants to be able to login using Google accounts restricted to users in corporate domain'),
+        clientName: ko.observable('Carlo Fibonacci'),
+        clientPriority: ko.observable('2'),
+        targetDate: ko.observable('2016-06-15'),
+        ticketUrl: ko.observable('http://localhost:5000/LhPnCk'),
+        productArea: ko.observable('Billing'),
+        agentName: ko.observable('Eleonor'),
+        createdAt: ko.observable('2015-12-20 09:15:20'),
         done: ko.observable(true)
       }]);
 
@@ -61,12 +87,6 @@
       }
       self.beginEdit = function(featureRequest) {
         alert("Edit: " + featureRequest.title());
-      }
-      self.remove = function(featureRequest) {
-        alert("Remove: " + featureRequest.title());
-      }
-      self.markInProgress = function(featureRequest) {
-        task.done(false);
       }
       self.markDone = function(task) {
         task.done(true);

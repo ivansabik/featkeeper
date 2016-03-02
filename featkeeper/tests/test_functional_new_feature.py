@@ -11,8 +11,10 @@ class NewFeatureTest(unittest.TestCase):
         self.browser.quit()
 
     def test_can_click_and_display_form(self):
-        self._take_screenshot(
-            self.browser, 'test_can_click_and_display_form.png', '/tmp')
+        # User navigates to home page, he can see a button to add a new feature request
+        self.browser.get('http://localhost:5000')
+        # User can click on the add new feature button and see a form to add feature request info
+        self._take_screenshot(self.browser, 'test_can_click_and_display_form.png', '/tmp')
         self.fail('test_can_click_and_display_form Not finished')
 
     def test_can_create_new_feature_request(self):
@@ -23,6 +25,7 @@ class NewFeatureTest(unittest.TestCase):
         self._take_screenshot(self.browser, 'test_see_validation_fail.png', '/tmp')
         self.fail('test_see_validation_fail Not finished')
 
+    # Modified from http://www.calebthorne.com/python/2012/May/taking-screenshot-webdriver-python
     def _take_screenshot(self, driver, name, save_location):
         path = os.path.abspath(save_location)
         if not os.path.exists(path):
