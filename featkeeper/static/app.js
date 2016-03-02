@@ -86,7 +86,8 @@ function NewFeatureRequestViewModel() {
   }
 }
 
-var tasksViewModel = new FeatureRequestViewModel();
-var addTaskViewModel = new NewFeatureRequestViewModel();
-ko.applyBindings(tasksViewModel, $('#main')[0]);
-ko.applyBindings(addTaskViewModel, $('#new')[0]);
+// Create ViewModels and bind to respective div containers by id
+var featureRequestViewModel = new FeatureRequestViewModel();
+var newFeatureRequestViewModel = new NewFeatureRequestViewModel();
+ko.applyBindings(featureRequestViewModel, $('#main')[0]);
+ko.applyBindings(newFeatureRequestViewModel, $('#new')[0]);

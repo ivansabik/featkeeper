@@ -1,7 +1,10 @@
 # Featkeeper
 [![Build Status](https://travis-ci.org/ivansabik/featkeeper.svg)](https://travis-ci.org/ivansabik/featkeeper)
 
-Featkeeper is a web app for creating and tracking feature requests from clients for different products. It's built using and API on top of Python and MongoDb for data persistence and a client app in JS.
+Featkeeper is a web app for creating and tracking feature requests from clients for different products. It consists of two core components:
+
+- API on top of Python and MongoDb for data persistence
+- Client app in JS
 
 Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial for integrating with KnockoutJs](http://blog.miguelgrinberg.com/post/writing-a-javascript-rest-client)
 
