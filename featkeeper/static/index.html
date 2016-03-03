@@ -70,19 +70,19 @@
     </div>
     <div class="modal-body">
       <form class="form-horizontal">
-        <fieldset class="form-group">
+        <div class="control-group">
           <label class="control-label" for="title">Title</label>
           <div class="controls">
             <input data-bind="value: title" type="text" id="title" placeholder="Eg. Add Google login" style="width: 150px;">
           </div>
-        </fieldset>
-        <fieldset class="form-group">
+        </div>
+        <div class="control-group">
           <label class="control-label" for="inputDescription">Description</label>
           <div class="controls">
             <textarea class="form-control" rows="3" data-bind="value: description" type="text" id="inputDescription" placeholder="Eg. Client wants to be able to login using his GMail account restricted to the corporate domain" style="width: 250px;"></textarea>
           </div>
-        </fieldset>
-        <fieldset class="form-group">
+        </div>
+        <div class="control-group">
           <label class="control-label" for="client-name">Client</label>
           <div class="controls">
             <select class="form-control" id="client-name">
@@ -91,20 +91,20 @@
               <option>Client C</option>
             </select>
           </div>
-        </fieldset>
-        <fieldset class="form-group">
+        </div>
+        <div class="control-group">
           <label class="control-label" for="client-priority">Priority</label>
           <div class="controls">
-            <input data-bind="value: clientPriority" type="text" id="client-priority" placeholder="1 highest, 2 lower, etc." style="width: 150px;">
+            <input data-bind="value: clientPriority" type="number" min="1" id="client-priority" placeholder="1 highest, 2 lower, etc." style="width: 150px;">
           </div>
-        </fieldset>
-        <fieldset class="form-group">
+        </div>
+        <div class="control-group">
           <label class="control-label" for="target-date">Target date</label>
           <div class="controls">
             <input data-bind="value: targetDate" type="text" id="target-date" placeholder="Pick a target date" style="width: 150px;">
           </div>
-        </fieldset>
-        <fieldset class="form-group">
+        </div>
+        <div class="control-group">
           <label class="control-label" for="product-area">Product area</label>
           <div class="controls">
             <select class="form-control" id="product-area">
@@ -114,13 +114,13 @@
               <option>Reports</option>
             </select>
           </div>
-        </fieldset>
-        <fieldset class="form-group">
+        </div>
+        <div class="control-group">
           <label class="control-label" for="agent-name">Agent</label>
           <div class="controls">
             <input data-bind="value: agentName" type="text" id="agent-name" placeholder="Eg. Agata Britonsdottir" style="width: 150px;">
           </div>
-        </fieldset>
+        </div>
       </form>
     </div>
     <div class="modal-footer">
