@@ -57,35 +57,35 @@
     <div id="footer">
       <div class="container">
         <p>
-          <button data-bind="click: beginNew" class="btn">New Feature request</button>
+          <button data-bind="click: beginNew" class="btn btn btn-primary">New Feature request</button>
         </p>
       </div>
     </div>
   </div>
   <!-- Add feature request -->
-  <div id="new" class="modal hide fade" tabindex="=1" role="dialog" aria-labelledby="addDialogLabel" aria-hidden="true">
+  <div id="new" class="modal hide fade" tabindex="=1" role="dialog" aria-labelledby="new-request-btn" aria-hidden="true">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="addDialogLabel">Add Feature request</h3>
+      <h3 id="new-request-btn">Add Feature Request</h3>
     </div>
     <div class="modal-body">
       <form class="form-horizontal">
         <div class="control-group">
-          <label class="control-label" for="title">Title</label>
+          <label class="control-label" for="new-title">Title</label>
           <div class="controls">
-            <input data-bind="value: title" type="text" id="title" placeholder="Eg. Add Google login" style="width: 150px;">
+            <input data-bind="value: title" type="text" id="new-title" placeholder="Eg. Add Google login" style="width: 150px;">
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="inputDescription">Description</label>
+          <label class="control-label" for="new-description">Description</label>
           <div class="controls">
-            <textarea class="form-control" rows="3" data-bind="value: description" type="text" id="inputDescription" placeholder="Eg. Client wants to be able to login using his GMail account restricted to the corporate domain" style="width: 250px;"></textarea>
+            <textarea class="form-control" rows="3" data-bind="value: description" type="text" id="new-description" placeholder="Eg. Client wants to be able to login using his GMail account restricted to the corporate domain" style="width: 250px;"></textarea>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="client-name">Client</label>
+          <label class="control-label" for="new-client-name">Client</label>
           <div class="controls">
-            <select class="form-control" id="client-name">
+            <select class="form-control" id="new-client-name">
               <option selected="selected">Client A</option>
               <option>Client B</option>
               <option>Client C</option>
@@ -93,21 +93,21 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="client-priority">Priority</label>
+          <label class="control-label" for="new-client-priority">Priority</label>
           <div class="controls">
-            <input data-bind="value: clientPriority" type="number" min="1" id="client-priority" placeholder="1 highest, 2 lower, etc." style="width: 150px;">
+            <input data-bind="value: clientPriority" type="number" min="1" id="new-client-priority" placeholder="1 highest, 2 lower, etc." style="width: 150px;">
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="target-date">Target date</label>
+          <label class="control-label" for="new-target-date">Target date</label>
           <div class="controls">
-            <input data-bind="value: targetDate" type="text" id="target-date" placeholder="Pick a target date" style="width: 150px;">
+            <input data-bind="value: targetDate" type="text" id="new-target-date" placeholder="Pick a target date" style="width: 150px;">
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="product-area">Product area</label>
+          <label class="control-label" for="new-product-area">Product area</label>
           <div class="controls">
-            <select class="form-control" id="product-area">
+            <select class="form-control" id="new-product-area">
               <option selected="selected">Policies</option>
               <option>Billing</option>
               <option>Claims</option>
@@ -116,9 +116,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="agent-name">Agent</label>
+          <label class="control-label" for="new-agent-name">Agent</label>
           <div class="controls">
-            <input data-bind="value: agentName" type="text" id="agent-name" placeholder="Eg. Agata Britonsdottir" style="width: 150px;">
+            <input data-bind="value: agentName" type="text" id="new-agent-name" placeholder="Eg. Agata Britonsdottir" style="width: 150px;">
           </div>
         </div>
       </form>
