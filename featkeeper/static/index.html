@@ -5,9 +5,11 @@
   <title>Featkeeper</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
   <link href="app.css" rel="stylesheet">
   <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
   <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
   <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
 </head>
 
@@ -68,53 +70,57 @@
     </div>
     <div class="modal-body">
       <form class="form-horizontal">
-        <div class="control-group">
+        <fieldset class="form-group">
           <label class="control-label" for="title">Title</label>
           <div class="controls">
             <input data-bind="value: title" type="text" id="title" placeholder="Eg. Add Google login" style="width: 150px;">
           </div>
-        </div>
-        <div class="control-group">
+        </fieldset>
+        <fieldset class="form-group">
           <label class="control-label" for="inputDescription">Description</label>
           <div class="controls">
             <textarea class="form-control" rows="3" data-bind="value: description" type="text" id="inputDescription" placeholder="Eg. Client wants to be able to login using his GMail account restricted to the corporate domain" style="width: 250px;"></textarea>
           </div>
-        </div>
-        <div class="control-group">
+        </fieldset>
+        <fieldset class="form-group">
           <label class="control-label" for="client-name">Client</label>
-          <select class="form-control" id="client-name">
-            <option selected="selected">Client A</option>
-            <option>Client B</option>
-            <option>Client C</option>
-          </select>
-        </div>
-        <div class="control-group">
+          <div class="controls">
+            <select class="form-control" id="client-name">
+              <option selected="selected">Client A</option>
+              <option>Client B</option>
+              <option>Client C</option>
+            </select>
+          </div>
+        </fieldset>
+        <fieldset class="form-group">
           <label class="control-label" for="client-priority">Priority</label>
           <div class="controls">
-            <input data-bind="value: clientPriority" type="text" id="client-priority" placeholder="Eg. 1 is highest, 2 is lower than 1, etc." style="width: 150px;">
+            <input data-bind="value: clientPriority" type="text" id="client-priority" placeholder="1 highest, 2 lower, etc." style="width: 150px;">
           </div>
-        </div>
-        <div class="control-group">
+        </fieldset>
+        <fieldset class="form-group">
           <label class="control-label" for="target-date">Target date</label>
           <div class="controls">
-            <input data-bind="value: targetDate" type="text" id="target-date" placeholder="Eg." style="width: 150px;">
+            <input data-bind="value: targetDate" type="text" id="target-date" placeholder="Pick a target date" style="width: 150px;">
           </div>
-        </div>
-        <div class="control-group">
+        </fieldset>
+        <fieldset class="form-group">
           <label class="control-label" for="product-area">Product area</label>
-          <select class="form-control" id="product-area">
-            <option selected="selected">Policies</option>
-            <option>Billing</option>
-            <option>Claims</option>
-            <option>Reports</option>
-          </select>
-        </div>
-        <div class="control-group">
+          <div class="controls">
+            <select class="form-control" id="product-area">
+              <option selected="selected">Policies</option>
+              <option>Billing</option>
+              <option>Claims</option>
+              <option>Reports</option>
+            </select>
+          </div>
+        </fieldset>
+        <fieldset class="form-group">
           <label class="control-label" for="agent-name">Agent</label>
           <div class="controls">
             <input data-bind="value: agentName" type="text" id="agent-name" placeholder="Eg. Agata Britonsdottir" style="width: 150px;">
           </div>
-        </div>
+        </fieldset>
       </form>
     </div>
     <div class="modal-footer">

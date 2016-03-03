@@ -17,6 +17,7 @@ class FeatkeeperApiTest(unittest.TestCase):
         self.client = MongoClient()
         self.db = self.client.featkeeper_test
         self.collection = self.db.feature_requests
+        self.client.drop_database('featkeeper_test')
         self._populate_test_feature_requests()
 
     # Delete test db

@@ -1,3 +1,9 @@
+$('#target-date').datepicker({
+    format: "yyyy-mm-dd",
+    startDate: "2016-01-01"
+});
+
+// ViewModel for displaying all feature request info and buttons to close and edit
 function FeatureRequestViewModel() {
   var self = this;
   self.featureRequestUrl = '/api/v1/feature-request';
