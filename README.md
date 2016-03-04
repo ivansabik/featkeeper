@@ -83,23 +83,17 @@ Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial
 }
 ```
 
-## Routes in client app
 ## Views in client app
-Login
 
-![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/login.png)
+KnockoutJS as other popular frameworks follow a wide known pattern called [Model-view-viewmodel or MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel). For this, the following HTML views are implemented:
 
-Dashboard
+- Feature requests
+- New feature request
 
-![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/dashboard.png)
+The implemented ViewModels are:
 
-New feature request
-
-![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/new_feature.png)
-
-Edit feature request
-
-![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/edit_feature.png)
+- FeatureRequestViewModel
+- NewFeatureRequestViewModel
 
 ## Working example
 A working sample app can be fount at: http://

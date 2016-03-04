@@ -78,7 +78,7 @@ class FeatkeeperApiTest(unittest.TestCase):
         response_test = json.loads(response.data)
         self.assertEqual(expected, response_test)
 
-    # Test for PUT /feature-request, should output success message
+    # Test for PUT /feature-request, should create a new feature request and return success message
     def test_api_create_feature_requests(self):
         expected = {
             'status': 'success',
@@ -88,7 +88,7 @@ class FeatkeeperApiTest(unittest.TestCase):
         response_test = json.loads(response.data)
         self.assertEqual(expected, response_test)
 
-    # Test for POST /feature-request, should output success message
+    # Test for PUT /feature-request, should edit an existing request and return success message
     def test_api_update_feature_requests(self):
         expected = {
             'status': 'success',
@@ -98,7 +98,7 @@ class FeatkeeperApiTest(unittest.TestCase):
         response_test = json.loads(response.data)
         self.assertEqual(expected, response_test)
 
-    # Test for non-existent API endpoint request should output error
+    # Test for non-existent API endpoint request should return error
     def test_api_non_existent_endpoint(self):
         expected = {
             'status': 'error',
@@ -108,7 +108,7 @@ class FeatkeeperApiTest(unittest.TestCase):
         response_test = json.loads(response.data)
         self.assertEqual(expected, response_test)
 
-    # Setup test data
+    # Setup test data, only 2 records with Id manually assigned so as created date
     def _populate_test_feature_requests(self):
         feature_request = FeatureRequest()
         FeatureRequestModel = feature_request.FeatureRequestModel

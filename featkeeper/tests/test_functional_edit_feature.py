@@ -34,5 +34,5 @@ class EditFeatureTest(unittest.TestCase):
         driver.save_screenshot(full_path)
         return full_path
 
-    if __name__ == '__main__':
+if __name__ == '__main__':
         unittest.main()

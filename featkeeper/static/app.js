@@ -1,4 +1,12 @@
-$('#target-date').datepicker({
+/*
+app.js
+Main file that contains client side logic, implements ViewModels
+Based on the great tutorial by Miguel Grinberg:
+http://blog.miguelgrinberg.com/post/writing-a-javascript-rest-client
+*/
+
+// Bind datepickers for bootstrap plugin
+$('#new-target-date').datepicker({
     format: "yyyy-mm-dd",
     startDate: "2016-01-01"
 });
@@ -80,15 +88,6 @@ function NewFeatureRequestViewModel() {
       createdAt: self.createdAt(),
       done: self.done()
     });
-    self.title("");
-    self.description("");
-    self.clientName("");
-    self.clientPriority("");
-    self.targetDate("");
-    self.productArea("");
-    self.agentName("");
-    self.createdAt("");
-    self.done("");
   }
 }
 

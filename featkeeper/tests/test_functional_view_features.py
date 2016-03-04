@@ -1,4 +1,9 @@
 # test_functional_view_features.py
+# Tests user stories and specs for viewing existing feature requests
+# @todo: Should warn when no feature requests exist
+# @todo: Should fail if user has not authenticated
+# @todo: Should only display authenticated user's feature requests
+
 from selenium import webdriver
 import unittest
 import os
@@ -86,7 +91,7 @@ class ViewFeaturesTest(unittest.TestCase):
             'Policies'
         )
 
-        # User can see the first feature request's agent name
+        # User can see the first agent name associated with the feature request
         agentName = self.browser.find_element_by_xpath('//*[@id="main"]/table/tbody/tr[2]/td[2]/span[11]')
         self.assertEqual(
             agentName.text,
