@@ -20,10 +20,37 @@ class FeatureRequest:
         self.FeatureRequestModel = create_model(self.feature_request_schema(), self.collection)
 
     def save(self):
-        self.id = '' # Get from saved in db
-        self.created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        self.ticket_url = 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)
-        return # dict representation of object including id
+        if not self.created_at:
+            self.created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        if not self.ticket_url:
+            self.ticket_url = 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)
+        # Persist to db
+        FeatureRequestModel = self.FeatureRequestModel
+        feature_request = FeatureRequestModel({
+            'title': self.title,
+            'description': self.description,
+            'client_name': self.client_name,
+            'client_priority': self.client_priority,
+            'target_date': self.target_date,
+            'product_area': self.product_area,
+            'agent_name': self.agent_name,
+            'ticket_url': self.ticket_url
+        })
+        feature_request.save()
+        self.id = feature_request['_id']
+        # Return dict representation including id assigned from db
+        return {
+            '_id': self.id,
+            'title': self.title,
+            'description': self.description,
+            'client_name': self.client_name,
+            'client_priority': self.client_priority,
+            'target_date': self.target_date,
+            'created_at': self.created_at,
+            'product_area': self.product_area,
+            'agent_name': self.agent_name,
+            'ticket_url': self.ticket_url
+        }
 
     def find_all(self):
         feature_requests = self.FeatureRequestModel.find()

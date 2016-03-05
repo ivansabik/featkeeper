@@ -82,10 +82,13 @@ class FeatureRequestUnitTest(unittest.TestCase):
         feature_request.title = 'Add end to end encripted chat'
         feature_request.description = 'Client wants to be able to send P2P encrypted messages to customers in realtime'
         feature_request.client_name = 'Akbar Erickssohn'
+        feature_request.client_priority = 1
         feature_request.target_date = '2016-10-29'
         feature_request.created_at = '2016-02-28 23:35:19'
         feature_request.product_area = 'Policies'
         feature_request.agent_name = 'Eleuthere'
+        feature_request.ticket_url = 'http://localhost:5000/1a2eaD'
+
         expected = {
             'title': 'Add end to end encripted chat',
             'description': 'Client wants to be able to send P2P encrypted messages to customers in realtime',
@@ -94,10 +97,13 @@ class FeatureRequestUnitTest(unittest.TestCase):
             'target_date': '2016-10-29',
             'created_at': '2016-02-28 23:35:19',
             'product_area': 'Policies',
-            'agent_name': 'Eleuthere'
+            'agent_name': 'Eleuthere',
+            'ticket_url': 'http://localhost:5000/1a2eaD'
         }
         # Remove id for test assertions
         result = feature_request.save()
+        self.assertIsNot(result['_id'], None, '_id not assigned (maybe not correctly saved to db?)')
+        del result['_id']
         self.assertEqual(expected, result)
 
     # Test edit an existing feature request
