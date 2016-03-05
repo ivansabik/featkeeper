@@ -16,18 +16,18 @@ API_ROOT_URL = '/api/v1'
 
 app = Flask(__name__)
 
-# Client app serve static files for HTML index and app.js
+# Client app serve static files for HTML index and app.js (minified!)
 @app.route('/')
 def client_app_html():
     return app.send_static_file('index.html')
 
 @app.route('/app.js')
 def client_app_js():
-    return app.send_static_file('app.js')
+    return app.send_static_file('app.min.js')
 
 @app.route('/app.css')
 def client_app_css():
-    return app.send_static_file('app.css')
+    return app.send_static_file('app.min.css')
 
 # API endpoints
 @app.route(API_ROOT_URL + '/feature-request', methods=['GET'])

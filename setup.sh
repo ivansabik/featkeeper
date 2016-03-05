@@ -8,4 +8,6 @@ cd featkeeper
 virtualenv venv
 . venv/bin/activate
 pip install -r requirements.txt
+npm install
+grunt
 python -m unittest discover
