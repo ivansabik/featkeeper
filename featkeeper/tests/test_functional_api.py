@@ -1,4 +1,11 @@
-# test_funcional_api.py
+'''
+test_funcional_api.py
+Tests API endpoints for CRUD operations
+@todo: Should return erron when requesting view non existent feature request
+@todo: Should return erron when requesting trying to add non-existent feature request
+@todo: Should return erron when requesting editing non existent feature request
+'''
+
 import sys
 sys.path.append('/home/ivansabik/Desktop/featkeeper')
 from featkeeper import api
@@ -80,15 +87,24 @@ class FeatkeeperApiTest(unittest.TestCase):
 
     # Test for PUT /feature-request, should create a new feature request and return success message
     def test_api_create_feature_requests(self):
+        new_feature_request = {
+            'title': 'Add end to end encripted chat',
+            'description': 'Client wants to be able to send P2P encrypted messages to customers in realtime',
+            'client_name': 'Akbar Erickssohn',
+            'client_priority': 1,
+            'target_date': '2016-10-29',
+            'product_area': 'Policies',
+            'agent_name': 'Eleuthere',
+        }
         expected = {
             'status': 'success',
             'message': 'Feature request added'
         }
-        response = self.app.put(API_ROOT_URL + '/feature-request')
+        response = self.app.put(API_ROOT_URL + '/feature-request', new_feature_request)
         response_test = json.loads(response.data)
         self.assertEqual(expected, response_test)
 
-    # Test for PUT /feature-request, should edit an existing request and return success message
+    # Test for POST /feature-request, should edit an existing request and return success message
     def test_api_update_feature_requests(self):
         expected = {
             'status': 'success',

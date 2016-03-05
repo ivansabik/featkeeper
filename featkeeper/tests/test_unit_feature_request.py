@@ -1,7 +1,10 @@
-# test_unit_feature.py
+'''
+test_unit_feature.py
+Tests FeatureRequest behaviour (find, save, validation methods, etc)
+'''
+
 import sys
 sys.path.append('/home/ivansabik/Desktop/featkeeper')
-from featkeeper import schemas
 import unittest
 from pymongo import MongoClient
 from featkeeper.models import FeatureRequest
@@ -75,20 +78,36 @@ class FeatureRequestUnitTest(unittest.TestCase):
 
     # Test create new feature request
     def test_create_feature_request(self):
-        self.fail('test_test_create_feature_request Not finished')
+        feature_request = FeatureRequest(test=True)
+        feature_request.title = 'Add end to end encripted chat'
+        feature_request.description = 'Client wants to be able to send P2P encrypted messages to customers in realtime'
+        feature_request.client_name = 'Akbar Erickssohn'
+        feature_request.target_date = '2016-10-29'
+        feature_request.created_at = '2016-02-28 23:35:19'
+        feature_request.product_area = 'Policies'
+        feature_request.agent_name = 'Eleuthere'
+        expected = {
+            'title': 'Add end to end encripted chat',
+            'description': 'Client wants to be able to send P2P encrypted messages to customers in realtime',
+            'client_name': 'Akbar Erickssohn',
+            'client_priority': 1,
+            'target_date': '2016-10-29',
+            'created_at': '2016-02-28 23:35:19',
+            'product_area': 'Policies',
+            'agent_name': 'Eleuthere'
+        }
+        # Remove id for test assertions
+        result = feature_request.save()
+        self.assertEqual(expected, result)
 
     # Test edit an existing feature request
     def test_update_feature_request(self):
         self.fail('test_update_feature_request Not finished')
 
-    '''
-    A numbered priority according to the client (1...n).
-    Client Priority numbers should not repeat for the given client,
-    so if a priority is set on a new feature as "1",
-    then all other feature requests for that client should be reordered.
-    '''
+
+    # Test reassign client priority for all existing feature requests when colliding with a new one
     def test_reassign_new_feature_request_client_priority(self):
-        self.fail('test_edit_feature Not finished')
+        self.fail('test_reassign_new_feature_request_client_priority Not finished')
 
     # Setup test data
     def _populate_test_feature_requests(self):

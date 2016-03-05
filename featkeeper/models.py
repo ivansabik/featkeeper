@@ -1,11 +1,16 @@
-# models.py
-# Classes: FeatureRequest
+'''
+models.py
+Implements FeatureRequest including method for reassigning client priority
+'''
+
 from mongothon import *
 from datetime import datetime
 from pymongo import MongoClient
 import shortuuid
 
 class FeatureRequest:
+    is_open = 1
+
     def __init__(self,test=False):
         self.client = MongoClient()
         self.db = self.client.featkeeper
@@ -13,6 +18,12 @@ class FeatureRequest:
             self.db = self.client.featkeeper_test
         self.collection = self.db.feature_requests
         self.FeatureRequestModel = create_model(self.feature_request_schema(), self.collection)
+
+    def save(self):
+        self.id = '' # Get from saved in db
+        self.created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        self.ticket_url = 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)
+        return # dict representation of object including id
 
     def find_all(self):
         feature_requests = self.FeatureRequestModel.find()
@@ -27,14 +38,14 @@ class FeatureRequest:
         return Schema({
             'title': {'type': basestring, 'required': True},
             'description': {'type': basestring, 'required': True},
-            # String for now, eventually will be own Schema in future sprint
+            # String for now, eventually will be own Schema
             'client_name': {'type': basestring, 'required': True},
             'client_priority': {'type': int, 'required': True, 'default': 1},
             'target_date': {'type': basestring, 'required': True},
             # Currently ticket URL is generated, later a custom input filed can be added to track visits to that URL coming from the app (as goo.gl, bit.ly, etc)
             'ticket_url': {'type': basestring, 'required': True, 'default': 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)},
             'product_area': {'type': basestring, 'required': True},
-            # String for now, eventually will be own Schema in future sprint
+            # String for now, eventually will be own Schema
             'agent_name': {'type': basestring, 'required': True},
             'created_at': {'type': basestring, 'required': True, 'default': datetime.now().strftime('%Y-%m-%d %H:%M:%S')},
             'modified_at': {'type': basestring},
@@ -68,7 +79,7 @@ class FeatureRequest:
             pass
         return self._remove_empty_keys(feature_request_dict)
 
-    # http://stackoverflow.com/questions/14813396/python-elegant-way-to-delete-empty-lists-from-python-dict
+    # From: http://stackoverflow.com/questions/14813396/python-elegant-way-to-delete-empty-lists-from-python-dict
     def _remove_empty_keys(self, d):
         for k in d.keys():
             if not d[k]:

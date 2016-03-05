@@ -6,6 +6,8 @@ Featkeeper is a web app for creating and tracking feature requests from clients 
 - API on top of Python and MongoDb for data persistence
 - Client app in JS
 
+Client app and server app are independent components! (Flask / KnockoutJS)
+
 Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial for integrating with KnockoutJs](http://blog.miguelgrinberg.com/post/writing-a-javascript-rest-client)
 
 
@@ -23,7 +25,7 @@ Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial
 ## Agent user stories (specs)
 - As an agent I should be able to create a new feature requests
 - As an agent I should be able to view feature requests
-- As an agent I should be able to edit a feature requests
+- As an agent I should be able to edit a feature request
 - As an agent I should be able to close a new feature request
 
 ## Models
@@ -109,7 +111,10 @@ $ . venv/bin/activate
 (venv)$ python featkeeper/app.py
 ```
 
-Now the api is listening at [http://127.0.0.1:5000/api/v1/](http://127.0.0.1:5000/api/v1/)
+Now the api is listening at: [http://127.0.0.1:5000/api/v1/](http://127.0.0.1:5000/api/v1/)
+
+For development, the client app can be statically served from:
+[http://127.0.0.1:5000/api/v1/](http://127.0.0.1:5000/)
 
 ## Test data
 A script is provided for generating test data, can be accessed with:
@@ -119,7 +124,7 @@ $ python featkeeper/setup_dev_data.py
 ```
 
 ## Tests
-Functional with Selenium and unit with unittest. Run test suites with:
+Functional tests with Selenium and unit tests with unittest. Run test suites with:
 
 ```shell
 $ python -m unittest discover

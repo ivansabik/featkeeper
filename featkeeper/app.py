@@ -1,7 +1,9 @@
-# api.py
-# Implements REST API endpoints for feature requests, for dev also serving static files
-# In production static files handled by server
-# Eventually will also implement /agent and /client
+'''
+api.py
+Implements REST API endpoints for feature requests, for dev also serving static files
+In production static files handled by server
+Eventually will also implement /agent and /client
+'''
 
 from flask import Flask, jsonify, Response
 from models import FeatureRequest

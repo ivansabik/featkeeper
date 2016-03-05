@@ -1,8 +1,10 @@
-# test_functional_view_features.py
-# Tests user stories and specs for viewing existing feature requests
-# @todo: Should warn when no feature requests exist
-# @todo: Should fail if user has not authenticated
-# @todo: Should only display authenticated user's feature requests
+'''
+test_functional_view_features.py
+Tests user stories and specs for viewing existing feature requests
+@todo: Should warn when no feature requests exist
+@todo: Should fail if user has not authenticated
+@todo: Should only display authenticated user's feature requests
+'''
 
 from selenium import webdriver
 import unittest
