@@ -43,7 +43,7 @@ class FeatureRequestUnitTest(unittest.TestCase):
                 '_id': '56d3d524402e5f1cfc273342',
                 'title': 'Support Google account auth',
                 'description': 'Client wants to be able to login using Google accounts restricted to users in corporate domain',
-                'client_name': 'Carlo Fibonacci',
+                'client_name': 'Mandel Jamesdottir',
                 'client_priority': 2,
                 'target_date': '2016-06-15',
                 'ticket_url': 'http://localhost:5000/LhPnCk',
@@ -100,7 +100,7 @@ class FeatureRequestUnitTest(unittest.TestCase):
             'agent_name': 'Eleuthere',
             'ticket_url': 'http://localhost:5000/1a2eaD'
         }
-        # Remove id for test assertions
+        # Remove _id for test assertions since its random, first check that exists
         result = feature_request.save()
         self.assertIsNot(result['_id'], None, '_id not assigned (maybe not correctly saved to db?)')
         del result['_id']
@@ -108,12 +108,27 @@ class FeatureRequestUnitTest(unittest.TestCase):
 
     # Test edit an existing feature request
     def test_update_feature_request(self):
-        self.fail('test_update_feature_request Not finished')
+        feature_request = FeatureRequest(test=True)
+        feature_request = feature_request.find_by_id('56d3d524402e5f1cfc273344')
+        feature_request.product_area = 'Policies'
+        # Assign none to retrieve again and check new product area associated
+        feature_request = None
+        feature_request = feature_request.find_by_id('56d3d524402e5f1cfc273344')
+        self.assertItemsEqual('Policies', feature_request.product_area)
 
 
     # Test reassign client priority for all existing feature requests when colliding with a new one
     def test_reassign_new_feature_request_client_priority(self):
-        self.fail('test_reassign_new_feature_request_client_priority Not finished')
+        feature_request = FeatureRequest(test=True)
+        feature_request_1 = feature_request.find_by_id('56d3d524402e5f1cfc273340')
+        feature_request_2 = feature_request.find_by_id('56d3d524402e5f1cfc273342')
+        # Check priority before changing
+        self.assertItemsEqual(1, feature_request_1.client_priority)
+        self.assertItemsEqual(2, feature_request_2.client_priority)
+        # Change priority and re-check new assignment
+        feature_request_2.client_priority = 1
+        self.assertItemsEqual(2, feature_request_1.client_priority)
+        self.assertItemsEqual(1, feature_request_2.client_priority)
 
     # Setup test data
     def _populate_test_feature_requests(self):
@@ -137,7 +152,7 @@ class FeatureRequestUnitTest(unittest.TestCase):
             '_id': ObjectId('56d3d524402e5f1cfc273342'),
             'title': 'Support Google account auth',
             'description': 'Client wants to be able to login using Google accounts restricted to users in corporate domain',
-            'client_name': 'Carlo Fibonacci',
+            'client_name': 'Mandel Jamesdottir',
             'client_priority': 2,
             'target_date': '2016-06-15',
             'ticket_url': 'http://localhost:5000/LhPnCk',

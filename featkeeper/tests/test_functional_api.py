@@ -104,13 +104,27 @@ class FeatkeeperApiTest(unittest.TestCase):
         response_test = json.loads(response.data)
         self.assertEqual(expected, response_test)
 
-    # Test for POST /feature-request, should edit an existing request and return success message
+    # Test for PUT /feature-request, should edit an existing request and return success message
     def test_api_update_feature_requests(self):
+        edit_feature_request = {
+            '_id': '56d3d524402e5f1cfc273344',
+            'title': 'Support Google account auth',
+            'description': 'Client wants to be able to login using Google accounts restricted to users in corporate domain',
+            'client_name': 'Carlo Fibonacci',
+            'client_priority': 3,
+            'target_date': '2016-06-15',
+            'product_area': 'Billing',
+            'agent_name': 'Eleonor',
+            'is_open': 0
+        }
+        # Remove modified_at for test assertions since its random, first check that exists
+        self.assertIsNot(response_test['modified_at'], None, 'modified_at not assigned')
+        del result['modified_at']
         expected = {
             'status': 'success',
             'message': 'Feature request updated'
         }
-        response = self.app.post(API_ROOT_URL + '/feature-request')
+        response = self.app.post(API_ROOT_URL + '/feature-request', edit_feature_request)
         response_test = json.loads(response.data)
         self.assertEqual(expected, response_test)
 
