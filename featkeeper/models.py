@@ -27,20 +27,34 @@ class FeatureRequest:
             self.ticket_url = 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)
         # Persist to db
         FeatureRequestModel = self.FeatureRequestModel
-        feature_request = FeatureRequestModel({
-            'title': self.title,
-            'description': self.description,
-            'client_name': self.client_name,
-            'client_priority': self.client_priority,
-            'target_date': self.target_date,
-            'product_area': self.product_area,
-            'agent_name': self.agent_name,
-            'ticket_url': self.ticket_url
-        })
-        feature_request.save()
-        self._id = str(feature_request['_id'])
+        # If self._id exists it should update existing feature request, else not create new feature request
+        if hasattr(self, '_id'):
+            feature_request = FeatureRequestModel.find_by_id(self._id)
+            self.modified_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            feature_request['title'] = self.title
+            feature_request['description'] = self.description
+            feature_request['client_name'] = self.client_name
+            feature_request['client_priority'] = self.client_priority
+            feature_request['target_date'] = self.target_date
+            feature_request['product_area'] = self.product_area
+            feature_request['agent_name'] = self.agent_name
+            feature_request['modified_at'] = self.modified_at
+            feature_request.save()
+        else:
+            feature_request = FeatureRequestModel({
+                'title': self.title,
+                'description': self.description,
+                'client_name': self.client_name,
+                'client_priority': self.client_priority,
+                'target_date': self.target_date,
+                'product_area': self.product_area,
+                'agent_name': self.agent_name,
+                'ticket_url': self.ticket_url
+            })
+            feature_request.save()
+            self._id = str(feature_request['_id'])
         # Return dict representation including id assigned from db
-        return {
+        saved_feature_request = {
             '_id': self._id,
             'title': self.title,
             'description': self.description,
@@ -52,6 +66,9 @@ class FeatureRequest:
             'agent_name': self.agent_name,
             'ticket_url': self.ticket_url
         }
+        if hasattr(self, 'modified_at'):
+            saved_feature_request['modified_at'] = self.modified_at
+        return saved_feature_request
 
     def find_all(self):
         feature_requests = self.FeatureRequestModel.find()

@@ -112,10 +112,12 @@ class FeatureRequestUnitTest(unittest.TestCase):
         feature_request = FeatureRequest(test=True)
         feature_request = feature_request.find_by_id('56d3d524402e5f1cfc273342')
         feature_request.product_area = 'Policies'
+        result = feature_request.save()
         # Assign none to retrieve again and check new product area associated
         feature_request = FeatureRequest(test=True)
         feature_request = feature_request.find_by_id('56d3d524402e5f1cfc273342')
-        self.assertItemsEqual('Policies', feature_request.product_area)
+        self.assertEqual(True, hasattr(feature_request, 'modified_at'))
+        self.assertEqual('Policies', feature_request.product_area)
 
     # Test reassign client priority for all existing feature requests when colliding with a new one
     def test_reassign_new_feature_request_client_priority(self):
