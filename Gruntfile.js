@@ -7,7 +7,7 @@ module.exports = function(grunt) {
       },
       build: {
         src: 'featkeeper/static/app.js',
-        dest: 'featkeeper/static/app..min.js'
+        dest: 'featkeeper/static/app.min.js'
       }
     },
     cssmin: {

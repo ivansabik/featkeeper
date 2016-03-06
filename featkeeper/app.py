@@ -15,6 +15,7 @@ import json
 API_ROOT_URL = '/api/v1'
 
 app = Flask(__name__)
+test_mode = False
 
 # Client app serve static files for HTML index and app.js (minified from Grunt)
 
@@ -34,7 +35,7 @@ def client_app_css():
 
 @app.route(API_ROOT_URL + '/feature-request', methods=['GET'])
 def feature_requests_all_read():
-    feature_request = FeatureRequest()
+    feature_request = FeatureRequest(test=test_mode)
     feature_requests = feature_request.find_all()
     feature_requests_list = []
     for feature_request in feature_requests:
@@ -43,7 +44,7 @@ def feature_requests_all_read():
 
 @app.route(API_ROOT_URL + '/feature-request/<feature_request_id>', methods=['GET'])
 def feature_request_by_id_read(feature_request_id):
-    feature_request = FeatureRequest()
+    feature_request = FeatureRequest(test=test_mode)
     feature_request = feature_request.find_by_id(feature_request_id)
     return jsonify(feature_request.to_dict())
 
@@ -52,7 +53,7 @@ def feature_request_add():
     data = request.data
     data_dict = json.loads(data)
     feature_requests_dict = {}
-    feature_request = FeatureRequest()
+    feature_request = FeatureRequest(test=test_mode)
     feature_request.title = data_dict['title']
     feature_request.description = data_dict['description']
     feature_request.client_name = data_dict['client_name']
@@ -81,4 +82,4 @@ def not_found(error):
     }), 404
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

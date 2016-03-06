@@ -1,11 +1,9 @@
 '''
 test_funcional_api.py
 Tests API endpoints for CRUD operations
-@todo: Should return erron when requesting view non existent feature request
-@todo: Should return erron when requesting trying to add non-existent feature request
-@todo: Should return erron when requesting editing non existent feature request
+@todo: Should return erron when requesting feature request not found (view and edit)
+@todo: Should return warning when trying to create feature request with same content as existing one
 '''
-
 import sys
 sys.path.append('/home/ivansabik/Desktop/featkeeper')
 from featkeeper import app
@@ -18,9 +16,9 @@ from flask import json
 API_ROOT_URL = '/api/v1'
 
 class FeatkeeperApiTest(unittest.TestCase):
-    maxDiff = 6000
     # Create client, db and collection for tests
     def setUp(self):
+        app.test_mode = True
         self.app = app.app.test_client()
         self.client = MongoClient()
         self.db = self.client.featkeeper_test
@@ -32,8 +30,15 @@ class FeatkeeperApiTest(unittest.TestCase):
     def tearDown(self):
         self.client.drop_database('featkeeper_test')
 
+    # Test can start using test db
+    def test_start_test_db(self):
+        self.assertEqual(True, app.test_mode)
+
     # Test for GET /feature-request, should output get existing feature requests
     def test_api_read_feature_requests(self):
+        # Need to do fresh populate since other tests in suite are modifying test db
+        self.client.drop_database('featkeeper_test')
+        self._populate_test_feature_requests()
         expected = [
             {
                 '_id': '56d3d524402e5f1cfc273340',
@@ -101,9 +106,14 @@ class FeatkeeperApiTest(unittest.TestCase):
             'status': 'success',
             'message': 'Feature request added'
         }
-        response = self.app.put(API_ROOT_URL + '/feature-request', new_feature_request)
-        response_test = json.loads(response)
-        self.assertEqual(expected, response)
+        response = self.app.put(
+            API_ROOT_URL + '/feature-request',
+            data=json.dumps(new_feature_request),
+            content_type='application/json'
+        )
+        response_test = json.loads(response.data)
+        del response_test['feature_request']
+        self.assertEqual(expected, response_test)
 
     # Test for POST /feature-request, should edit an existing request and return success message
     def test_api_update_feature_requests(self):
@@ -122,8 +132,13 @@ class FeatkeeperApiTest(unittest.TestCase):
             'status': 'success',
             'message': 'Feature request updated'
         }
-        response = self.app.post(API_ROOT_URL + '/feature-request', edit_feature_request)
-        response_test = json.loads(response)
+        response = self.app.post(
+            API_ROOT_URL + '/feature-request',
+            data=json.dumps(edit_feature_request),
+            content_type='application/json'
+        )
+        response_test = json.loads(response.data)
+        del response_test['feature_request']
         self.assertEqual(expected, response_test)
 
     # Test for non-existent API endpoint request should return error
@@ -138,7 +153,7 @@ class FeatkeeperApiTest(unittest.TestCase):
 
     # Setup test data, only 2 records with Id manually assigned so as created date
     def _populate_test_feature_requests(self):
-        feature_request = FeatureRequest()
+        feature_request = FeatureRequest(test=True)
         FeatureRequestModel = feature_request.FeatureRequestModel
         feature_request_1 = FeatureRequestModel({
             '_id': ObjectId('56d3d524402e5f1cfc273340'),

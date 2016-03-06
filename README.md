@@ -8,7 +8,7 @@ Featkeeper is a web app for creating and tracking feature requests from clients 
 
 Client app and server app are independent components! (Flask / KnockoutJS)
 
-Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial for integrating with KnockoutJs](http://blog.miguelgrinberg.com/post/writing-a-javascript-rest-client)
+Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial for integrating REST APIs with KnockoutJS](http://blog.miguelgrinberg.com/post/writing-a-javascript-rest-client)
 
 
 ## Tools
