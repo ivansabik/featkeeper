@@ -5,7 +5,7 @@ In production static files handled by server
 Eventually will also implement /agent and /client
 '''
 
-from flask import Flask, jsonify, Response
+from flask import Flask, jsonify, Response, request
 from models import FeatureRequest
 import shortuuid
 from pymongo import MongoClient
@@ -47,11 +47,15 @@ def feature_request_by_id_read(feature_request_id):
 
 @app.route(API_ROOT_URL + '/feature-request', methods=['PUT'])
 def feature_request_add():
-    return jsonify({})
+    data = request.data
+    data_dict = json.loads(data)
+    return jsonify(data_dict)
 
 @app.route(API_ROOT_URL + '/feature-request', methods=['POST'])
 def feature_requests_update():
-    return jsonify({})
+    data = request.data
+    data_dict = json.loads(data)
+    return jsonify(data_dict)
 
 @app.errorhandler(404)
 def not_found(error):
