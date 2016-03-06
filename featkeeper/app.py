@@ -17,6 +17,7 @@ API_ROOT_URL = '/api/v1'
 app = Flask(__name__)
 
 # Client app serve static files for HTML index and app.js (minified from Grunt)
+
 @app.route('/')
 def client_app_html():
     return app.send_static_file('index.html')
@@ -30,6 +31,7 @@ def client_app_css():
     return app.send_static_file('app.min.css')
 
 # API endpoints
+
 @app.route(API_ROOT_URL + '/feature-request', methods=['GET'])
 def feature_requests_all_read():
     feature_request = FeatureRequest()
@@ -49,7 +51,21 @@ def feature_request_by_id_read(feature_request_id):
 def feature_request_add():
     data = request.data
     data_dict = json.loads(data)
-    return jsonify(data_dict)
+    feature_requests_dict = {}
+    feature_request = FeatureRequest()
+    feature_request.title = data_dict['title']
+    feature_request.description = data_dict['description']
+    feature_request.client_name = data_dict['client_name']
+    feature_request.client_priority = data_dict['client_priority']
+    feature_request.target_date = data_dict['target_date']
+    feature_request.product_area = data_dict['product_area']
+    feature_request.agent_name = data_dict['agent_name']
+    feature_request.save()
+    return jsonify({
+        'status': 'success',
+        'message': 'Feature request added',
+        'feature_request': feature_request.to_dict()
+    })
 
 @app.route(API_ROOT_URL + '/feature-request', methods=['POST'])
 def feature_requests_update():
@@ -65,4 +81,4 @@ def not_found(error):
     }), 404
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

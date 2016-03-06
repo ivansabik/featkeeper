@@ -11,7 +11,6 @@ from featkeeper.models import FeatureRequest
 from bson import ObjectId
 
 class FeatureRequestUnitTest(unittest.TestCase):
-    maxDiff = 3500
     # Create client, db and collection for tests
     def setUp(self):
         self.client = MongoClient()
@@ -95,15 +94,17 @@ class FeatureRequestUnitTest(unittest.TestCase):
             'client_name': 'Akbar Erickssohn',
             'client_priority': 1,
             'target_date': '2016-10-29',
-            'created_at': '2016-02-28 23:35:19',
             'product_area': 'Policies',
-            'agent_name': 'Eleuthere',
-            'ticket_url': 'http://localhost:5000/1a2eaD'
+            'agent_name': 'Eleuthere'
         }
         # Remove _id for test assertions since its random, first check that exists
         result = feature_request.save()
-        self.assertIsNot(result['_id'], None, '_id not assigned (maybe not correctly saved to db?)')
+        self.assertIsNot(result['_id'], None)
+        self.assertIsNot(result['created_at'], None)
+        self.assertIsNot(result['ticket_url'], None)
         del result['_id']
+        del result['created_at']
+        del result['ticket_url']
         self.assertEqual(expected, result)
 
     # Test edit an existing feature request

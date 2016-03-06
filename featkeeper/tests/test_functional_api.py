@@ -18,7 +18,7 @@ from flask import json
 API_ROOT_URL = '/api/v1'
 
 class FeatkeeperApiTest(unittest.TestCase):
-    maxDiff = 5000
+    maxDiff = 6000
     # Create client, db and collection for tests
     def setUp(self):
         self.app = app.app.test_client()
@@ -95,15 +95,15 @@ class FeatkeeperApiTest(unittest.TestCase):
             'client_priority': 1,
             'target_date': '2016-10-29',
             'product_area': 'Policies',
-            'agent_name': 'Eleuthere',
+            'agent_name': 'Eleuthere'
         }
         expected = {
             'status': 'success',
             'message': 'Feature request added'
         }
         response = self.app.put(API_ROOT_URL + '/feature-request', new_feature_request)
-        response_test = json.loads(response.data)
-        self.assertEqual(expected, response_test)
+        response_test = json.loads(response)
+        self.assertEqual(expected, response)
 
     # Test for POST /feature-request, should edit an existing request and return success message
     def test_api_update_feature_requests(self):
@@ -123,7 +123,7 @@ class FeatkeeperApiTest(unittest.TestCase):
             'message': 'Feature request updated'
         }
         response = self.app.post(API_ROOT_URL + '/feature-request', edit_feature_request)
-        response_test = json.loads(response.data)
+        response_test = json.loads(response)
         self.assertEqual(expected, response_test)
 
     # Test for non-existent API endpoint request should return error

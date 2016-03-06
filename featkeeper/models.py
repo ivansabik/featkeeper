@@ -21,9 +21,9 @@ class FeatureRequest:
         self.FeatureRequestModel = create_model(self.feature_request_schema(), self.collection)
 
     def save(self):
-        if not self.created_at:
+        if not hasattr(self, 'created_at'):
             self.created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        if not self.ticket_url:
+        if not hasattr(self, 'ticket_url'):
             self.ticket_url = 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)
         # Persist to db
         FeatureRequestModel = self.FeatureRequestModel
