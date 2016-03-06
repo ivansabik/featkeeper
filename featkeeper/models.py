@@ -1,6 +1,7 @@
 '''
 models.py
 Implements FeatureRequest including method for reassigning client priority
+CRUD methods ORM style
 '''
 
 from mongothon import *
@@ -37,10 +38,10 @@ class FeatureRequest:
             'ticket_url': self.ticket_url
         })
         feature_request.save()
-        self.id = feature_request['_id']
+        self._id = str(feature_request['_id'])
         # Return dict representation including id assigned from db
         return {
-            '_id': self.id,
+            '_id': self._id,
             'title': self.title,
             'description': self.description,
             'client_name': self.client_name,
@@ -54,11 +55,15 @@ class FeatureRequest:
 
     def find_all(self):
         feature_requests = self.FeatureRequestModel.find()
-        return self._decode_feature_requests(feature_requests)
+        feature_requests_list = []
+        for feature_request_model in feature_requests:
+            feature_request = FeatureRequest(test=True)
+            feature_requests_list.append(self._decode_feature_request(feature_request, feature_request_model))
+        return feature_requests_list
 
     def find_by_id(self, feature_request_id):
         feature_request = self.FeatureRequestModel.find_by_id(feature_request_id)
-        return self._decode_feature_request(feature_request)
+        return self._decode_feature_request(self, feature_request)
 
     @classmethod
     def feature_request_schema(cls):
@@ -67,7 +72,7 @@ class FeatureRequest:
             'description': {'type': basestring, 'required': True},
             # String for now, eventually will be own Schema
             'client_name': {'type': basestring, 'required': True},
-            'client_priority': {'type': int, 'required': True, 'default': 1},
+            'client_priority': {'type': int, 'required': True},
             'target_date': {'type': basestring, 'required': True},
             # Currently ticket URL is generated, later a custom input filed can be added to track visits to that URL coming from the app (as goo.gl, bit.ly, etc)
             'ticket_url': {'type': basestring, 'required': True, 'default': 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)},
@@ -79,32 +84,39 @@ class FeatureRequest:
             'is_open': {'type': int, 'required': True, 'default': 1}
         })
 
-    def _decode_feature_requests(self, feature_requests):
-        feature_requests_dict = []
-        for feature_request in feature_requests:
-            feature_requests_dict.append(self._decode_feature_request(feature_request))
+    def to_dict(self):
+        feature_requests_dict = {}
+        feature_requests_dict['_id'] = self._id
+        feature_requests_dict['title']  = self.title
+        feature_requests_dict['description']  = self.description
+        feature_requests_dict['client_name']  = self.client_name
+        feature_requests_dict['client_priority']  = self.client_priority
+        feature_requests_dict['target_date'] = self.target_date
+        feature_requests_dict['ticket_url'] = self.ticket_url
+        feature_requests_dict['product_area'] = self.product_area
+        feature_requests_dict['agent_name'] = self.agent_name
+        feature_requests_dict['created_at'] = self.created_at
+        feature_requests_dict['is_open'] = self.is_open
         return feature_requests_dict
 
-    def _decode_feature_request(self, feature_request):
-        feature_request_dict = {
-            '_id': str(feature_request['_id']),
-            'title': feature_request['title'],
-            'description': feature_request['description'],
-            'client_name': feature_request['client_name'],
-            'client_priority': feature_request['client_priority'],
-            'target_date': feature_request['target_date'],
-            'ticket_url': feature_request['ticket_url'],
-            'product_area': feature_request['product_area'],
-            'agent_name': feature_request['agent_name'],
-            'created_at': feature_request['created_at'],
-            'is_open': feature_request['is_open']
-        }
+    def _decode_feature_request(self, feature_request_object, feature_request_dict):
+        feature_request_object._id = str(feature_request_dict['_id'])
+        feature_request_object.title = feature_request_dict['title']
+        feature_request_object.description = feature_request_dict['description']
+        feature_request_object.client_name = feature_request_dict['client_name']
+        feature_request_object.client_priority = feature_request_dict['client_priority']
+        feature_request_object.target_date = feature_request_dict['target_date']
+        feature_request_object.ticket_url = feature_request_dict['ticket_url']
+        feature_request_object.product_area = feature_request_dict['product_area']
+        feature_request_object.agent_name = feature_request_dict['agent_name']
+        feature_request_object.created_at = feature_request_dict['created_at']
+        feature_request_object.is_open = feature_request_dict['is_open']
         # Modified at is optional, if document not edited will no be set, assign separately
         try:
-            feature_request_dict['modified_at'] = feature_request['modified_at']
+            feature_request_object.modified_at = feature_request_dict['modified_at']
         except KeyError:
             pass
-        return self._remove_empty_keys(feature_request_dict)
+        return feature_request_object
 
     # From: http://stackoverflow.com/questions/14813396/python-elegant-way-to-delete-empty-lists-from-python-dict
     def _remove_empty_keys(self, d):
@@ -112,3 +124,9 @@ class FeatureRequest:
             if not d[k]:
                 del d[k]
         return d
+
+    def __eq__(self, other):
+        return (isinstance(other, self.__class__) and self._remove_empty_keys(self.__dict__) == self._remove_empty_keys(other.__dict__))
+
+    def __ne__(self, other):
+        return not self.__eq__(other)

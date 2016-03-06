@@ -8,7 +8,7 @@ Tests API endpoints for CRUD operations
 
 import sys
 sys.path.append('/home/ivansabik/Desktop/featkeeper')
-from featkeeper import api
+from featkeeper import app
 import unittest
 from pymongo import MongoClient
 from featkeeper.models import FeatureRequest
@@ -18,9 +18,10 @@ from flask import json
 API_ROOT_URL = '/api/v1'
 
 class FeatkeeperApiTest(unittest.TestCase):
+    maxDiff = 5000
     # Create client, db and collection for tests
     def setUp(self):
-        self.app = api.app.test_client()
+        self.app = app.app.test_client()
         self.client = MongoClient()
         self.db = self.client.featkeeper_test
         self.collection = self.db.feature_requests
@@ -48,7 +49,7 @@ class FeatkeeperApiTest(unittest.TestCase):
                 'is_open': 1
             },
             {
-                '_id': '56d3d524402e5f1cfc273344',
+                '_id': '56d3d524402e5f1cfc273342',
                 'title': 'Support Google account auth',
                 'description': 'Client wants to be able to login using Google accounts restricted to users in corporate domain',
                 'client_name': 'Carlo Fibonacci',
@@ -64,7 +65,7 @@ class FeatkeeperApiTest(unittest.TestCase):
 
         response = self.app.get(API_ROOT_URL + '/feature-request')
         response_test = json.loads(response.data)
-        self.assertItemsEqual(expected, response_test)
+        self.assertEqual({ 'feature_requests': expected }, response_test)
 
     # Test for GET /feature-request, should get a single feature request
     def test_api_read_feature_request(self):

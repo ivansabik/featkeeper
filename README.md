@@ -100,11 +100,17 @@ The implemented ViewModels are:
 ## Working example
 A working sample app can be fount at: http://
 
-## Deploy
+## Setup a dev environment in Mint/Ubuntu
 
 ```shell
+$ sudo apt-get update
+$ sudo apt-get install git python python-pip python-all-dev mongodb nodejs
+$ sudo apt-get install npm
+$ npm install -g grunt-cli
 $ git clone https://github.com/ivansabik/featkeeper
 $ cd featkeeper
+$ npm install
+$ grunt
 $ virtualenv venv
 $ . venv/bin/activate
 (venv)$  pip install -r requirements.txt
@@ -114,7 +120,7 @@ $ . venv/bin/activate
 Now the api is listening at: [http://127.0.0.1:5000/api/v1/](http://127.0.0.1:5000/api/v1/)
 
 For development, the client app can be statically served from:
-[http://127.0.0.1:5000/api/v1/](http://127.0.0.1:5000/)
+[http://127.0.0.1:5000/](http://127.0.0.1:5000/)
 
 ## Test data
 A script is provided for generating test data, can be accessed with:
@@ -123,7 +129,7 @@ A script is provided for generating test data, can be accessed with:
 $ python featkeeper/setup_dev_data.py
 ```
 
-## Tests
+## Run functional and unit tests
 Functional tests with Selenium and unit tests with unittest. Run test suites with:
 
 ```shell

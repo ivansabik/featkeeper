@@ -11,6 +11,7 @@ from featkeeper.models import FeatureRequest
 from bson import ObjectId
 
 class FeatureRequestUnitTest(unittest.TestCase):
+    maxDiff = 3500
     # Create client, db and collection for tests
     def setUp(self):
         self.client = MongoClient()
@@ -55,7 +56,7 @@ class FeatureRequestUnitTest(unittest.TestCase):
         ]
         feature_request = FeatureRequest(test=True)
         feature_requests = feature_request.find_all()
-        self.assertEqual(expected, feature_requests)
+        self.assertEqual(expected[0], feature_requests[0].to_dict())
 
     # Test find specific feature request by id
     def test_find_feature_request_by_id(self):
@@ -74,7 +75,7 @@ class FeatureRequestUnitTest(unittest.TestCase):
         }
         feature_request = FeatureRequest(test=True)
         feature_request = feature_request.find_by_id('56d3d524402e5f1cfc273340')
-        self.assertEqual(expected, feature_request)
+        self.assertEqual(expected, feature_request.to_dict())
 
     # Test create new feature request
     def test_create_feature_request(self):
@@ -88,7 +89,6 @@ class FeatureRequestUnitTest(unittest.TestCase):
         feature_request.product_area = 'Policies'
         feature_request.agent_name = 'Eleuthere'
         feature_request.ticket_url = 'http://localhost:5000/1a2eaD'
-
         expected = {
             'title': 'Add end to end encripted chat',
             'description': 'Client wants to be able to send P2P encrypted messages to customers in realtime',
@@ -109,13 +109,12 @@ class FeatureRequestUnitTest(unittest.TestCase):
     # Test edit an existing feature request
     def test_update_feature_request(self):
         feature_request = FeatureRequest(test=True)
-        feature_request = feature_request.find_by_id('56d3d524402e5f1cfc273344')
+        feature_request = feature_request.find_by_id('56d3d524402e5f1cfc273342')
         feature_request.product_area = 'Policies'
         # Assign none to retrieve again and check new product area associated
-        feature_request = None
-        feature_request = feature_request.find_by_id('56d3d524402e5f1cfc273344')
+        feature_request = FeatureRequest(test=True)
+        feature_request = feature_request.find_by_id('56d3d524402e5f1cfc273342')
         self.assertItemsEqual('Policies', feature_request.product_area)
-
 
     # Test reassign client priority for all existing feature requests when colliding with a new one
     def test_reassign_new_feature_request_client_priority(self):
@@ -123,8 +122,8 @@ class FeatureRequestUnitTest(unittest.TestCase):
         feature_request_1 = feature_request.find_by_id('56d3d524402e5f1cfc273340')
         feature_request_2 = feature_request.find_by_id('56d3d524402e5f1cfc273342')
         # Check priority before changing
-        self.assertItemsEqual(1, feature_request_1.client_priority)
-        self.assertItemsEqual(2, feature_request_2.client_priority)
+        self.assertEqual(1, feature_request_1.client_priority)
+        self.assertEqual(2, feature_request_2.client_priority)
         # Change priority and re-check new assignment
         feature_request_2.client_priority = 1
         self.assertItemsEqual(2, feature_request_1.client_priority)

@@ -10,4 +10,3 @@ virtualenv venv
 pip install -r requirements.txt
 npm install
 grunt
-python -m unittest discover

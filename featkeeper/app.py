@@ -16,7 +16,7 @@ API_ROOT_URL = '/api/v1'
 
 app = Flask(__name__)
 
-# Client app serve static files for HTML index and app.js (minified!)
+# Client app serve static files for HTML index and app.js (minified from Grunt)
 @app.route('/')
 def client_app_html():
     return app.send_static_file('index.html')
@@ -34,13 +34,16 @@ def client_app_css():
 def feature_requests_all_read():
     feature_request = FeatureRequest()
     feature_requests = feature_request.find_all()
-    return jsonify(feature_requests=feature_requests)
+    feature_requests_list = []
+    for feature_request in feature_requests:
+        feature_requests_list.append(feature_request.to_dict())
+    return jsonify(feature_requests=feature_requests_list)
 
 @app.route(API_ROOT_URL + '/feature-request/<feature_request_id>', methods=['GET'])
 def feature_request_by_id_read(feature_request_id):
     feature_request = FeatureRequest()
     feature_request = feature_request.find_by_id(feature_request_id)
-    return jsonify(feature_request)
+    return jsonify(feature_request.to_dict())
 
 @app.route(API_ROOT_URL + '/feature-request', methods=['PUT'])
 def feature_request_add():
