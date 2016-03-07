@@ -193,12 +193,12 @@ For development, the client app can be statically served from: [http://127.0.0.1
 
 Run using test db:
 ```shell
-$ python featkeeper/app.py- -mode test
+$ python featkeeper/app.py --mode test
 ```
 
 Run listening in public IP:
 ```shell
-$ python featkeeper/app.py- -public true
+$ python featkeeper/app.py --public true
 ```
 
 ## Test data
