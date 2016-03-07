@@ -38,7 +38,7 @@ class EditFeatureTest(unittest.TestCase):
         # User can click on the add new feature button and see a form to add feature request info
         self.browser.find_element_by_xpath('//*[@id="feature-requests"]/tbody/tr[2]/td[3]/button').click()
         self._take_screenshot(self.browser, 'test_can_add_edit_feature_request_1.png', '/tmp')
-        time.sleep(5)
+        time.sleep(8)
         self.assertEqual('block', self.browser.find_element_by_id('edit').value_of_css_property('display'))
 
         # User can see prepopulated fields of the selected feature request
