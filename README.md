@@ -159,14 +159,12 @@ Will return something like:
 KnockoutJS as other popular frameworks follow a wide known pattern called [Model-view-viewmodel or MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel). For this, the following HTML views are implemented:
 - Feature requests
 - New feature request
+- Edit feature request
 
 The implemented ViewModels are:
 - FeatureRequestViewModel
 - NewFeatureRequestViewModel
 - EditFeatureRequestViewModel
-
-## Working example
-A working sample app can be fount at: http://
 
 ## Setup a dev environment in Mint/Ubuntu
 
@@ -209,8 +207,15 @@ $ python featkeeper/setup_dev_data.py
 ```
 
 ## Run functional and unit tests
-Functional tests with Selenium and unit tests with unittest. Run test suites with:
+Functional tests with Selenium and unit tests with unittest:
 
 ```shell
+$ nohup python featkeeper/app.py --mode test &
 $ python -m unittest discover
+```
+
+After running tests you can kill the Flask process:
+
+```shell
+fuser 5000/tcp
 ```

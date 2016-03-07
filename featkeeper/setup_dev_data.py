@@ -1,11 +1,14 @@
-# setup_dev_data.py
+'''
+setup_dev_data.py
+Setup db for development (not testing) with statically defined data
+Product areas: Policies, Billing, Claims, Reports
+Clients: A, B, C
+Agents: Eleuthere, Amanda, Jean Claude
+'''
+
 from pymongo import MongoClient
 import shortuuid
 from models import FeatureRequest
-
-# Product areas: Policies, Billing, Claims, Reports
-# Clients: A, B, C
-# Agents: Eleuthere, Amanda, Jean Claude
 
 def _insert_feature_requests(client):
     client.drop_database('featkeeper')

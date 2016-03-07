@@ -26,11 +26,11 @@ def client_app_html():
 
 @app.route('/app.js')
 def client_app_js():
-    return app.send_static_file('app.js')
+    return app.send_static_file('app.min.js')
 
 @app.route('/app.css')
 def client_app_css():
-    return app.send_static_file('app.css')
+    return app.send_static_file('app.min.css')
 
 # API endpoints
 
@@ -128,6 +128,7 @@ def not_found(error):
     }), 404
 
 # When running from CLI, --mode test will use test db this is for selenium mostly
+# When running from CLI, --public can be used to listen publicly in development environment (no apache, tornado, etc)
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-m', '--mode', default='dev')

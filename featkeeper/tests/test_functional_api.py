@@ -8,7 +8,7 @@ Tests API endpoints for CRUD operations
 @todo: Should sort by created at date
 '''
 import sys
-sys.path.append('/home/ivansabik/Desktop/featkeeper')
+#sys.path.append('/home/ivansabik/Desktop/featkeeper')
 from featkeeper import app
 import unittest
 from pymongo import MongoClient
