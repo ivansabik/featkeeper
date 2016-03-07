@@ -52,9 +52,9 @@ class NewFeatureTest(unittest.TestCase):
         self._take_screenshot(self.browser, 'test_can_click_and_display_form_2.png', '/tmp')
 
         # User can click on the add button and see the newly created feature request
-        self.browser.find_element_by_id('save-new-feature-request').click()
-        time.sleep(15)
+        self.browser.find_element_by_id('save-new-feature-request').send_keys('\n')
         self._take_screenshot(self.browser, 'test_can_click_and_display_form_3.png', '/tmp')
+        
         # User can see new feature request's title
         newFeatureRequestTitle = self.browser.find_element_by_xpath('//*[@id="feature-requests"]/tbody/tr[2]/td[2]/p[1]/b')
         self.assertEqual('Do stuff', newFeatureRequestTitle.text)
