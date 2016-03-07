@@ -122,16 +122,18 @@ class FeatureRequestUnitTest(unittest.TestCase):
 
     # Test reassign client priority for all existing feature requests when colliding with a new one
     def test_reassign_new_feature_request_client_priority(self):
-        feature_request = FeatureRequest(test=True)
-        feature_request_1 = feature_request.find_by_id('56d3d524402e5f1cfc273340')
-        feature_request_2 = feature_request.find_by_id('56d3d524402e5f1cfc273342')
+        feature_request_1 = FeatureRequest(test=True).find_by_id('56d3d524402e5f1cfc273340')
+        feature_request_2 = FeatureRequest(test=True).find_by_id('56d3d524402e5f1cfc273342')
         # Check priority before changing
         self.assertEqual(1, feature_request_1.client_priority)
         self.assertEqual(2, feature_request_2.client_priority)
         # Change priority and re-check new assignment
         feature_request_2.client_priority = 1
-        self.assertItemsEqual(2, feature_request_1.client_priority)
-        self.assertItemsEqual(1, feature_request_2.client_priority)
+        feature_request_2.save()
+        feature_request_1 = FeatureRequest(test=True).find_by_id('56d3d524402e5f1cfc273340')
+        feature_request_2 = FeatureRequest(test=True).find_by_id('56d3d524402e5f1cfc273342')
+        self.assertEqual(1, feature_request_2.client_priority)
+        self.assertEqual(2, feature_request_1.client_priority)
 
     # Setup test data
     def _populate_test_feature_requests(self):

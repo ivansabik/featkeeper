@@ -17,6 +17,7 @@ class FeatureRequest:
         self.db = self.client.featkeeper
         if test==True:
             self.db = self.client.featkeeper_test
+        self.test = test
         self.collection = self.db.feature_requests
         self.FeatureRequestModel = create_model(self.feature_request_schema(), self.collection)
 
@@ -61,6 +62,7 @@ class FeatureRequest:
             feature_request.save()
             self._id = str(feature_request['_id'])
         # Return dict representation including id assigned from db
+        self._reassign_client_priorities(feature_request)
         saved_feature_request = {
             '_id': self._id,
             'title': self.title,
@@ -77,11 +79,41 @@ class FeatureRequest:
             saved_feature_request['modified_at'] = self.modified_at
         return saved_feature_request
 
+    def _reassign_client_priorities(self, feature_request_dict):
+        # find others with same Client
+        feature_requests_same_client =  self.FeatureRequestModel.find(
+            {
+                '$and': [
+                    { '_id': { '$ne': feature_request_dict['_id'] } },
+                    { 'client_name': feature_request_dict['client_name'] }
+                ]
+            }
+        )
+        for feature_request_model in feature_requests_same_client:
+            self._reassign_client_priority(feature_request_model)
+
+    def _reassign_client_priority(self, feature_request_dict):
+        try:
+            # find other feature request with same client sorted by priority
+            feature_request_same_priority =  self.FeatureRequestModel.find_one(
+                {
+                    '$and': [
+                        { '_id': feature_request_dict['_id'] },
+                        { 'client_name': feature_request_dict['client_name'] },
+                        { 'client_priority': feature_request_dict['client_priority'] }
+                    ]
+                }
+            )
+            feature_request_same_priority['client_priority'] += 1
+            feature_request_same_priority.save()
+        except:
+            pass
+
     def find_all(self):
         feature_requests = self.FeatureRequestModel.find()
         feature_requests_list = []
         for feature_request_model in feature_requests:
-            feature_request = FeatureRequest(test=True)
+            feature_request = FeatureRequest(test=self.test)
             feature_requests_list.append(self._decode_feature_request(feature_request, feature_request_model))
         return feature_requests_list
 
