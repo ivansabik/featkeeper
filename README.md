@@ -2,14 +2,12 @@
 [![Build Status](https://travis-ci.org/ivansabik/featkeeper.svg)](https://travis-ci.org/ivansabik/featkeeper)
 
 Featkeeper is a web app for creating and tracking feature requests from clients for different products. It consists of two core components:
-
 - API on top of Python and MongoDb for data persistence
 - Client app in JS
 
 Client app and server app are independent components! (Flask / KnockoutJS)
 
 Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial for integrating REST APIs with KnockoutJS](http://blog.miguelgrinberg.com/post/writing-a-javascript-rest-client)
-
 
 ## Tools
 - [flask](https://github.com/mitsuhiko/flask)
@@ -32,7 +30,7 @@ Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial
 ![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/models.png)
 
 ## API endpoints
-### /api/v1/feature-request
+### GET /api/v1/feature-request
 
 ```javascript
 {
@@ -67,7 +65,7 @@ Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial
 }
 ```
 
-### /api/v1/feature-request/:id
+### GET /api/v1/feature-request/:id
 
 ```javascript
 {
@@ -85,15 +83,82 @@ Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial
 }
 ```
 
+### POST /api/v1/feature-request/
+ HTTP request with body:
+
+```
+{
+    "title": "Add end to end encripted chat",
+    "description": "Client wants to be able to send P2P encrypted messages to customers in realtime",
+    "client_name": "Akbar Erickssohn",
+    "client_priority": 1,
+    "target_date": "2016-10-29",
+    "product_area": "Policies",
+    "agent_name": "Eleuthere"
+}
+```
+
+Will return something like:
+
+```javascript
+{
+  "feature_request": {
+    "_id": "56dcd6cf402e5f3fd6b9b360",
+    "agent_name": "Eleuthere",
+    "client_name": "Akbar Erickssohn",
+    "client_priority": 1,
+    "created_at": "2016-03-06 19:18:07",
+    "description": "Client wants to be able to send P2P encrypted messages to customers in realtime",
+    "is_open": 1,
+    "product_area": "Policies",
+    "target_date": "2016-10-29",
+    "ticket_url": "http://localhost:5000/er78Bg",
+    "title": "Add end to end encripted chat"
+  },
+  "message": "Feature request added",
+  "status": "success"
+}
+```
+
+### PUT /api/v1/feature-request/:id
+Given that a feature request with ID 56dcc6bf402e5f329f71bde9 exists, HTTP request with body:
+
+```
+{
+  "_id": "56dcc6bf402e5f329f71bde9",
+  "is_open": 0
+}
+```
+
+Will return something like:
+
+```javascript
+{
+  "feature_request": {
+    "_id": "56dcc6bf402e5f329f71bde9",
+    "agent_name": "Eleuthere",
+    "client_name": "A",
+    "client_priority": 5,
+    "created_at": "2016-03-06 18:09:35",
+    "description": "Client wants to be able to choose different colors, fonts, and layouts for each module",
+    "is_open": 0,
+    "modified_at": "2016-03-06 18:44:54",
+    "product_area": "Policies",
+    "target_date": "2016-08-21",
+    "ticket_url": "http://localhost:5000/WKRuRz",
+    "title": "Support custom themes"
+  },
+  "message": "Feature request updated",
+  "status": "success"
+}
+```
+
 ## Views in client app
-
 KnockoutJS as other popular frameworks follow a wide known pattern called [Model-view-viewmodel or MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel). For this, the following HTML views are implemented:
-
 - Feature requests
 - New feature request
 
 The implemented ViewModels are:
-
 - FeatureRequestViewModel
 - NewFeatureRequestViewModel
 
@@ -119,8 +184,7 @@ $ . venv/bin/activate
 
 Now the api is listening at: [http://127.0.0.1:5000/api/v1/](http://127.0.0.1:5000/api/v1/)
 
-For development, the client app can be statically served from:
-[http://127.0.0.1:5000/](http://127.0.0.1:5000/)
+For development, the client app can be statically served from: [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
 
 ## Test data
 A script is provided for generating test data, can be accessed with:

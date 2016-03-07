@@ -48,7 +48,7 @@ def feature_request_by_id_read(feature_request_id):
     feature_request = feature_request.find_by_id(feature_request_id)
     return jsonify(feature_request.to_dict())
 
-@app.route(API_ROOT_URL + '/feature-request', methods=['PUT'])
+@app.route(API_ROOT_URL + '/feature-request', methods=['POST'])
 def feature_request_add():
     data = request.data
     data_dict = json.loads(data)
@@ -68,13 +68,13 @@ def feature_request_add():
         'feature_request': feature_request.to_dict()
     })
 
-@app.route(API_ROOT_URL + '/feature-request', methods=['POST'])
-def feature_requests_update():
+@app.route(API_ROOT_URL + '/feature-request/<feature_request_id>', methods=['PUT'])
+def feature_requests_update(feature_request_id):
     data = request.data
     data_dict = json.loads(data)
     feature_requests_dict = {}
     feature_request = FeatureRequest(test=test_mode)
-    feature_request.find_by_id(data_dict['_id'])
+    feature_request.find_by_id(feature_request_id)
     try:
         feature_request.title = data_dict['title']
     except KeyError:

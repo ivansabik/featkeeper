@@ -108,7 +108,7 @@ class FeatkeeperApiTest(unittest.TestCase):
             'status': 'success',
             'message': 'Feature request added'
         }
-        response = self.app.put(
+        response = self.app.post(
             API_ROOT_URL + '/feature-request',
             data=json.dumps(new_feature_request),
             content_type='application/json'
@@ -128,7 +128,7 @@ class FeatkeeperApiTest(unittest.TestCase):
             'status': 'success',
             'message': 'Feature request updated'
         }
-        response = self.app.post(
+        response = self.app.put(
             API_ROOT_URL + '/feature-request',
             data=json.dumps(edit_feature_request),
             content_type='application/json'
