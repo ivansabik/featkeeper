@@ -172,7 +172,7 @@ A working sample app can be fount at: http://
 
 ```shell
 $ sudo apt-get update
-$ sudo apt-get install git python python-pip python-all-dev mongodb nodejs
+$ sudo apt-get install git python python-pip python-all-dev mongodb nodejs python-virtualenv
 $ sudo apt-get install npm
 $ npm install -g grunt-cli
 $ git clone https://github.com/ivansabik/featkeeper
@@ -188,6 +188,18 @@ $ . venv/bin/activate
 Now the api is listening at: [http://127.0.0.1:5000/api/v1/](http://127.0.0.1:5000/api/v1/)
 
 For development, the client app can be statically served from: [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
+
+## Run
+
+Run using test db:
+```shell
+$ python featkeeper/app.py- -mode test
+```
+
+Run listening in public IP:
+```shell
+$ python featkeeper/app.py- -public true
+```
 
 ## Test data
 A script is provided for generating test data, can be accessed with:

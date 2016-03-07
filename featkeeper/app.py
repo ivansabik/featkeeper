@@ -131,7 +131,11 @@ def not_found(error):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-m', '--mode', default='dev')
+    parser.add_argument('-p', '--public', default='false')
     args = vars(parser.parse_args())
     if args['mode'] == 'test':
         test_mode = True
-    app.run()
+    if args['public'] == 'true':
+        app.run('0.0.0.0')
+    else:
+        app.run()
