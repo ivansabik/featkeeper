@@ -72,7 +72,48 @@ def feature_request_add():
 def feature_requests_update():
     data = request.data
     data_dict = json.loads(data)
-    return jsonify(data_dict)
+    feature_requests_dict = {}
+    feature_request = FeatureRequest(test=test_mode)
+    feature_request.find_by_id(data_dict['_id'])
+    try:
+        feature_request.title = data_dict['title']
+    except KeyError:
+        pass
+    try:
+        feature_request.description = data_dict['description']
+    except KeyError:
+        pass
+    try:
+        feature_request.client_name = data_dict['client_name']
+    except KeyError:
+        pass
+    try:
+        feature_request.client_priority = data_dict['client_priority']
+    except KeyError:
+        pass
+    try:
+        feature_request.target_date = data_dict['target_date']
+    except KeyError:
+        pass
+    try:
+        feature_request.product_area = data_dict['product_area']
+    except KeyError:
+        pass
+    try:
+        feature_request.agent_name = data_dict['agent_name']
+    except KeyError:
+        pass
+    try:
+        feature_request.is_open = data_dict['is_open']
+    except KeyError:
+        pass
+
+    feature_request.save()
+    return jsonify({
+        'status': 'success',
+        'message': 'Feature request updated',
+        'feature_request': feature_request.to_dict()
+    })
 
 @app.errorhandler(404)
 def not_found(error):
@@ -82,4 +123,5 @@ def not_found(error):
     }), 404
 
 if __name__ == '__main__':
+    app.debug = True
     app.run()

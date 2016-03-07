@@ -32,12 +32,19 @@ class FeatureRequest:
             feature_request = FeatureRequestModel.find_by_id(self._id)
             self.modified_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             feature_request['title'] = self.title
-            feature_request['description'] = self.description
-            feature_request['client_name'] = self.client_name
-            feature_request['client_priority'] = self.client_priority
-            feature_request['target_date'] = self.target_date
-            feature_request['product_area'] = self.product_area
-            feature_request['agent_name'] = self.agent_name
+            # @todo only assing if exist!
+            if hasattr(self, 'description'):
+                feature_request['description'] = self.description
+            if hasattr(self, 'client_name'):
+                feature_request['client_name'] = self.client_name
+            if hasattr(self, 'client_priority'):
+                feature_request['client_priority'] = self.client_priority
+            if hasattr(self, 'target_date'):
+                feature_request['target_date'] = self.target_date
+            if hasattr(self, 'product_area'):
+                feature_request['product_area'] = self.product_area
+            if hasattr(self, 'agent_name'):
+                feature_request['agent_name'] = self.agent_name
             feature_request['modified_at'] = self.modified_at
             feature_request.save()
         else:
@@ -114,6 +121,8 @@ class FeatureRequest:
         feature_requests_dict['agent_name'] = self.agent_name
         feature_requests_dict['created_at'] = self.created_at
         feature_requests_dict['is_open'] = self.is_open
+        if hasattr(self, 'modified_at'):
+            feature_requests_dict['modified_at'] = self.modified_at
         return feature_requests_dict
 
     def _decode_feature_request(self, feature_request_object, feature_request_dict):

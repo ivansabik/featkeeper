@@ -2,7 +2,9 @@
 test_funcional_api.py
 Tests API endpoints for CRUD operations
 @todo: Should return erron when requesting feature request not found (view and edit)
+@todo: Should return erron when trying to updated feature request without specifying _id
 @todo: Should return warning when trying to create feature request with same content as existing one
+@todo: Should validate feature request model
 '''
 import sys
 sys.path.append('/home/ivansabik/Desktop/featkeeper')
@@ -118,15 +120,9 @@ class FeatkeeperApiTest(unittest.TestCase):
     # Test for POST /feature-request, should edit an existing request and return success message
     def test_api_update_feature_requests(self):
         edit_feature_request = {
-            '_id': '56d3d524402e5f1cfc273344',
-            'title': 'Support Google account auth',
-            'description': 'Client wants to be able to login using Google accounts restricted to users in corporate domain',
-            'client_name': 'Carlo Fibonacci',
+            '_id': '56d3d524402e5f1cfc273342',
             'client_priority': 3,
-            'target_date': '2016-06-15',
-            'product_area': 'Billing',
-            'agent_name': 'Eleonor',
-            'is_open': 0
+            'product_area': 'Policies',
         }
         expected = {
             'status': 'success',
@@ -138,6 +134,9 @@ class FeatkeeperApiTest(unittest.TestCase):
             content_type='application/json'
         )
         response_test = json.loads(response.data)
+        self.assertIsNot(None, response_test['feature_request']['modified_at'])
+        self.assertEqual(3, response_test['feature_request']['client_priority'])
+        self.assertEqual('Policies', response_test['feature_request']['product_area'])
         del response_test['feature_request']
         self.assertEqual(expected, response_test)
 

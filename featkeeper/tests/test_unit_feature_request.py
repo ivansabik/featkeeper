@@ -1,6 +1,7 @@
 '''
 test_unit_feature.py
 Tests FeatureRequest behaviour (find, save, validation methods, etc)
+@todo: Should validate feature request model
 '''
 
 import sys
@@ -99,9 +100,9 @@ class FeatureRequestUnitTest(unittest.TestCase):
         }
         # Remove _id for test assertions since its random, first check that exists
         result = feature_request.save()
-        self.assertIsNot(result['_id'], None)
-        self.assertIsNot(result['created_at'], None)
-        self.assertIsNot(result['ticket_url'], None)
+        self.assertIsNot(None, result['_id'])
+        self.assertIsNot(None, result['created_at'])
+        self.assertIsNot(None, result['ticket_url'])
         del result['_id']
         del result['created_at']
         del result['ticket_url']
