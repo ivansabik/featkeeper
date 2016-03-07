@@ -129,6 +129,55 @@
     </div>
   </div>
   <!-- Edit feature request -->
+  <div id="edit" class="modal hide fade" tabindex="1" role="dialog" aria-labelledby="edit-request-btn" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="edit-request-btn">Edit Feature Request</h3>
+    </div>
+    <div class="modal-body">
+      <form class="form-horizontal">
+        <div class="control-group">
+          <label class="control-label" for="edit-title">Title</label>
+          <div class="controls">
+            <input data-bind="value: title" type="text" id="edit-title" style="width: 150px;">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="edit-description">Description</label>
+          <div class="controls">
+            <textarea class="form-control" rows="3" data-bind="value: description" type="text" id="edit-description" style="width: 250px;"></textarea>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="edit-client-priority">Priority</label>
+          <div class="controls">
+            <input data-bind="value: clientPriority" type="number" min="1" id="edit-client-priority" style="width: 150px;">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="edit-target-date">Target date</label>
+          <div class="controls">
+            <input data-bind="value: targetDate" type="text" id="edit-target-date" style="width: 150px;">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="edit-product-area">Product area</label>
+          <div class="controls">
+            <select data-bind="value: productArea" class="form-control" id="edit-product-area">
+              <option selected="selected">Policies</option>
+              <option>Billing</option>
+              <option>Claims</option>
+              <option>Reports</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button id="save-edit-feature-request" data-bind="click: editFeatureRequest" class="btn btn-primary">Update</button>
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    </div>
+  </div>
   <script src="app.js"></script>
 </body>
 

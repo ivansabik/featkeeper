@@ -20,6 +20,7 @@ class ViewFeaturesTest(unittest.TestCase):
     # Create client, db and collection for tests
     def setUp(self):
         self.browser = webdriver.Firefox()
+        self.browser.set_window_size(500, 800)
         self.client = MongoClient()
         self.db = self.client.featkeeper
         self.collection = self.db.feature_requests
@@ -89,7 +90,7 @@ class ViewFeaturesTest(unittest.TestCase):
 
     # Setup test data
     def _populate_test_feature_requests(self):
-        feature_request = FeatureRequest()
+        feature_request = FeatureRequest(test=True)
         FeatureRequestModel = feature_request.FeatureRequestModel
         feature_request_1 = FeatureRequestModel({
             '_id': ObjectId('56d3d524402e5f1cfc273340'),

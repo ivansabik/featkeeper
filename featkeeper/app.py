@@ -11,6 +11,7 @@ import shortuuid
 from pymongo import MongoClient
 from bson import json_util, ObjectId
 import json
+import argparse
 
 API_ROOT_URL = '/api/v1'
 
@@ -126,6 +127,11 @@ def not_found(error):
         'message': 'Endpoint does not exist'
     }), 404
 
+# When running from CLI, --mode test will use test db this is for selenium mostly
 if __name__ == '__main__':
-    app.debug = True
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-m', '--mode', default='dev')
+    args = vars(parser.parse_args())
+    if args['mode'] == 'test':
+        test_mode = True
     app.run()

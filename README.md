@@ -161,6 +161,7 @@ KnockoutJS as other popular frameworks follow a wide known pattern called [Model
 The implemented ViewModels are:
 - FeatureRequestViewModel
 - NewFeatureRequestViewModel
+- EditFeatureRequestViewModel
 
 ## Working example
 A working sample app can be fount at: http://

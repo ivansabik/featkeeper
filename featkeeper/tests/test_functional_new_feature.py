@@ -5,7 +5,6 @@ Tests user stories and specs for adding a new feature request
 '''
 
 from selenium import webdriver
-import time
 import unittest
 import os
 import sys
@@ -14,11 +13,13 @@ from featkeeper import app
 from pymongo import MongoClient
 from featkeeper.models import FeatureRequest
 from bson import json_util, ObjectId
+import time
 
 class NewFeatureTest(unittest.TestCase):
     # Create client, db and collection for tests
     def setUp(self):
         self.browser = webdriver.Firefox()
+        self.browser.set_window_size(500, 800)
         self.client = MongoClient()
         self.db = self.client.featkeeper_test
         self.collection = self.db.feature_requests
@@ -35,11 +36,9 @@ class NewFeatureTest(unittest.TestCase):
         self.browser.get('http://localhost:5000')
         # User can click on the add new feature button and see a form to add feature request info
         self.browser.find_element_by_id('new-feature-request').click()
-        self._take_screenshot(self.browser, 'test_can_click_and_display_form_1.png', '/tmp')
-        self.assertEqual(
-            'block',
-            self.browser.find_element_by_id('new').value_of_css_property('display')
-        )
+        time.sleep(2)
+        self._take_screenshot(self.browser, 'test_can_add_new_feature_request_1.png', '/tmp')
+        self.assertEqual('block',self.browser.find_element_by_id('new').value_of_css_property('display'))
 
         # User can fill in the required fields associated to the new feature request
         self.browser.find_element_by_id('new-title').send_keys('Do stuff')
@@ -54,7 +53,7 @@ class NewFeatureTest(unittest.TestCase):
         # User can click on the add button and see the newly created feature request
         self.browser.find_element_by_id('save-new-feature-request').send_keys('\n')
         self._take_screenshot(self.browser, 'test_can_click_and_display_form_3.png', '/tmp')
-        
+
         # User can see new feature request's title
         newFeatureRequestTitle = self.browser.find_element_by_xpath('//*[@id="feature-requests"]/tbody/tr[2]/td[2]/p[1]/b')
         self.assertEqual('Do stuff', newFeatureRequestTitle.text)

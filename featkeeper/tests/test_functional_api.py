@@ -130,7 +130,7 @@ class FeatkeeperApiTest(unittest.TestCase):
             'message': 'Feature request updated'
         }
         response = self.app.put(
-            API_ROOT_URL + '/feature-request',
+            API_ROOT_URL + '/feature-request/56d3d524402e5f1cfc273342',
             data=json.dumps(edit_feature_request),
             content_type='application/json'
         )

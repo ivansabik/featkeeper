@@ -6,7 +6,7 @@ http://blog.miguelgrinberg.com/post/writing-a-javascript-rest-client
 */
 
 // Bind datepickers for bootstrap plugin
-$('#new-target-date').datepicker({
+$('#new-target-date, #edit-target-date').datepicker({
   format: "yyyy-mm-dd",
   startDate: "2016-01-01"
 });
@@ -36,6 +36,7 @@ function FeatureRequestViewModel() {
   self.ajax(self.featureRequestUrl, 'GET').done(function(data) {
     for (var i = 0; i < data.feature_requests.length; i++) {
       self.featureRequests.push({
+        _id: ko.observable(data.feature_requests[i]._id),
         title: ko.observable(data.feature_requests[i].title),
         description: ko.observable(data.feature_requests[i].description),
         clientName: ko.observable(data.feature_requests[i].client_name),
@@ -44,7 +45,6 @@ function FeatureRequestViewModel() {
         ticketUrl: ko.observable(data.feature_requests[i].ticket_url),
         productArea: ko.observable(data.feature_requests[i].product_area),
         agentName: ko.observable(data.feature_requests[i].agent_name),
-        createdAt: ko.observable(data.feature_requests[i].created_at),
         done: ko.observable(data.feature_requests[i].done)
       });
     }
@@ -71,8 +71,25 @@ function FeatureRequestViewModel() {
     });
   }
 
+
   self.beginEdit = function(featureRequest) {
-    alert("Edit: " + featureRequest.title());
+    editFeatureRequestViewModel.setFeatureRequest(featureRequest);
+    $('#edit').modal('show');
+  }
+  self.editFeatureRequest = function(featureRequest, data) {
+    var putUrl = self.featureRequestUrl + '/' + featureRequest._id();
+    self.ajax(putUrl, 'PUT', data).done(function(res) {
+      self.updateFeatureRequest(featureRequest, res.feature_request);
+    });
+  }
+  self.updateFeatureRequest = function(featureRequest, newFeatureRequest) {
+    var i = self.featureRequests.indexOf(featureRequest);
+    self.featureRequests()[i].title(newFeatureRequest.title);
+    self.featureRequests()[i].description(newFeatureRequest.description);
+    self.featureRequests()[i].clientPriority(newFeatureRequest.client_priority);
+    self.featureRequests()[i].targetDate(newFeatureRequest.target_date);
+    self.featureRequests()[i].productArea(newFeatureRequest.product_area);
+    self.featureRequests()[i].done(newFeatureRequest.done);
   }
   self.markDone = function(task) {
     task.done(true);
@@ -89,7 +106,6 @@ function NewFeatureRequestViewModel() {
   self.targetDate = ko.observable();
   self.productArea = ko.observable();
   self.agentName = ko.observable();
-  self.createdAt = ko.observable();
   self.done = ko.observable();
 
   self.newFeatureRequest = function() {
@@ -113,8 +129,44 @@ function NewFeatureRequestViewModel() {
   }
 }
 
+function EditFeatureRequestViewModel() {
+  var self = this;
+  self.title = ko.observable();
+  self.description = ko.observable();
+  self.clientPriority = ko.observable();
+  self.targetDate = ko.observable();
+  self.productArea = ko.observable();
+  self.done = ko.observable();
+
+  self.setFeatureRequest = function(featureRequest) {
+    self.featureRequest = featureRequest;
+    self.title(featureRequest.title());
+    self.description(featureRequest.description());
+    self.clientPriority(featureRequest.clientPriority());
+    self.targetDate(featureRequest.targetDate());
+    self.productArea(featureRequest.productArea());
+    self.done(featureRequest.done());
+    $('edit').modal('show');
+  }
+  self.editFeatureRequest = function() {
+    $('#edit').modal('hide');
+    featureRequestViewModel.editFeatureRequest(self.featureRequest, {
+      title: self.title(),
+      description: self.description(),
+      client_priority: parseInt(self.clientPriority()),
+      target_date: self.targetDate(),
+      product_area: self.productArea(),
+      done: self.done()
+    });
+  }
+}
+
+
 // Create ViewModels and bind to respective div containers by id
 var featureRequestViewModel = new FeatureRequestViewModel();
 var newFeatureRequestViewModel = new NewFeatureRequestViewModel();
+var editFeatureRequestViewModel = new EditFeatureRequestViewModel();
+
 ko.applyBindings(featureRequestViewModel, $('#main')[0]);
 ko.applyBindings(newFeatureRequestViewModel, $('#new')[0]);
+ko.applyBindings(editFeatureRequestViewModel, $('#edit')[0]);
