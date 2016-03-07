@@ -53,6 +53,7 @@ class NewFeatureTest(unittest.TestCase):
 
         # User can click on the add button and see the newly created feature request
         self.browser.find_element_by_id('save-new-feature-request').send_keys('\n')
+        time.sleep(5)
         self._take_screenshot(self.browser, 'test_can_click_and_display_form_3.png', '/tmp')
 
         # User can see new feature request's title

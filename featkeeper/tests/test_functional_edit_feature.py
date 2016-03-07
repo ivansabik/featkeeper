@@ -75,6 +75,7 @@ class EditFeatureTest(unittest.TestCase):
 
         # User can click on the update button and see the newly created feature request
         self.browser.find_element_by_id('save-edit-feature-request').send_keys('\n')
+        time.sleep(5)
         self._take_screenshot(self.browser, 'test_can_add_edit_feature_request_2.png', '/tmp')
 
         # User can see updated feature request's title
