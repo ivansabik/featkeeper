@@ -57,7 +57,7 @@
     <div id="footer">
       <div class="container">
         <p>
-          <button data-bind="click: beginNew" class="btn btn btn-primary">New Feature request</button>
+          <button data-bind="click: beginNew" class="btn btn btn-primary" id="new-feature-request">New Feature request</button>
         </p>
       </div>
     </div>
@@ -85,7 +85,7 @@
         <div class="control-group">
           <label class="control-label" for="new-client-name">Client</label>
           <div class="controls">
-            <select class="form-control" id="new-client-name">
+            <select data-bind="value: clientName" class="form-control" id="new-client-name" >
               <option selected="selected">Client A</option>
               <option>Client B</option>
               <option>Client C</option>
@@ -107,7 +107,7 @@
         <div class="control-group">
           <label class="control-label" for="new-product-area">Product area</label>
           <div class="controls">
-            <select class="form-control" id="new-product-area">
+            <select data-bind="value: productArea" class="form-control" id="new-product-area">
               <option selected="selected">Policies</option>
               <option>Billing</option>
               <option>Claims</option>
@@ -124,7 +124,7 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button data-bind="click: addTask" class="btn btn-primary">Save</button>
+      <button id="save-new-feature-request" data-bind="click: newFeatureRequest" class="btn btn-primary">Save</button>
       <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
     </div>
   </div>

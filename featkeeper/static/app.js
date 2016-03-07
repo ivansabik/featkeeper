@@ -7,8 +7,8 @@ http://blog.miguelgrinberg.com/post/writing-a-javascript-rest-client
 
 // Bind datepickers for bootstrap plugin
 $('#new-target-date').datepicker({
-    format: "yyyy-mm-dd",
-    startDate: "2016-01-01"
+  format: "yyyy-mm-dd",
+  startDate: "2016-01-01"
 });
 
 // ViewModel for displaying all feature request info and buttons to close and edit
@@ -53,6 +53,24 @@ function FeatureRequestViewModel() {
   self.beginNew = function() {
     $('#new').modal('show');
   }
+
+  self.saveNewFeatureRequest = function(featureRequest) {
+    self.ajax(self.featureRequestUrl, 'POST', featureRequest).done(function(data) {
+      self.featureRequests.unshift({
+        title: ko.observable(data.feature_request.title),
+        description: ko.observable(data.feature_request.description),
+        clientName: ko.observable(data.feature_request.client_name),
+        clientPriority: ko.observable(data.feature_request.client_priority),
+        targetDate: ko.observable(data.feature_request.target_date),
+        ticketUrl: ko.observable(data.feature_request.ticket_url),
+        productArea: ko.observable(data.feature_request.product_area),
+        agentName: ko.observable(data.feature_request.agent_name),
+        createdAt: ko.observable(data.feature_request.created_at),
+        done: ko.observable(data.feature_request.done)
+      });
+    });
+  }
+
   self.beginEdit = function(featureRequest) {
     alert("Edit: " + featureRequest.title());
   }
@@ -74,20 +92,24 @@ function NewFeatureRequestViewModel() {
   self.createdAt = ko.observable();
   self.done = ko.observable();
 
-  self.addTask = function() {
+  self.newFeatureRequest = function() {
     $('#new').modal('hide');
-    tasksViewModel.add({
+    featureRequestViewModel.saveNewFeatureRequest({
       title: self.title(),
       description: self.description(),
-      clientName: self.clientName(),
-      clientPriority: self.clientPriority(),
-      ticketUrl: self.ticketUrl(),
-      targetDate: self.targetDate(),
-      productArea: self.productArea(),
-      agentName: self.agentName(),
-      createdAt: self.createdAt(),
-      done: self.done()
+      client_name: self.clientName(),
+      client_priority: parseInt(self.clientPriority()),
+      target_date: self.targetDate(),
+      product_area: self.productArea(),
+      agent_name: self.agentName()
     });
+    self.title('')
+    self.description('')
+    self.clientName('')
+    self.clientPriority('')
+    self.targetDate('')
+    self.productArea('')
+    self.agentName('')
   }
 }
 

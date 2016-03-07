@@ -5,6 +5,7 @@ Tests API endpoints for CRUD operations
 @todo: Should return erron when trying to updated feature request without specifying _id
 @todo: Should return warning when trying to create feature request with same content as existing one
 @todo: Should validate feature request model
+@todo: Should sort by created at date
 '''
 import sys
 sys.path.append('/home/ivansabik/Desktop/featkeeper')

@@ -25,14 +25,15 @@ def client_app_html():
 
 @app.route('/app.js')
 def client_app_js():
-    return app.send_static_file('app.min.js')
+    return app.send_static_file('app.js')
 
 @app.route('/app.css')
 def client_app_css():
-    return app.send_static_file('app.min.css')
+    return app.send_static_file('app.css')
 
 # API endpoints
 
+# Retrieve all existing feature requests
 @app.route(API_ROOT_URL + '/feature-request', methods=['GET'])
 def feature_requests_all_read():
     feature_request = FeatureRequest(test=test_mode)
@@ -42,12 +43,14 @@ def feature_requests_all_read():
         feature_requests_list.append(feature_request.to_dict())
     return jsonify(feature_requests=feature_requests_list)
 
+# Retrieve a single feature request by ID
 @app.route(API_ROOT_URL + '/feature-request/<feature_request_id>', methods=['GET'])
 def feature_request_by_id_read(feature_request_id):
     feature_request = FeatureRequest(test=test_mode)
     feature_request = feature_request.find_by_id(feature_request_id)
     return jsonify(feature_request.to_dict())
 
+# Add a new feature request
 @app.route(API_ROOT_URL + '/feature-request', methods=['POST'])
 def feature_request_add():
     data = request.data
@@ -68,6 +71,7 @@ def feature_request_add():
         'feature_request': feature_request.to_dict()
     })
 
+# Update existing feature request
 @app.route(API_ROOT_URL + '/feature-request/<feature_request_id>', methods=['PUT'])
 def feature_requests_update(feature_request_id):
     data = request.data
