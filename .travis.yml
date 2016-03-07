@@ -10,3 +10,4 @@ before_script:
   - "wget http://selenium.googlecode.com/files/selenium-server-standalone-2.31.0.jar"
   - "java -jar selenium-server-standalone-2.31.0.jar > /dev/null &"
   - sleep 5
+  - "nohup python featkeeper/app.py &"
