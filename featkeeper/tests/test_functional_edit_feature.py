@@ -19,7 +19,7 @@ class EditFeatureTest(unittest.TestCase):
     # Create client, db and collection for tests
     def setUp(self):
         self.browser = webdriver.Firefox()
-        self.browser.set_window_size(500, 800)
+        self.browser.set_window_size(800, 800)
         self.client = MongoClient()
         self.db = self.client.featkeeper_test
         self.collection = self.db.feature_requests
@@ -36,10 +36,9 @@ class EditFeatureTest(unittest.TestCase):
         self.browser.get('http://localhost:5000')
 
         # User can click on the add new feature button and see a form to add feature request info
-        time.sleep(7)
         self.browser.find_element_by_xpath('//*[@id="feature-requests"]/tbody/tr[2]/td[3]/button').click()
-        time.sleep(7)
         self._take_screenshot(self.browser, 'test_can_add_edit_feature_request_1.png', '/tmp')
+        time.sleep(5)
         self.assertEqual('block', self.browser.find_element_by_id('edit').value_of_css_property('display'))
 
         # User can see prepopulated fields of the selected feature request
@@ -75,10 +74,10 @@ class EditFeatureTest(unittest.TestCase):
 
         # User can click on the update button and see the newly created feature request
         self.browser.find_element_by_id('save-edit-feature-request').send_keys('\n')
-        time.sleep(5)
         self._take_screenshot(self.browser, 'test_can_add_edit_feature_request_2.png', '/tmp')
 
         # User can see updated feature request's title
+        time.sleep(8)
         updatedFeatureRequestTitle = self.browser.find_element_by_xpath('//*[@id="feature-requests"]/tbody/tr[2]/td[2]/p[1]/b')
         self.assertEqual('Do stuff', updatedFeatureRequestTitle.text)
         # description

@@ -19,7 +19,7 @@ class NewFeatureTest(unittest.TestCase):
     # Create client, db and collection for tests
     def setUp(self):
         self.browser = webdriver.Firefox()
-        self.browser.set_window_size(500, 800)
+        self.browser.set_window_size(800, 800)
         self.client = MongoClient()
         self.db = self.client.featkeeper_test
         self.collection = self.db.feature_requests
@@ -35,10 +35,9 @@ class NewFeatureTest(unittest.TestCase):
         # User navigates to home page, he can see a button to add a new feature request
         self.browser.get('http://localhost:5000')
         # User can click on the add new feature button and see a form to add feature request info
-        time.sleep(5)
         self.browser.find_element_by_id('new-feature-request').click()
-        time.sleep(5)
         self._take_screenshot(self.browser, 'test_can_add_new_feature_request_1.png', '/tmp')
+        time.sleep(5)
         self.assertEqual('block',self.browser.find_element_by_id('new').value_of_css_property('display'))
 
         # User can fill in the required fields associated to the new feature request
@@ -53,10 +52,10 @@ class NewFeatureTest(unittest.TestCase):
 
         # User can click on the add button and see the newly created feature request
         self.browser.find_element_by_id('save-new-feature-request').send_keys('\n')
-        time.sleep(5)
         self._take_screenshot(self.browser, 'test_can_click_and_display_form_3.png', '/tmp')
 
         # User can see new feature request's title
+        time.sleep(8)
         newFeatureRequestTitle = self.browser.find_element_by_xpath('//*[@id="feature-requests"]/tbody/tr[2]/td[2]/p[1]/b')
         self.assertEqual('Do stuff', newFeatureRequestTitle.text)
 

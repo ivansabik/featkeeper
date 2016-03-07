@@ -20,7 +20,7 @@ class ViewFeaturesTest(unittest.TestCase):
     # Create client, db and collection for tests
     def setUp(self):
         self.browser = webdriver.Firefox()
-        self.browser.set_window_size(500, 800)
+        self.browser.set_window_size(800, 800)
         self.client = MongoClient()
         self.db = self.client.featkeeper
         self.collection = self.db.feature_requests

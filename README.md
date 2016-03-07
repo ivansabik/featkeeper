@@ -1,6 +1,8 @@
 # Featkeeper
 [![Build Status](https://travis-ci.org/ivansabik/featkeeper.svg)](https://travis-ci.org/ivansabik/featkeeper)
 
+![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/demo.gif)
+
 Featkeeper is a web app for creating and tracking feature requests from clients for different products. It consists of two core components:
 - API on top of Python and MongoDb for data persistence
 - Client app in JS
