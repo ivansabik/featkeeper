@@ -5,7 +5,7 @@ Tests FeatureRequest behaviour (find, save, validation methods, etc)
 '''
 
 import sys
-#sys.path.append('/home/ivansabik/Desktop/featkeeper')
+sys.path.append('/home/ivansabik/Desktop/featkeeper')
 import unittest
 from pymongo import MongoClient
 from featkeeper.models import FeatureRequest

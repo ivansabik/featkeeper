@@ -8,7 +8,7 @@ from selenium import webdriver
 import unittest
 import os
 import sys
-#sys.path.append('/home/ivansabik/Desktop/featkeeper')
+sys.path.append('/home/ivansabik/Desktop/featkeeper')
 from featkeeper import app
 from pymongo import MongoClient
 from featkeeper.models import FeatureRequest

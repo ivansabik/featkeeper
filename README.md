@@ -1,5 +1,6 @@
 # Featkeeper
 [![Build Status](https://travis-ci.org/ivansabik/featkeeper.svg)](https://travis-ci.org/ivansabik/featkeeper)
+[![Coverage Status](https://coveralls.io/repos/github/ivansabik/featkeeper/badge.svg?branch=master)](https://coveralls.io/github/ivansabik/featkeeper?branch=master)
 
 ![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/demo.gif)
 
