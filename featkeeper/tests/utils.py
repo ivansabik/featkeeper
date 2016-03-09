@@ -16,7 +16,7 @@ class FeatkeeperTestUtils:
     def populate_test_feature_requests(cls):
         client = MongoClient()
         db = client.featkeeper_test
-        collection = db.users
+        collection = db.feature_requests
         client.drop_database('featkeeper_test')
         feature_request = FeatureRequest(test=True)
         FeatureRequestModel = feature_request.FeatureRequestModel
@@ -55,6 +55,36 @@ class FeatkeeperTestUtils:
         client = MongoClient()
         db = client.featkeeper_test
         collection = db.users
+        client.drop_database('featkeeper_test')
+        user = User(test=True)
+        UserModel = user.UserModel
+        admin_user = UserModel({
+            '_id': ObjectId('56d3d524402e5f1cfc123340'),
+            'username': '',
+            'hashim': '',
+            'type': 'admin',
+            'created_at': '2016-03-02 23:35:19',
+            'access_is_enabled': 1
+        })
+        admin_user.save()
+        agent_user_1 = UserModel({
+            '_id': ObjectId('56d3d524402e5f1cfc124340'),
+            'username': '',
+            'hashim': '',
+            'type': 'agent',
+            'created_at': '2016-03-02 23:38:15',
+            'access_is_enabled': 1
+        })
+        agent_user_1.save()
+        agent_user_2 = UserModel({
+            '_id': ObjectId('56d3d524402e5f1cfc125340'),
+            'username': '',
+            'hashim': '',
+            'type': 'agent',
+            'created_at': '2016-02-28 23:40:10',
+            'access_is_enabled': 0
+        })
+        agent_user_2.save()
 
     # Destroy test db
     @classmethod

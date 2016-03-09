@@ -16,10 +16,8 @@ import shortuuid
 # User class
 
 class User:
-    _username = None
-    _hashim = None
-    _pass = None
-    _user_type = 'agent'
+    type = 'agent'
+    access_is_enabled = 1
 
     def __init__(self, test=False):
         self.client = MongoClient()
@@ -32,6 +30,7 @@ class User:
             self.user_schema(), self.collection
         )
 
+    # Using encrypted tokens with expiration time
     @classmethod
     def auth(cls):
         pass
@@ -48,10 +47,25 @@ class User:
     @classmethod
     def user_schema(cls):
         return Schema({
+            'username': {'type': basestring, 'required': True},
+            'hashim': {'type': basestring, 'required': True},
+            'type': {'type': basestring, 'required': True,  'default': 'agent'},
+            'created_at': {'type': basestring, 'required': True, 'default': datetime.now().strftime('%Y-%m-%d %H:%M:%S')},
+            'modified_at': {'type': basestring},
+            'access_is_enabled': {'type': int, 'required': True, 'default': 1}
         })
 
     def to_dict(self):
-        pass
+        user_dict = {}
+        user_dict['_id'] = self._id
+        user_dict['username'] = self.title
+        user_dict['hashim'] = self.description
+        user_dict['type'] = self.client_name
+        user_dict['created_at'] = self.created_at
+        user_dict['access_is_enabled'] = self.client_priority
+        if hasattr(self, 'modified_at'):
+            user_dict['modified_at'] = self.modified_at
+        return user_dict
 
 # FetureRequest class
 

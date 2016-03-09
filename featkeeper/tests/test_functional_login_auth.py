@@ -3,11 +3,11 @@ test_login_auth.py
 Tests user stories and specs for login and authentication
 '''
 
-from selenium import webdriver
-import unittest
 import os
 import sys
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
+from selenium import webdriver
+import unittest
 import time
 from utils import FeatkeeperTestUtils
 

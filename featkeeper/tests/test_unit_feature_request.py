@@ -23,12 +23,12 @@ class FeatureRequestUnitTest(unittest.TestCase):
     # Test when instanced with default test parameter uses dev db
     def test_use_dev_db(self):
         feature_request = FeatureRequest()
-        self.assertEqual('featkeeper', feature_request.collection)
+        self.assertEqual('featkeeper', feature_request.db-name)
 
     # Test when instanced with test parameter actually uses test db
     def test_use_test_db(self):
-        feature_request_testing = feature_request = FeatureRequest(test=True)
-        self.assertEqual('featkeeper', feature_request_testing.collection)
+        feature_request = FeatureRequest(test=True)
+        self.assertEqual('featkeeper_test', feature_request.db-name)
 
     # Test find all feature requests
     def test_find_feature_requests(self):

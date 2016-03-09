@@ -145,7 +145,7 @@ class FeatkeeperApiTest(unittest.TestCase):
         del response_test['feature_request']
         self.assertEqual(expected, response_test)
 
-    # Test can authenticate user using HTTP digest (JSON tokens could be also considered)
+    # Test can authenticate user using token generation
     def test_api_can_authenticate_user(self):
         self.fail('test_api_deny_restricted_endpoints not finished!')
 
