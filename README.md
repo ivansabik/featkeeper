@@ -1,6 +1,5 @@
 # Featkeeper
-[![Build Status](https://travis-ci.org/ivansabik/featkeeper.svg)](https://travis-ci.org/ivansabik/featkeeper)
-[![Coverage Status](https://coveralls.io/repos/github/ivansabik/featkeeper/badge.svg?branch=master)](https://coveralls.io/github/ivansabik/featkeeper?branch=master)
+[![Build Status](https://travis-ci.org/ivansabik/featkeeper.svg)](https://travis-ci.org/ivansabik/featkeeper) [![Coverage Status](https://coveralls.io/repos/github/ivansabik/featkeeper/badge.svg?branch=master)](https://coveralls.io/github/ivansabik/featkeeper?branch=master)
 
 ![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/demo.gif)
 
@@ -21,9 +20,19 @@ Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial
 - [atom](https://atom.io/), the best code editor I have ever known, free and open source (used to be Neatbeans and Geany fan)
 
 ## Use cases
-![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/use_cases.png)
+![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/admin_use_cases.png)
+
+![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/agent_use_cases.png)
+
+## Admin user stories (specs)
+- As an admin I should be able to login (do auth)
+- As an admin I should be able to create a new user
+- As an admin I should be able to view current users
+- As an admin I should be able to edit a user
+- As an admin I should be able to disable access for a user
 
 ## Agent user stories (specs)
+- As an agent I should be able to login (do auth)
 - As an agent I should be able to create a new feature requests
 - As an agent I should be able to view feature requests
 - As an agent I should be able to edit a feature request
@@ -33,6 +42,8 @@ Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial
 ![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/models.png)
 
 ## API endpoints
+Delete actions do not exists, instead an attribute/field is used to check models' current status which can be updated using PUT requests. This allow to recover objects as opposed to deleting the API resources. This also allows better logging and analytics.
+
 ### GET /api/v1/feature-request
 
 ```javascript
@@ -184,18 +195,19 @@ $ . venv/bin/activate
 (venv)$ python featkeeper/app.py
 ```
 
-Now the api is listening at: [http://127.0.0.1:5000/api/v1/](http://127.0.0.1:5000/api/v1/)
+Now the API is listening at: [http://127.0.0.1:5000/api/v1/](http://127.0.0.1:5000/api/v1/)
 
 For development, the client app can be statically served from: [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
 
 ## Run
-
 Run using test db:
+
 ```shell
 $ python featkeeper/app.py --mode test
 ```
 
 Run listening in public IP:
+
 ```shell
 $ python featkeeper/app.py --public true
 ```

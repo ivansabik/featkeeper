@@ -31,7 +31,7 @@ class EditFeatureTest(unittest.TestCase):
         self.client.drop_database('featkeeper_test')
         self.browser.quit()
 
-    def test_can_add_edit_feature_request(self):
+    def test_agent_can_add_edit_feature_request(self):
         # User navigates to home page, he can see a button to edit the first feature request
         self.browser.get('http://localhost:5000')
 
@@ -84,6 +84,9 @@ class EditFeatureTest(unittest.TestCase):
         # description
         # client priority
         self._take_screenshot(self.browser, 'test_can_add_edit_feature_request_3.png', '/tmp')
+
+    def test_agent_can_close_open_feature_requests(self):
+        self.fail('test_can_close_open_feature_requests is not finished!')
 
     # Modified from http://www.calebthorne.com/python/2012/May/taking-screenshot-webdriver-python
     def _take_screenshot(self, driver, name, save_location):

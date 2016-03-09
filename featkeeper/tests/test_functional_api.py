@@ -152,9 +152,13 @@ class FeatkeeperApiTest(unittest.TestCase):
     def test_api_can_authenticate_user(self):
         self.fail('test_api_deny_restricted_endpoints not finished!')
 
-    # Test cannot make API requests without valid authentication
-    def test_api_can_deny_requests_for_restricted_endpoints(self):
-        self.fail('test_api_deny_restricted_endpoints not finished!')
+    # Test can deny API requests without valid authentication as admin
+    def test_api_can_deny_requests_for_restricted_admin_endpoints(self):
+        self.fail('test_api_can_deny_requests_for_restricted_admin_endpoints not finished!')
+
+    # Test can deny API requests without valid authentication as agent
+    def test_api_can_deny_requests_for_restricted_agent_endpoints(self):
+        self.fail('test_api_can_deny_requests_for_restricted_agent_endpoints not finished!')
 
     # Test for non-existent API endpoint request should return error
     def test_api_non_existent_endpoint(self):

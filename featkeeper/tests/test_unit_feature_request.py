@@ -1,5 +1,5 @@
 '''
-test_unit_feature.py
+test_unit_feature_request.py
 Tests FeatureRequest behaviour (find, save, validation methods, etc)
 @todo: Should validate feature request model
 '''
