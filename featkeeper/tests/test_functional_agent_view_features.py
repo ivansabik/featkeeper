@@ -10,26 +10,19 @@ from selenium import webdriver
 import unittest
 import os
 import sys
-sys.path.append('/home/ivansabik/Desktop/featkeeper')
-from featkeeper import app
-from pymongo import MongoClient
-from featkeeper.models import FeatureRequest
-from bson import json_util, ObjectId
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
+from utils import FeatkeeperTestUtils
 
 class ViewFeaturesTest(unittest.TestCase):
     # Create client, db and collection for tests
     def setUp(self):
         self.browser = webdriver.Firefox()
         self.browser.set_window_size(800, 800)
-        self.client = MongoClient()
-        self.db = self.client.featkeeper
-        self.collection = self.db.feature_requests
-        self.client.drop_database('featkeeper_test')
-        self._populate_test_feature_requests()
+        FeatkeeperTestUtils.populate_test_feature_requests()
 
     # Delete test db
     def tearDown(self):
-        self.client.drop_database('featkeeper_test')
+        FeatkeeperTestUtils.destroy_test_db()
         self.browser.quit()
 
     def test_can_view_feature_requests(self):
@@ -77,49 +70,7 @@ class ViewFeaturesTest(unittest.TestCase):
         # User can see the first feature request's status (open, closed)
         isOpen = self.browser.find_element_by_xpath('//*[@id="main"]/table/tbody/tr[2]/td[1]/span[2]')
         self.assertEqual('In Progress',isOpen.text)
-        self._take_screenshot(self.browser, 'test_can_view_feature_requests.png', '/tmp')
-
-    # Modified from http://www.calebthorne.com/python/2012/May/taking-screenshot-webdriver-python
-    def _take_screenshot(self, driver, name, save_location):
-        path = os.path.abspath(save_location)
-        if not os.path.exists(path):
-            os.makedirs(path)
-        full_path = path + '/' + name
-        driver.save_screenshot(full_path)
-        return full_path
-
-    # Setup test data
-    def _populate_test_feature_requests(self):
-        feature_request = FeatureRequest(test=True)
-        FeatureRequestModel = feature_request.FeatureRequestModel
-        feature_request_1 = FeatureRequestModel({
-            '_id': ObjectId('56d3d524402e5f1cfc273340'),
-            'title': 'Support custom themes',
-            'description': 'Client wants to be able to choose different colors, fonts, and layouts for each module',
-            'client_name': 'Mandel Jamesdottir',
-            'client_priority': 1,
-            'target_date': '2016-08-21',
-            'ticket_url': 'http://localhost:5000/8VZuWu',
-            'product_area': 'Policies',
-            'agent_name': 'Eleuthere',
-            'created_at': '2016-02-28 23:35:19',
-            'is_open': 1
-        })
-        feature_request_1.save()
-        feature_request_2 = FeatureRequestModel({
-            '_id': ObjectId('56d3d524402e5f1cfc273342'),
-            'title': 'Support Google account auth',
-            'description': 'Client wants to be able to login using Google accounts restricted to users in corporate domain',
-            'client_name': 'Carlo Fibonacci',
-            'client_priority': 2,
-            'target_date': '2016-06-15',
-            'ticket_url': 'http://localhost:5000/LhPnCk',
-            'product_area': 'Billing',
-            'agent_name': 'Eleonor',
-            'created_at': '2015-12-20 09:15:20',
-            'is_open': 1
-        })
-        feature_request_2.save()
+        FeatkeeperTestUtils.take_screenshot(self.browser, 'test_can_view_feature_requests.png', '/tmp')
 
 if __name__ == '__main__':
     unittest.main()

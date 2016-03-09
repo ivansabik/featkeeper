@@ -7,27 +7,20 @@ from selenium import webdriver
 import unittest
 import os
 import sys
-sys.path.append('/home/ivansabik/Desktop/featkeeper')
-from featkeeper import app
-from pymongo import MongoClient
-from featkeeper.models import FeatureRequest
-from bson import json_util, ObjectId
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
 import time
+from utils import FeatkeeperTestUtils
 
 class AdminNewUserTest(unittest.TestCase):
     # Create client, db and collection for tests
     def setUp(self):
         self.browser = webdriver.Firefox()
         self.browser.set_window_size(800, 800)
-        self.client = MongoClient()
-        self.db = self.client.featkeeper_test
-        self.collection = self.db.users
-        self.client.drop_database('featkeeper_test')
-        self._populate_test_users()
+        FeatkeeperTestUtils.populate_test_users()
 
     # Delete test db
     def tearDown(self):
-        self.client.drop_database('featkeeper_test')
+        FeatkeeperTestUtils.destroy_test_db()
         self.browser.quit()
 
     def test_admin_can_add_agent_user(self):

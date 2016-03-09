@@ -3,33 +3,30 @@ test_unit_user.py
 Tests User behaviour (find, save, validation methods, etc) for both agents and admins
 '''
 
+import os
 import sys
-sys.path.append('/home/ivansabik/Desktop/featkeeper')
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
 import unittest
-from pymongo import MongoClient
 from featkeeper.models import User
-from bson import ObjectId
-
+from utils import FeatkeeperTestUtils
 
 class UserUnitTest(unittest.TestCase):
     # Create client, db and collection for tests
-
     def setUp(self):
-        self.client = MongoClient()
-        self.db = self.client.featkeeper_test
-        self.collection = self.db.feature_requests
-        self.client.drop_database('featkeeper_test')
-        self._populate_test_users()
+        FeatkeeperTestUtils.populate_test_users()
 
+    # Delete test db
+    def tearDown(self):
+        FeatkeeperTestUtils.destroy_test_db()
     # Test when instanced with default test parameter uses dev db
     def test_use_dev_db(self):
-        user_request = User()
-        self.assertEqual('featkeeper', user_request.collection)
+        user = User()
+        self.assertEqual('featkeeper', user.collection)
 
     # Test when instanced with test parameter actually uses test db
     def test_use_test_db(self):
-        user_testing = feature_request = User(test=True)
-        self.assertEqual('featkeeper', user_testing.collection)
+        user = feature_request = User(test=True)
+        self.assertEqual('featkeeper-test', user.collection)
 
     # Test when instanced with test parameter actually uses test db
     def test_use_test_db(self):
@@ -70,10 +67,6 @@ class UserUnitTest(unittest.TestCase):
     # Test update existing agent
     def test_create_user_agent_type(self):
         self.fail('test_create_user_agent_type not finished!')
-
-    # Setup test data
-    def _populate_test_users(self):
-        pass
 
 if __name__ == '__main__':
     unittest.main()

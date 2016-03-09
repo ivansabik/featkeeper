@@ -4,27 +4,21 @@ Tests FeatureRequest behaviour (find, save, validation methods, etc)
 @todo: Should validate feature request model
 '''
 
+import os
 import sys
-sys.path.append('/home/ivansabik/Desktop/featkeeper')
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
 import unittest
-from pymongo import MongoClient
 from featkeeper.models import FeatureRequest
-from bson import ObjectId
-
+from utils import FeatkeeperTestUtils
 
 class FeatureRequestUnitTest(unittest.TestCase):
     # Create client, db and collection for tests
-
     def setUp(self):
-        self.client = MongoClient()
-        self.db = self.client.featkeeper_test
-        self.collection = self.db.feature_requests
-        self.client.drop_database('featkeeper_test')
-        self._populate_test_feature_requests()
+        FeatkeeperTestUtils.populate_test_feature_requests()
 
     # Delete test db
     def tearDown(self):
-        self.client.drop_database('featkeeper_test')
+        FeatkeeperTestUtils.destroy_test_db()
 
     # Test when instanced with default test parameter uses dev db
     def test_use_dev_db(self):
@@ -155,39 +149,6 @@ class FeatureRequestUnitTest(unittest.TestCase):
             test=True).find_by_id('56d3d524402e5f1cfc273342')
         self.assertEqual(1, feature_request_2.client_priority)
         self.assertEqual(2, feature_request_1.client_priority)
-
-    # Setup test data
-    def _populate_test_feature_requests(self):
-        feature_request = FeatureRequest(test=True)
-        FeatureRequestModel = feature_request.FeatureRequestModel
-        feature_request_1 = FeatureRequestModel({
-            '_id': ObjectId('56d3d524402e5f1cfc273340'),
-            'title': 'Support custom themes',
-            'description': 'Client wants to be able to choose different colors, fonts, and layouts for each module',
-            'client_name': 'Mandel Jamesdottir',
-            'client_priority': 1,
-            'target_date': '2016-08-21',
-            'ticket_url': 'http://localhost:5000/8VZuWu',
-            'product_area': 'Policies',
-            'agent_name': 'Eleuthere',
-            'created_at': '2016-02-28 23:35:19',
-            'is_open': 1
-        })
-        feature_request_1.save()
-        feature_request_2 = FeatureRequestModel({
-            '_id': ObjectId('56d3d524402e5f1cfc273342'),
-            'title': 'Support Google account auth',
-            'description': 'Client wants to be able to login using Google accounts restricted to users in corporate domain',
-            'client_name': 'Mandel Jamesdottir',
-            'client_priority': 2,
-            'target_date': '2016-06-15',
-            'ticket_url': 'http://localhost:5000/LhPnCk',
-            'product_area': 'Billing',
-            'agent_name': 'Eleonor',
-            'created_at': '2015-12-20 09:15:20',
-            'is_open': 1
-        })
-        feature_request_2.save()
 
 if __name__ == '__main__':
     unittest.main()

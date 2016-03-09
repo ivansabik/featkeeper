@@ -21,14 +21,13 @@ class User:
     _pass = None
     _user_type = 'agent'
 
-
     def __init__(self, test=False):
         self.client = MongoClient()
         self.db = self.client.featkeeper
         if test == True:
             self.db = self.client.featkeeper_test
         self.test = test
-        self.collection = self.db.feature_requests
+        self.collection = self.db.users
         self.UserModel = create_model(
             self.user_schema(), self.collection
         )
@@ -44,6 +43,14 @@ class User:
         pass
 
     def save(self):
+        pass
+
+    @classmethod
+    def user_schema(cls):
+        return Schema({
+        })
+
+    def to_dict(self):
         pass
 
 # FetureRequest class
