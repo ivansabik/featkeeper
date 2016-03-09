@@ -11,8 +11,10 @@ from pymongo import MongoClient
 from featkeeper.models import FeatureRequest
 from bson import ObjectId
 
+
 class FeatureRequestUnitTest(unittest.TestCase):
     # Create client, db and collection for tests
+
     def setUp(self):
         self.client = MongoClient()
         self.db = self.client.featkeeper_test
@@ -26,11 +28,13 @@ class FeatureRequestUnitTest(unittest.TestCase):
 
     # Test when instanced with default test parameter uses dev db
     def test_use_dev_db(self):
-        self.fail('test_use_dev_db not finished!')
+        feature_request = FeatureRequest()
+        self.assertEqual('featkeeper', feature_request.collection)
 
     # Test when instanced with test parameter actually uses test db
     def test_use_test_db(self):
-        self.fail('test_find_feature_requests not finished!')
+        feature_request_testing = feature_request = FeatureRequest(test=True)
+        self.assertEqual('featkeeper', feature_request_testing.collection)
 
     # Test find all feature requests
     def test_find_feature_requests(self):
@@ -82,7 +86,8 @@ class FeatureRequestUnitTest(unittest.TestCase):
             'is_open': 1
         }
         feature_request = FeatureRequest(test=True)
-        feature_request = feature_request.find_by_id('56d3d524402e5f1cfc273340')
+        feature_request = feature_request.find_by_id(
+            '56d3d524402e5f1cfc273340')
         self.assertEqual(expected, feature_request.to_dict())
 
     # Test create new feature request
@@ -106,7 +111,8 @@ class FeatureRequestUnitTest(unittest.TestCase):
             'product_area': 'Policies',
             'agent_name': 'Eleuthere'
         }
-        # Remove _id for test assertions since its random, first check that exists
+        # Remove _id for test assertions since its random, first check that
+        # exists
         result = feature_request.save()
         self.assertIsNot(None, result['_id'])
         self.assertIsNot(None, result['created_at'])
@@ -119,27 +125,34 @@ class FeatureRequestUnitTest(unittest.TestCase):
     # Test edit an existing feature request
     def test_update_feature_request(self):
         feature_request = FeatureRequest(test=True)
-        feature_request = feature_request.find_by_id('56d3d524402e5f1cfc273342')
+        feature_request = feature_request.find_by_id(
+            '56d3d524402e5f1cfc273342')
         feature_request.product_area = 'Policies'
         result = feature_request.save()
         # Assign none to retrieve again and check new product area associated
         feature_request = FeatureRequest(test=True)
-        feature_request = feature_request.find_by_id('56d3d524402e5f1cfc273342')
+        feature_request = feature_request.find_by_id(
+            '56d3d524402e5f1cfc273342')
         self.assertEqual(True, hasattr(feature_request, 'modified_at'))
         self.assertEqual('Policies', feature_request.product_area)
 
-    # Test reassign client priority for all existing feature requests when colliding with a new one
+    # Test reassign client priority for all existing feature requests when
+    # colliding with a new one
     def test_reassign_new_feature_request_client_priority(self):
-        feature_request_1 = FeatureRequest(test=True).find_by_id('56d3d524402e5f1cfc273340')
-        feature_request_2 = FeatureRequest(test=True).find_by_id('56d3d524402e5f1cfc273342')
+        feature_request_1 = FeatureRequest(
+            test=True).find_by_id('56d3d524402e5f1cfc273340')
+        feature_request_2 = FeatureRequest(
+            test=True).find_by_id('56d3d524402e5f1cfc273342')
         # Check priority before changing
         self.assertEqual(1, feature_request_1.client_priority)
         self.assertEqual(2, feature_request_2.client_priority)
         # Change priority and re-check new assignment
         feature_request_2.client_priority = 1
         feature_request_2.save()
-        feature_request_1 = FeatureRequest(test=True).find_by_id('56d3d524402e5f1cfc273340')
-        feature_request_2 = FeatureRequest(test=True).find_by_id('56d3d524402e5f1cfc273342')
+        feature_request_1 = FeatureRequest(
+            test=True).find_by_id('56d3d524402e5f1cfc273340')
+        feature_request_2 = FeatureRequest(
+            test=True).find_by_id('56d3d524402e5f1cfc273342')
         self.assertEqual(1, feature_request_2.client_priority)
         self.assertEqual(2, feature_request_1.client_priority)
 

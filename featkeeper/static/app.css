@@ -1,3 +1,26 @@
+/* Header navbar from https://github.com/BlackrockDigital/startbootstrap-logo-nav */
+
+body {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+.navbar {
+  background-color: #f5f5f5;
+}
+.navbar-fixed-top .nav {
+  padding: 15px 0;
+}
+.left {
+  float: left;
+}
+@media(min-width:768px) {
+  body {
+    padding-top: 100px;
+  }
+  .navbar-fixed-top .navbar-brand {
+    padding: 15px 0;
+  }
+}
 #footer {
   position: fixed;
   bottom: 0;

@@ -50,7 +50,7 @@ Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial
 ![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/models.png)
 
 ## API endpoints
-Delete actions do not exist, instead an attribute/field is used to check models' current status which can be updated using PUT requests. This allow to recover objects as opposed to deleting the API resources. This also allows better logging and analytics.
+Delete actions do not exist, instead an attribute/field is used to check models' current status which can be updated using PUT requests. This allows to recover objects as opposed to deleting the API resources. This also allows better logging and analytics.
 
 ### GET /api/v1/feature-request
 

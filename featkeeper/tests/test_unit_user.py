@@ -10,8 +10,10 @@ from pymongo import MongoClient
 from featkeeper.models import User
 from bson import ObjectId
 
+
 class UserUnitTest(unittest.TestCase):
     # Create client, db and collection for tests
+
     def setUp(self):
         self.client = MongoClient()
         self.db = self.client.featkeeper_test
@@ -19,31 +21,37 @@ class UserUnitTest(unittest.TestCase):
         self.client.drop_database('featkeeper_test')
         self._populate_test_users()
 
-    # Delete test db
-    def tearDown(self):
-        self.client.drop_database('featkeeper_test')
-
     # Test when instanced with default test parameter uses dev db
     def test_use_dev_db(self):
-        self.fail('test_use_dev_db not finished!')
+        user_request = User()
+        self.assertEqual('featkeeper', user_request.collection)
+
+    # Test when instanced with test parameter actually uses test db
+    def test_use_test_db(self):
+        user_testing = feature_request = User(test=True)
+        self.assertEqual('featkeeper', user_testing.collection)
 
     # Test when instanced with test parameter actually uses test db
     def test_use_test_db(self):
         self.fail('test_use_test_db not finished!')
 
-    # Test user authentification for agents (HTTP Digest auth for now) with exiting username and pass
+    # Test user authentification for agents (HTTP Digest auth for now) with
+    # exiting username and pass
     def test_agent_auth_succesful(self):
         self.fail('test_agent_auth_succesful not finished!')
 
-    # Test user authentification for admins (HTTP Digest auth for now) with exiting username and pass
+    # Test user authentification for admins (HTTP Digest auth for now) with
+    # exiting username and pass
     def test_admin_auth_succesful(self):
         self.fail('test_admin_auth_succesful not finished!')
 
-    # Test failed user authentification (HTTP Digest auth for now) with wrong username and pass
+    # Test failed user authentification (HTTP Digest auth for now) with wrong
+    # username and pass
     def test_auth_failed_wrong_credentials(self):
         self.fail('test_auth_failed_wrong_credentials not finished!')
 
-    # Test failed user authentification (HTTP Digest auth for now) with exiting username and pass that is flagged as access disabled
+    # Test failed user authentification (HTTP Digest auth for now) with
+    # exiting username and pass that is flagged as access disabled
     def test_auth_failed_user_disabled(self):
         self.fail('test_auth_failed_wrong_credentials not finished!')
 

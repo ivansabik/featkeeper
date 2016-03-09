@@ -5,7 +5,7 @@ CRUD methods ODM style based on schema and defining custom
 save, find_by_id, find_all public methods
 
 Username and hash should not be used in API! not included in to_dict, declared as private
-Exposes static auth method, no need to access directly username and hash
+Exposes public static auth method, no need to access directly username and hash
 '''
 
 from mongothon import *
@@ -17,11 +17,21 @@ import shortuuid
 
 class User:
     _username = None
+    _hashim = None
     _pass = None
     _user_type = 'agent'
 
+
     def __init__(self, test=False):
-        pass
+        self.client = MongoClient()
+        self.db = self.client.featkeeper
+        if test == True:
+            self.db = self.client.featkeeper_test
+        self.test = test
+        self.collection = self.db.feature_requests
+        self.UserModel = create_model(
+            self.user_schema(), self.collection
+        )
 
     @classmethod
     def auth(cls):
@@ -50,7 +60,8 @@ class FeatureRequest:
         self.test = test
         self.collection = self.db.feature_requests
         self.FeatureRequestModel = create_model(
-            self.feature_request_schema(), self.collection)
+            self.feature_request_schema(), self.collection
+        )
 
     def find_all(self):
         feature_requests = self.FeatureRequestModel.find()

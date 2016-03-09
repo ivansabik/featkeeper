@@ -32,6 +32,11 @@ def client_app_js():
 def client_app_css():
     return app.send_static_file('app.min.css')
 
+@app.route('/logo.png')
+def client_app_l():
+    return app.send_static_file('logo.png')
+
+
 # API endpoints
 
 # Retrieve all existing feature requests

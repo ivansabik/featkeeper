@@ -4,6 +4,8 @@ Main file that contains client side logic, implements ViewModels
 Consumes API for authenticating and getting models for displaying in views
 Based on the great tutorial by Miguel Grinberg:
 http://blog.miguelgrinberg.com/post/writing-a-javascript-rest-client
+
+@todo: Wrap clear input fields (='') in for or function
 */
 
 $(function() {
