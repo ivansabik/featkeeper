@@ -37,6 +37,13 @@ class FeatkeeperApiTest(unittest.TestCase):
     def test_start_test_db(self):
         self.assertEqual(True, app.test_mode)
 
+    # Test can serve static files (eventually will only be for dev or testing)
+    def test_serve_static_file_app(self):
+        javascript_response = self.app.get('/app.js')
+        css_response = self.app.get('/app.css')
+        self.assertEqual(200, javascript_response.status_code)
+        self.assertEqual(200, css_response.status_code)
+
     # Test for GET /feature-request, should output get existing feature requests
     def test_api_read_feature_requests(self):
         # Need to do fresh populate since other tests in suite are modifying test db
