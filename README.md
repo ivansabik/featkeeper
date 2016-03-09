@@ -12,12 +12,18 @@ Client app and server app are independent components! (Flask / KnockoutJS)
 Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial for integrating REST APIs with KnockoutJS](http://blog.miguelgrinberg.com/post/writing-a-javascript-rest-client)
 
 ## Tools
+### API (Python)
 - [flask](https://github.com/mitsuhiko/flask)
 - [mongothon](https://github.com/gamechanger/mongothon)
 - [shortuuid](https://github.com/stochastic-technologies/shortuuid)
-- [knockout.js](https://github.com/knockout/knockout)
+- [Flask-HTTPAuth](https://github.com/miguelgrinberg/Flask-HTTPAuth)
+
+### Client app (Javascript)
+- [knockout](https://github.com/knockout/knockout)
 - [bootstrap](https://github.com/twbs/bootstrap)
-- [atom](https://atom.io/), the best code editor I have ever known, free and open source (used to be Neatbeans and Geany fan)
+- [bootstrap-datepicker](https://github.com/eternicode/bootstrap-datepicker)
+- [jquery](https://github.com/jquery/jquery)
+- [moment](https://github.com/moment/moment)
 
 ## Use cases
 ![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/admin_use_cases.png)

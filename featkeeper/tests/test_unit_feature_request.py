@@ -24,6 +24,14 @@ class FeatureRequestUnitTest(unittest.TestCase):
     def tearDown(self):
         self.client.drop_database('featkeeper_test')
 
+    # Test when instanced with default test parameter uses dev db
+    def test_use_dev_db(self):
+        self.fail('test_use_dev_db not finished!')
+
+    # Test when instanced with test parameter actually uses test db
+    def test_use_test_db(self):
+        self.fail('test_find_feature_requests not finished!')
+
     # Test find all feature requests
     def test_find_feature_requests(self):
         expected = [

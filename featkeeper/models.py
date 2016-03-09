@@ -14,28 +14,64 @@ from pymongo import MongoClient
 import shortuuid
 
 # User class
+
 class User:
     _username = None
     _pass = None
+    _user_type = 'agent'
+
+    def __init__(self, test=False):
+        pass
+
+    @classmethod
+    def auth(cls):
+        pass
+
+    def find_all(self, user_type='agent'):
+        pass
+
+    def find_by_username(self):
+        pass
+
+    def save(self):
+        pass
 
 # FetureRequest class
+
+
 class FeatureRequest:
     is_open = 1
 
-    def __init__(self,test=False):
+    def __init__(self, test=False):
         self.client = MongoClient()
         self.db = self.client.featkeeper
-        if test==True:
+        if test == True:
             self.db = self.client.featkeeper_test
         self.test = test
         self.collection = self.db.feature_requests
-        self.FeatureRequestModel = create_model(self.feature_request_schema(), self.collection)
+        self.FeatureRequestModel = create_model(
+            self.feature_request_schema(), self.collection)
+
+    def find_all(self):
+        feature_requests = self.FeatureRequestModel.find()
+        feature_requests_list = []
+        for feature_request_model in feature_requests:
+            feature_request = FeatureRequest(test=self.test)
+            feature_requests_list.append(self._decode_feature_request(
+                feature_request, feature_request_model))
+        return feature_requests_list
+
+    def find_by_id(self, feature_request_id):
+        feature_request = self.FeatureRequestModel.find_by_id(
+            feature_request_id)
+        return self._decode_feature_request(self, feature_request)
 
     def save(self):
         if not hasattr(self, 'created_at'):
             self.created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         if not hasattr(self, 'ticket_url'):
-            self.ticket_url = 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)
+            self.ticket_url = 'http://localhost:5000/' + \
+                shortuuid.ShortUUID().random(length=6)
         # Persist to db
         FeatureRequestModel = self.FeatureRequestModel
         # If self._id exists it should update existing feature request, else create new feature request
@@ -93,11 +129,11 @@ class FeatureRequest:
 
     def _reassign_client_priorities(self, feature_request_dict):
         # find others with same Client
-        feature_requests_same_client =  self.FeatureRequestModel.find(
+        feature_requests_same_client = self.FeatureRequestModel.find(
             {
                 '$and': [
-                    { '_id': { '$ne': feature_request_dict['_id'] } },
-                    { 'client_name': feature_request_dict['client_name'] }
+                    {'_id': {'$ne': feature_request_dict['_id']}},
+                    {'client_name': feature_request_dict['client_name']}
                 ]
             }
         )
@@ -107,12 +143,13 @@ class FeatureRequest:
     def _reassign_client_priority(self, feature_request_dict):
         try:
             # find other feature request with same client sorted by priority
-            feature_request_same_priority =  self.FeatureRequestModel.find_one(
+            feature_request_same_priority = self.FeatureRequestModel.find_one(
                 {
                     '$and': [
-                        { '_id': feature_request_dict['_id'] },
-                        { 'client_name': feature_request_dict['client_name'] },
-                        { 'client_priority': feature_request_dict['client_priority'] }
+                        {'_id': feature_request_dict['_id']},
+                        {'client_name': feature_request_dict['client_name']},
+                        {'client_priority': feature_request_dict[
+                            'client_priority']}
                     ]
                 }
             )
@@ -120,18 +157,6 @@ class FeatureRequest:
             feature_request_same_priority.save()
         except:
             pass
-
-    def find_all(self):
-        feature_requests = self.FeatureRequestModel.find()
-        feature_requests_list = []
-        for feature_request_model in feature_requests:
-            feature_request = FeatureRequest(test=self.test)
-            feature_requests_list.append(self._decode_feature_request(feature_request, feature_request_model))
-        return feature_requests_list
-
-    def find_by_id(self, feature_request_id):
-        feature_request = self.FeatureRequestModel.find_by_id(feature_request_id)
-        return self._decode_feature_request(self, feature_request)
 
     @classmethod
     def feature_request_schema(cls):
@@ -142,7 +167,9 @@ class FeatureRequest:
             'client_name': {'type': basestring, 'required': True},
             'client_priority': {'type': int, 'required': True},
             'target_date': {'type': basestring, 'required': True},
-            # Currently ticket URL is generated, later a custom input filed can be added to track visits to that URL coming from the app (as goo.gl, bit.ly, etc)
+            # Currently ticket URL is generated, later a custom input filed can
+            # be added to track visits to that URL coming from the app (as
+            # goo.gl, bit.ly, etc)
             'ticket_url': {'type': basestring, 'required': True, 'default': 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)},
             'product_area': {'type': basestring, 'required': True},
             # String for now, eventually will be own Schema
@@ -155,10 +182,10 @@ class FeatureRequest:
     def to_dict(self):
         feature_requests_dict = {}
         feature_requests_dict['_id'] = self._id
-        feature_requests_dict['title']  = self.title
-        feature_requests_dict['description']  = self.description
-        feature_requests_dict['client_name']  = self.client_name
-        feature_requests_dict['client_priority']  = self.client_priority
+        feature_requests_dict['title'] = self.title
+        feature_requests_dict['description'] = self.description
+        feature_requests_dict['client_name'] = self.client_name
+        feature_requests_dict['client_priority'] = self.client_priority
         feature_requests_dict['target_date'] = self.target_date
         feature_requests_dict['ticket_url'] = self.ticket_url
         feature_requests_dict['product_area'] = self.product_area
@@ -172,23 +199,31 @@ class FeatureRequest:
     def _decode_feature_request(self, feature_request_object, feature_request_dict):
         feature_request_object._id = str(feature_request_dict['_id'])
         feature_request_object.title = feature_request_dict['title']
-        feature_request_object.description = feature_request_dict['description']
-        feature_request_object.client_name = feature_request_dict['client_name']
-        feature_request_object.client_priority = feature_request_dict['client_priority']
-        feature_request_object.target_date = feature_request_dict['target_date']
+        feature_request_object.description = feature_request_dict[
+            'description']
+        feature_request_object.client_name = feature_request_dict[
+            'client_name']
+        feature_request_object.client_priority = feature_request_dict[
+            'client_priority']
+        feature_request_object.target_date = feature_request_dict[
+            'target_date']
         feature_request_object.ticket_url = feature_request_dict['ticket_url']
-        feature_request_object.product_area = feature_request_dict['product_area']
+        feature_request_object.product_area = feature_request_dict[
+            'product_area']
         feature_request_object.agent_name = feature_request_dict['agent_name']
         feature_request_object.created_at = feature_request_dict['created_at']
         feature_request_object.is_open = feature_request_dict['is_open']
-        # Modified at is optional, if document not edited will no be set, assign separately
+        # Modified at is optional, if document not edited will no be set,
+        # assign separately
         try:
-            feature_request_object.modified_at = feature_request_dict['modified_at']
+            feature_request_object.modified_at = feature_request_dict[
+                'modified_at']
         except KeyError:
             pass
         return feature_request_object
 
-    # From: http://stackoverflow.com/questions/14813396/python-elegant-way-to-delete-empty-lists-from-python-dict
+    # From:
+    # http://stackoverflow.com/questions/14813396/python-elegant-way-to-delete-empty-lists-from-python-dict
     def _remove_empty_keys(self, d):
         for k in d.keys():
             if not d[k]:

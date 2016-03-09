@@ -1,16 +1,18 @@
 /*
 app.js
 Main file that contains client side logic, implements ViewModels
+Consumes API for authenticating and getting models for displaying in views
 Based on the great tutorial by Miguel Grinberg:
 http://blog.miguelgrinberg.com/post/writing-a-javascript-rest-client
 */
 
-// Bind datepickers for bootstrap plugin
-$('#new-target-date, #edit-target-date').datepicker({
-  format: "yyyy-mm-dd",
-  startDate: "2016-01-01"
+$(function() {
+    // Bind datepickers for bootstrap plugin
+  $('#new-target-date, #edit-target-date').datepicker({
+    format: 'yyyy-mm-dd',
+    startDate: moment().format('YYYY-MM-DD')
+  });
 });
-
 // ViewModel for displaying all feature request info and buttons to close and edit
 function FeatureRequestViewModel() {
   var self = this;
@@ -21,13 +23,13 @@ function FeatureRequestViewModel() {
     var ajaxRequest = {
       url: url,
       type: method,
-      contentType: "application/json",
-      accepts: "application/json",
+      contentType: 'application/json',
+      accepts: 'application/json',
       cache: false,
       dataType: 'json',
       data: JSON.stringify(data),
       error: function(jqXHR) {
-        console.log("ajax error " + jqXHR.status);
+        console.log('ajax error ' + jqXHR.status);
       }
     };
     return $.ajax(ajaxRequest);
@@ -96,6 +98,7 @@ function FeatureRequestViewModel() {
   }
 }
 
+// ViewModel for displaying a form to create a new feature request, will also handle validation displays
 function NewFeatureRequestViewModel() {
   var self = this;
   self.title = ko.observable();
@@ -129,6 +132,7 @@ function NewFeatureRequestViewModel() {
   }
 }
 
+// ViewModel for displaying a form to edit an existing feature request, will also handle validation displaysfunction EditFeatureRequestViewModel() {
 function EditFeatureRequestViewModel() {
   var self = this;
   self.title = ko.observable();
@@ -160,7 +164,6 @@ function EditFeatureRequestViewModel() {
     });
   }
 }
-
 
 // Create ViewModels and bind to respective div containers by id
 var featureRequestViewModel = new FeatureRequestViewModel();
