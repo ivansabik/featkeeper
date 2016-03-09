@@ -5,7 +5,7 @@ Tests API endpoints for CRUD operations
 @todo: Should return erron when trying to updated feature request without specifying _id
 @todo: Should return warning when trying to create feature request with same content as existing one
 @todo: Should validate feature request model
-@todo: Should sort by created at date
+@todo: Should sort by created date
 '''
 import sys
 sys.path.append('/home/ivansabik/Desktop/featkeeper')
@@ -34,18 +34,18 @@ class FeatkeeperApiTest(unittest.TestCase):
         self.client.drop_database('featkeeper_test')
 
     # Test can start using test db
-    def test_start_test_db(self):
+    def test_can_run_using__test_db(self):
         self.assertEqual(True, app.test_mode)
 
     # Test can serve static files (eventually will only be for dev or testing)
-    def test_serve_static_file_app(self):
+    def test_can_serve_static_file_app(self):
         javascript_response = self.app.get('/app.js')
         css_response = self.app.get('/app.css')
         self.assertEqual(200, javascript_response.status_code)
         self.assertEqual(200, css_response.status_code)
 
     # Test for GET /feature-request, should output get existing feature requests
-    def test_api_read_feature_requests(self):
+    def test_api_can_read_feature_requests(self):
         # Need to do fresh populate since other tests in suite are modifying test db
         self.client.drop_database('featkeeper_test')
         self._populate_test_feature_requests()
@@ -83,7 +83,7 @@ class FeatkeeperApiTest(unittest.TestCase):
         self.assertEqual({ 'feature_requests': expected }, response_test)
 
     # Test for GET /feature-request, should get a single feature request
-    def test_api_read_feature_request(self):
+    def test_api_can_read_feature_request(self):
         expected = {
             '_id': '56d3d524402e5f1cfc273340',
             'title': 'Support custom themes',
@@ -102,7 +102,7 @@ class FeatkeeperApiTest(unittest.TestCase):
         self.assertEqual(expected, response_test)
 
     # Test for PUT /feature-request, should create a new feature request and return success message
-    def test_api_create_feature_requests(self):
+    def test_api_can_create_feature_requests(self):
         new_feature_request = {
             'title': 'Add end to end encripted chat',
             'description': 'Client wants to be able to send P2P encrypted messages to customers in realtime',
@@ -126,7 +126,7 @@ class FeatkeeperApiTest(unittest.TestCase):
         self.assertEqual(expected, response_test)
 
     # Test for POST /feature-request, should edit an existing request and return success message
-    def test_api_update_feature_requests(self):
+    def test_api_can_update_feature_requests(self):
         edit_feature_request = {
             '_id': '56d3d524402e5f1cfc273342',
             'client_priority': 3,
@@ -147,6 +147,14 @@ class FeatkeeperApiTest(unittest.TestCase):
         self.assertEqual('Policies', response_test['feature_request']['product_area'])
         del response_test['feature_request']
         self.assertEqual(expected, response_test)
+
+    # Test can authenticate user using HTTP digest (JSON tokens could be also considered)
+    def test_api_can_authenticate_user(self):
+        self.fail('test_api_deny_restricted_endpoints not finished!')
+
+    # Test cannot make API requests without valid authentication
+    def test_api_can_deny_requests_for_restricted_endpoints(self):
+        self.fail('test_api_deny_restricted_endpoints not finished!')
 
     # Test for non-existent API endpoint request should return error
     def test_api_non_existent_endpoint(self):

@@ -127,8 +127,8 @@ def not_found(error):
         'message': 'Endpoint does not exist'
     }), 404
 
-# When running from CLI, --mode test will use test db this is for selenium mostly
-# When running from CLI, --public can be used to listen publicly in development environment (no apache, tornado, etc)
+# When running from CLI, "--mode test" will use test db this is for selenium mostly
+# When running from CLI, "--public" can be used to listen publicly in development environment (no apache, tornado, etc)
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-m', '--mode', default='dev')

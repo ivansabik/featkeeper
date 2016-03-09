@@ -1,4 +1,5 @@
-flask
-selenium
-mongothon
-shortuuid
+Flask==0.10.1
+Flask-HTTPAuth==3.0.0
+Mongothon==0.7.19
+shortuuid==0.4.3
+selenium==2.52.0
