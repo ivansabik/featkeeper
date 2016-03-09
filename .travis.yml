@@ -1,15 +1,19 @@
 language: python
 python:
-  - "2.7"
+  - 2.7
 install:
-  - "pip install -r requirements.txt"
+  - pip install -r requirements.txt
 script:
-  - python -m unittest discover
-services: mongodb
+  - coverage run -m unittest discover
+  - coverage report
+services:
+  - mongodb
 before_script:
-  - "sh -e /etc/init.d/xvfb start"
-  - "export DISPLAY=:99.0"
-  - "wget http://selenium.googlecode.com/files/selenium-server-standalone-2.31.0.jar"
-  - "java -jar selenium-server-standalone-2.31.0.jar > /dev/null &"
+  - sh -e /etc/init.d/xvfb start
+  - export DISPLAY=:99.0
+  - wget http://selenium.googlecode.com/files/selenium-server-standalone-2.31.0.jar
+  - java -jar selenium-server-standalone-2.31.0.jar > /dev/null &
   - sleep 5
-  - "nohup python featkeeper/app.py --mode test &"
+  - nohup python featkeeper/app.py --mode test &
+after_success:
+  - coveralls
