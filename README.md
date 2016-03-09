@@ -1,5 +1,7 @@
-# Featkeeper
+# ![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/logo.png) Featkeeper
 [![Build Status](https://travis-ci.org/ivansabik/featkeeper.svg)](https://travis-ci.org/ivansabik/featkeeper) [![Coverage Status](https://coveralls.io/repos/github/ivansabik/featkeeper/badge.svg?branch=master)](https://coveralls.io/github/ivansabik/featkeeper?branch=master)
+
+Icon made by [freepik](http://www.flaticon.com/free-icon/cat-face-outline_57104) from www.flaticon.com
 
 ![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/demo.gif)
 
@@ -48,7 +50,7 @@ Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial
 ![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/models.png)
 
 ## API endpoints
-Delete actions do not exists, instead an attribute/field is used to check models' current status which can be updated using PUT requests. This allow to recover objects as opposed to deleting the API resources. This also allows better logging and analytics.
+Delete actions do not exist, instead an attribute/field is used to check models' current status which can be updated using PUT requests. This allow to recover objects as opposed to deleting the API resources. This also allows better logging and analytics.
 
 ### GET /api/v1/feature-request
 
