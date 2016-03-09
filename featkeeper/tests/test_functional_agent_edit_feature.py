@@ -1,6 +1,6 @@
 '''
 test_functional_edit_feature.py
-Tests user stories and specs for editing an existing feature request
+Tests user stories and specs for agent editing an existing feature request
 @todo: Should validate wrong input fields
 '''
 

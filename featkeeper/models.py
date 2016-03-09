@@ -1,7 +1,11 @@
 '''
 models.py
-Implements FeatureRequest including method for reassigning client priority
-CRUD methods ORM style
+Implements User and FeatureRequest
+CRUD methods ODM style based on schema and defining custom
+save, find_by_id, find_all public methods
+
+Username and hash should not be used in API! not included in to_dict, declared as private
+Exposes static auth method, no need to access directly username and hash
 '''
 
 from mongothon import *
@@ -9,6 +13,12 @@ from datetime import datetime
 from pymongo import MongoClient
 import shortuuid
 
+# User class
+class User:
+    _username = None
+    _pass = None
+
+# FetureRequest class
 class FeatureRequest:
     is_open = 1
 
@@ -28,7 +38,8 @@ class FeatureRequest:
             self.ticket_url = 'http://localhost:5000/' + shortuuid.ShortUUID().random(length=6)
         # Persist to db
         FeatureRequestModel = self.FeatureRequestModel
-        # If self._id exists it should update existing feature request, else not create new feature request
+        # If self._id exists it should update existing feature request, else create new feature request
+        # Update existing feature request
         if hasattr(self, '_id'):
             feature_request = FeatureRequestModel.find_by_id(self._id)
             self.modified_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -48,6 +59,7 @@ class FeatureRequest:
                 feature_request['agent_name'] = self.agent_name
             feature_request['modified_at'] = self.modified_at
             feature_request.save()
+        # Create new existing feature request
         else:
             feature_request = FeatureRequestModel({
                 'title': self.title,

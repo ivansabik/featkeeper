@@ -1,3 +1,4 @@
 '''
 test_functional_admin_view_users.py
-Tests user stories and specs for
+Tests user stories and specs for (user) administrator viewing current users
+'''
