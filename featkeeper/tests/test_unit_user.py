@@ -75,8 +75,8 @@ class UserUnitTest(unittest.TestCase):
         self.fail('test_create_user_agent_type not finished!')
 
     # Test update existing agent
-    def test_create_user_agent_type(self):
-        self.fail('test_create_user_agent_type not finished!')
+    def test_update_user_agent_type(self):
+        self.fail('test_update_user_agent_type not finished!')
 
 if __name__ == '__main__':
     unittest.main()

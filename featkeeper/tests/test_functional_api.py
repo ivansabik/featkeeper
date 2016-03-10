@@ -18,8 +18,10 @@ from utils import FeatkeeperTestUtils
 
 API_ROOT_URL = '/api/v1'
 
+
 class FeatkeeperApiTest(unittest.TestCase):
     # Create client, db and collection for tests
+
     def setUp(self):
         app.test_mode = True
         self.app = app.app.test_client()
@@ -41,9 +43,17 @@ class FeatkeeperApiTest(unittest.TestCase):
         self.assertEqual(200, javascript_response.status_code)
         self.assertEqual(200, css_response.status_code)
 
-    # Test for GET /feature-request, should output get existing feature requests
+    # Test for GET /auth, should generate and return access token with
+    # expiration for user with valid credentials and with login enabled
+    # (access_is_disabled=0)
+    def test_api_can_generate_and_return_token(self):
+        FeatkeeperTestUtils.destroy_test_db()
+
+    # Test for GET /feature-request, should output get existing feature
+    # requests
     def test_api_can_read_feature_requests(self):
-        # Need to do fresh populate since other tests in suite are modifying test db
+        # Need to do fresh populate since other tests in suite are modifying
+        # test db
         FeatkeeperTestUtils.populate_test_feature_requests()
         FeatkeeperTestUtils.populate_test_users()
         expected = [
@@ -77,7 +87,7 @@ class FeatkeeperApiTest(unittest.TestCase):
 
         response = self.app.get(API_ROOT_URL + '/feature-request')
         response_test = json.loads(response.data)
-        self.assertEqual({ 'feature_requests': expected }, response_test)
+        self.assertEqual({'feature_requests': expected}, response_test)
 
     # Test for GET /feature-request, should get a single feature request
     def test_api_can_read_feature_request(self):
@@ -94,11 +104,13 @@ class FeatkeeperApiTest(unittest.TestCase):
             'created_at': '2016-02-28 23:35:19',
             'is_open': 1
         }
-        response = self.app.get(API_ROOT_URL + '/feature-request/56d3d524402e5f1cfc273340')
+        response = self.app.get(
+            API_ROOT_URL + '/feature-request/56d3d524402e5f1cfc273340')
         response_test = json.loads(response.data)
         self.assertEqual(expected, response_test)
 
-    # Test for PUT /feature-request, should create a new feature request and return success message
+    # Test for PUT /feature-request, should create a new feature request and
+    # return success message
     def test_api_can_create_feature_requests(self):
         new_feature_request = {
             'title': 'Add end to end encripted chat',
@@ -122,7 +134,8 @@ class FeatkeeperApiTest(unittest.TestCase):
         del response_test['feature_request']
         self.assertEqual(expected, response_test)
 
-    # Test for POST /feature-request, should edit an existing request and return success message
+    # Test for POST /feature-request, should edit an existing request and
+    # return success message
     def test_api_can_update_feature_requests(self):
         edit_feature_request = {
             '_id': '56d3d524402e5f1cfc273342',
@@ -140,8 +153,10 @@ class FeatkeeperApiTest(unittest.TestCase):
         )
         response_test = json.loads(response.data)
         self.assertIsNot(None, response_test['feature_request']['modified_at'])
-        self.assertEqual(3, response_test['feature_request']['client_priority'])
-        self.assertEqual('Policies', response_test['feature_request']['product_area'])
+        self.assertEqual(3, response_test['feature_request'][
+                         'client_priority'])
+        self.assertEqual('Policies', response_test[
+                         'feature_request']['product_area'])
         del response_test['feature_request']
         self.assertEqual(expected, response_test)
 
@@ -151,11 +166,13 @@ class FeatkeeperApiTest(unittest.TestCase):
 
     # Test can deny API requests without valid authentication as admin
     def test_api_can_deny_requests_for_restricted_admin_endpoints(self):
-        self.fail('test_api_can_deny_requests_for_restricted_admin_endpoints not finished!')
+        self.fail(
+            'test_api_can_deny_requests_for_restricted_admin_endpoints not finished!')
 
     # Test can deny API requests without valid authentication as agent
     def test_api_can_deny_requests_for_restricted_agent_endpoints(self):
-        self.fail('test_api_can_deny_requests_for_restricted_agent_endpoints not finished!')
+        self.fail(
+            'test_api_can_deny_requests_for_restricted_agent_endpoints not finished!')
 
     # Test for non-existent API endpoint request should return error
     def test_api_non_existent_endpoint(self):
