@@ -10,6 +10,10 @@ import unittest
 from featkeeper.models import User
 from utils import FeatkeeperTestUtils
 
+from itsdangerous import (TimedJSONWebSignatureSerializer
+                          as Serializer, BadSignature, SignatureExpired)
+
+
 class UserUnitTest(unittest.TestCase):
     # Create client, db and collection for tests
     def setUp(self):
@@ -36,44 +40,60 @@ class UserUnitTest(unittest.TestCase):
 
     # Test generate token with user type (agent or admin) and with expiration time
     def test_generate_token(self):
-        self.fail('test_generate_token not finished!')
+        user = User(test=True)
+        user = user.find_by_username('dondiablo@gmx.de')
+        token = user.generate_token() # Detects test db mode from instance
+        expected_token = {
+            'username': 'dondiablo@gmx.de',
+            'user_type': 'agent'
+        }
+        self.assertEqual(expected_token, token)
 
+    @unittest.skip('')
     # Test validate token (user and expiration)
     def test_validate_token(self):
         self.fail('test_validate_token not finished!')
 
+    @unittest.skip('')
     # Test user authentification for agents
     # exiting username and pass
     def test_agent_auth_succesful(self):
         self.fail('test_agent_auth_succesful not finished!')
 
+    @unittest.skip('')
     # Test user authentification for admins
     # exiting username and pass
     def test_admin_auth_succesful(self):
         self.fail('test_admin_auth_succesful not finished!')
 
+    @unittest.skip('')
     # Test failed user authentification with wrong
     # username and pass
     def test_auth_failed_wrong_credentials(self):
         self.fail('test_auth_failed_wrong_credentials not finished!')
 
+    @unittest.skip('')
     # Test failed user authentification with
     # exiting username and pass that is flagged as access disabled
     def test_auth_failed_user_disabled(self):
         self.fail('test_auth_failed_wrong_credentials not finished!')
 
+    @unittest.skip('')
     # Test find all agents
     def test_find_all_agents(self):
         self.fail('test_find_all_agents not finished!')
 
+    @unittest.skip('')
     # Test find user by username
     def test_find_user_by_username(self):
         self.fail('test_find_user_by_username not finished!')
 
+    @unittest.skip('')
     # Test create agent
     def test_create_user_agent_type(self):
         self.fail('test_create_user_agent_type not finished!')
 
+    @unittest.skip('')
     # Test update existing agent
     def test_update_user_agent_type(self):
         self.fail('test_update_user_agent_type not finished!')

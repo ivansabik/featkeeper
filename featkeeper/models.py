@@ -35,10 +35,13 @@ class User:
     def auth(cls):
         pass
 
+    def _generate_token():
+        pass
+
     def find_all(self, user_type='agent'):
         pass
 
-    def find_by_username(self):
+    def find_by_username(self, username):
         pass
 
     def save(self):

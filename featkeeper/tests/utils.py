@@ -69,7 +69,7 @@ class FeatkeeperTestUtils:
         admin_user.save()
         agent_user_1 = UserModel({
             '_id': ObjectId('56d3d524402e5f1cfc124340'),
-            'username': '',
+            'username': 'dondiablo@gmx.de',
             'hashim': '',
             'type': 'agent',
             'created_at': '2016-03-02 23:38:15',
