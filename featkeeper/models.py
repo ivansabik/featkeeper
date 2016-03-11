@@ -12,7 +12,7 @@ from mongothon import *
 from datetime import datetime
 from pymongo import MongoClient
 import shortuuid
-
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 # User class
 
 class User:
@@ -35,14 +35,36 @@ class User:
     def auth(cls):
         pass
 
-    def _generate_token():
-        pass
+    def get_token(self):
+        if self.test:
+            secret_key = 'NOT_SO_SECRET_KEY'
+        else:
+            secret_key = '' # Get from config!
+        s = Serializer(secret_key, expires_in = 30)
+        return s.dumps({'username': self.username, 'type': self.type })
 
     def find_all(self, user_type='agent'):
         pass
 
     def find_by_username(self, username):
-        pass
+        user = self.UserModel.find_one({'username': username})
+        return self._decode_user(self, user)
+
+    def _decode_user(self, user_object, user_dict):
+        user_object._id = str(user_dict['_id'])
+        user_object.username = user_dict['username']
+        user_object.hashim = user_dict['hashim']
+        user_object.type = user_dict['type']
+        user_object.created_at = user_dict['created_at']
+        user_object.access_is_enabled = user_dict['access_is_enabled']
+        # Modified at is optional, if document not edited will no be set,
+        # assign separately
+        try:
+            user_object.modified_at = user_dict['modified_at']
+        except KeyError:
+            pass
+
+        return user_object
 
     def save(self):
         pass
@@ -251,8 +273,7 @@ class FeatureRequest:
         # Modified at is optional, if document not edited will no be set,
         # assign separately
         try:
-            feature_request_object.modified_at = feature_request_dict[
-                'modified_at']
+            feature_request_object.modified_at = feature_request_dict['modified_at']
         except KeyError:
             pass
         return feature_request_object

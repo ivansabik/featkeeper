@@ -9,10 +9,7 @@ sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
 import unittest
 from featkeeper.models import User
 from utils import FeatkeeperTestUtils
-
-from itsdangerous import (TimedJSONWebSignatureSerializer
-                          as Serializer, BadSignature, SignatureExpired)
-
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 
 class UserUnitTest(unittest.TestCase):
     # Create client, db and collection for tests
@@ -42,12 +39,14 @@ class UserUnitTest(unittest.TestCase):
     def test_generate_token(self):
         user = User(test=True)
         user = user.find_by_username('dondiablo@gmx.de')
-        token = user.generate_token() # Detects test db mode from instance
-        expected_token = {
+        token = user.get_token() # Detects test db mode from instance
+        expected_decoded = {
             'username': 'dondiablo@gmx.de',
-            'user_type': 'agent'
+            'type': 'agent'
         }
-        self.assertEqual(expected_token, token)
+        s = Serializer('NOT_SO_SECRET_KEY')
+        decoded = s.loads(token)
+        self.assertEqual(expected_decoded, decoded)
 
     @unittest.skip('')
     # Test validate token (user and expiration)
