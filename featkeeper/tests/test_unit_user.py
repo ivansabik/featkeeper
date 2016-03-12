@@ -5,6 +5,7 @@ Tests User behaviour (find, save, validation methods, etc) for both agents and a
 
 import os
 import sys
+import time
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
 import unittest
 from featkeeper.models import User
@@ -48,34 +49,65 @@ class UserUnitTest(unittest.TestCase):
         decoded = s.loads(token)
         self.assertEqual(expected_decoded, decoded)
 
-    @unittest.skip('')
-    # Test validate token (user and expiration)
-    def test_validate_token(self):
-        self.fail('test_validate_token not finished!')
+    # Test verify token is not valid
+    def test_verify_token_invalid(self):
+        invalid_fake_token = '1nv4lidT0k3n'
+        token_is_valid = User.verify_token(invalid_fake_token)
+        self.assertFalse(token_is_valid)
 
-    @unittest.skip('')
-    # Test user authentification for agents
-    # exiting username and pass
+    # Test verify token is valid but expired
+    def test_verify_token_valid_but_expired(self):
+        s = Serializer('NOT_SO_SECRET_KEY', expires_in = 0)
+        valid_expired_token = s.dumps(
+            {
+                'username': 'dondiablo@gmx.de',
+                'type': 'agent'
+            }
+        )
+        time.sleep(1)
+        token_is_valid = User.verify_token(valid_expired_token)
+        self.assertFalse(token_is_valid)
+
+    # Test verify token is valid and not yet expired
+    def test_verify_token_valid_and_not_expired(self):
+        s = Serializer('NOT_SO_SECRET_KEY', expires_in = 30)
+        valid_token = s.dumps(
+            {
+                'username': 'dondiablo@gmx.de',
+                'type': 'agent'
+            }
+        )
+        verify_result = User.verify_token(valid_token)
+        expected = True
+        self.assertEqual(expected, verify_result)
+
+    # Test user authentification for agents exiting username and pass
     def test_agent_auth_succesful(self):
-        self.fail('test_agent_auth_succesful not finished!')
+        username = 'dondiablo@gmx.de'
+        password = ''
+        user_type = user.auth(username, password)
+        self.assertEqual('agent', user_type)
 
-    @unittest.skip('')
-    # Test user authentification for admins
-    # exiting username and pass
+    # Test user authentification for admins exiting username and pass
     def test_admin_auth_succesful(self):
-        self.fail('test_admin_auth_succesful not finished!')
+        username = 'gary.host@ghost.com'
+        password = ''
+        user_type = user.auth(username, password)
+        self.assertEqual('admin', user_type)
 
-    @unittest.skip('')
-    # Test failed user authentification with wrong
-    # username and pass
+    # Test failed user authentification with wrong username and pass
     def test_auth_failed_wrong_credentials(self):
-        self.fail('test_auth_failed_wrong_credentials not finished!')
+        username = 'dondiablo@gmx.de'
+        password = 'NotMyActualPassword'
+        user_type = user.auth(username, password)
+        self.assertEqual('', user_type)
 
-    @unittest.skip('')
-    # Test failed user authentification with
-    # exiting username and pass that is flagged as access disabled
+    # Test failed user authentification with valid creds but access disabled
     def test_auth_failed_user_disabled(self):
-        self.fail('test_auth_failed_wrong_credentials not finished!')
+        username = 'mandel@muddypaws.org'
+        password = ''
+        user_type = user.auth(username, password)
+        self.assertEqual('', user_type)
 
     @unittest.skip('')
     # Test find all agents

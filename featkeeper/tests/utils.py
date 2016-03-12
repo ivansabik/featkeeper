@@ -60,7 +60,7 @@ class FeatkeeperTestUtils:
         UserModel = user.UserModel
         admin_user = UserModel({
             '_id': ObjectId('56d3d524402e5f1cfc123340'),
-            'username': '',
+            'username': 'gary.host@ghost.com',
             'hashim': '',
             'type': 'admin',
             'created_at': '2016-03-02 23:35:19',
@@ -78,7 +78,7 @@ class FeatkeeperTestUtils:
         agent_user_1.save()
         agent_user_2 = UserModel({
             '_id': ObjectId('56d3d524402e5f1cfc125340'),
-            'username': '',
+            'username': 'mandel@muddypaws.org',
             'hashim': '',
             'type': 'agent',
             'created_at': '2016-02-28 23:40:10',

@@ -6,6 +6,9 @@ save, find_by_id, find_all public methods
 
 Username and hash should not be used in API! not included in to_dict, declared as private
 Exposes public static auth method, no need to access directly username and hash
+
+Toekn based auth implementation based on sample by Miguel Grinberg
+http://blog.miguelgrinberg.com/post/restful-authentication-with-flask
 '''
 
 from mongothon import *
@@ -13,13 +16,14 @@ from datetime import datetime
 from pymongo import MongoClient
 import shortuuid
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
-# User class
 
+# User class
 class User:
     type = 'agent'
     access_is_enabled = 1
 
     def __init__(self, test=False):
+        self._hashim = None
         self.client = MongoClient()
         self.db = self.client.featkeeper
         if test == True:
@@ -35,6 +39,14 @@ class User:
     def auth(cls):
         pass
 
+    # http://flask.pocoo.org/snippets/54/
+    def set_password(self, password):
+        self._hashim = generate_password_hash(password)
+
+    # http://flask.pocoo.org/snippets/54/
+    def verify_password(self, password):
+        return check_password_hash(self._hashim, password)
+
     def get_token(self):
         if self.test:
             secret_key = 'NOT_SO_SECRET_KEY'
@@ -42,6 +54,17 @@ class User:
             secret_key = '' # Get from config!
         s = Serializer(secret_key, expires_in = 30)
         return s.dumps({'username': self.username, 'type': self.type })
+
+    @classmethod
+    def verify_token(cls, token):
+        s = Serializer('NOT_SO_SECRET_KEY')
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return False
+        except BadSignature:
+            return False
+        return True # In near future will be a dict response of the auth user
 
     def find_all(self, user_type='agent'):
         pass
@@ -93,8 +116,6 @@ class User:
         return user_dict
 
 # FetureRequest class
-
-
 class FeatureRequest:
     is_open = 1
 
@@ -278,7 +299,6 @@ class FeatureRequest:
             pass
         return feature_request_object
 
-    # From:
     # http://stackoverflow.com/questions/14813396/python-elegant-way-to-delete-empty-lists-from-python-dict
     def _remove_empty_keys(self, d):
         for k in d.keys():
