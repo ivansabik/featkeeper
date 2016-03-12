@@ -1,8 +1,6 @@
 # ![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/logo.png) Featkeeper
 [![Build Status](https://travis-ci.org/ivansabik/featkeeper.svg)](https://travis-ci.org/ivansabik/featkeeper) [![Coverage Status](https://coveralls.io/repos/github/ivansabik/featkeeper/badge.svg?branch=master)](https://coveralls.io/github/ivansabik/featkeeper?branch=master)
 
-Icon made by [freepik](http://www.flaticon.com/free-icon/cat-face-outline_57104) from www.flaticon.com
-
 ![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/demo.gif)
 
 Featkeeper is a web app for creating and tracking feature requests from clients for different products. It consists of two core components:
@@ -27,11 +25,6 @@ Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial
 - [jquery](https://github.com/jquery/jquery)
 - [moment](https://github.com/moment/moment)
 
-## Use cases
-![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/admin_use_cases.png)
-
-![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/agent_use_cases.png)
-
 ## Admin user stories (specs)
 - As an admin I should be able to login (do auth)
 - As an admin I should be able to create a new user
@@ -45,9 +38,6 @@ Great props to Miguel Grinberg for his excellent book on Flask and his [tutorial
 - As an agent I should be able to view feature requests
 - As an agent I should be able to edit a feature request
 - As an agent I should be able to close a new feature request
-
-## Models
-![](https://raw.githubusercontent.com/ivansabik/featkeeper/master/doc/models.png)
 
 ## API endpoints
 Delete actions do not exist, instead an attribute/field is used to check models' current status which can be updated using PUT requests. This allows to recover objects as opposed to deleting the API resources. This also allows better logging and analytics.
@@ -240,3 +230,5 @@ After running tests you can kill the Flask process:
 ```shell
 fuser 5000/tcp
 ```
+
+Icon made by [freepik](http://www.flaticon.com/free-icon/cat-face-outline_57104) from www.flaticon.com
