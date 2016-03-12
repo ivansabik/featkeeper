@@ -81,32 +81,40 @@ class UserUnitTest(unittest.TestCase):
         expected = True
         self.assertEqual(expected, verify_result)
 
+    def test_set_password(self):
+        user = User(test=True)
+        user.set_password('testSetPassword')
+        self.assertRegexpMatches(user.hashim, 'pbkdf2:sha1:1000\$[a-zA-Z0-9_]{8}\$*[a-zA-Z0-9_]{40}')
+
+    def test_verify_password(self):
+        pass
+
     # Test user authentification for agents exiting username and pass
     def test_agent_auth_succesful(self):
         username = 'dondiablo@gmx.de'
         password = ''
-        user_type = user.auth(username, password)
+        user_type = User.auth(username, password)
         self.assertEqual('agent', user_type)
 
     # Test user authentification for admins exiting username and pass
     def test_admin_auth_succesful(self):
         username = 'gary.host@ghost.com'
         password = ''
-        user_type = user.auth(username, password)
+        user_type = User.auth(username, password)
         self.assertEqual('admin', user_type)
 
     # Test failed user authentification with wrong username and pass
     def test_auth_failed_wrong_credentials(self):
         username = 'dondiablo@gmx.de'
         password = 'NotMyActualPassword'
-        user_type = user.auth(username, password)
+        user_type = User.auth(username, password)
         self.assertEqual('', user_type)
 
     # Test failed user authentification with valid creds but access disabled
     def test_auth_failed_user_disabled(self):
         username = 'mandel@muddypaws.org'
         password = ''
-        user_type = user.auth(username, password)
+        user_type = User.auth(username, password)
         self.assertEqual('', user_type)
 
     @unittest.skip('')

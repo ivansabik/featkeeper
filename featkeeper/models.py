@@ -16,6 +16,7 @@ from datetime import datetime
 from pymongo import MongoClient
 import shortuuid
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # User class
 class User:
@@ -36,12 +37,16 @@ class User:
 
     # Using encrypted tokens with expiration time
     @classmethod
-    def auth(cls):
+    def auth(cls, username, password):
         pass
 
     # http://flask.pocoo.org/snippets/54/
     def set_password(self, password):
-        self._hashim = generate_password_hash(password)
+        self.hashim = generate_password_hash(password)
+
+    # http://flask.pocoo.org/snippets/54/
+    def verify_password(self, password):
+        return check_password_hash(self._hashim, password)
 
     # http://flask.pocoo.org/snippets/54/
     def verify_password(self, password):
@@ -80,8 +85,7 @@ class User:
         user_object.type = user_dict['type']
         user_object.created_at = user_dict['created_at']
         user_object.access_is_enabled = user_dict['access_is_enabled']
-        # Modified at is optional, if document not edited will no be set,
-        # assign separately
+        # Modified at is optional, if document not edited will no be set, assign separately
         try:
             user_object.modified_at = user_dict['modified_at']
         except KeyError:
@@ -291,8 +295,7 @@ class FeatureRequest:
         feature_request_object.agent_name = feature_request_dict['agent_name']
         feature_request_object.created_at = feature_request_dict['created_at']
         feature_request_object.is_open = feature_request_dict['is_open']
-        # Modified at is optional, if document not edited will no be set,
-        # assign separately
+        # Modified at is optional, if document not edited will no be set, assign separately
         try:
             feature_request_object.modified_at = feature_request_dict['modified_at']
         except KeyError:
