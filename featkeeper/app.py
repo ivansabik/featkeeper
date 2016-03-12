@@ -42,19 +42,27 @@ def client_app_l():
 # Retrieve all existing feature requests
 @app.route(API_ROOT_URL + '/feature-request', methods=['GET'])
 def feature_requests_all_read():
-    feature_request = FeatureRequest(test=test_mode)
-    feature_requests = feature_request.find_all()
-    feature_requests_list = []
-    for feature_request in feature_requests:
-        feature_requests_list.append(feature_request.to_dict())
-    return jsonify(feature_requests=feature_requests_list)
+    try:
+        feature_request = FeatureRequest(test=test_mode)
+        feature_requests = feature_request.find_all()
+        feature_requests_list = []
+        for feature_request in feature_requests:
+            feature_requests_list.append(feature_request.to_dict())
+        return jsonify(feature_requests=feature_requests_list)
+    except Exception, e:
+        print e
+        return e
 
 # Retrieve a single feature request by ID
 @app.route(API_ROOT_URL + '/feature-request/<feature_request_id>', methods=['GET'])
 def feature_request_by_id_read(feature_request_id):
-    feature_request = FeatureRequest(test=test_mode)
-    feature_request = feature_request.find_by_id(feature_request_id)
-    return jsonify(feature_request.to_dict())
+    try:
+        feature_request = FeatureRequest(test=test_mode)
+        feature_request = feature_request.find_by_id(feature_request_id)
+        return jsonify(feature_request.to_dict())
+    except Exception, e:
+        print e
+        return e
 
 # Add a new feature request
 @app.route(API_ROOT_URL + '/feature-request', methods=['POST'])
@@ -80,43 +88,46 @@ def feature_request_add():
 # Update existing feature request
 @app.route(API_ROOT_URL + '/feature-request/<feature_request_id>', methods=['PUT'])
 def feature_requests_update(feature_request_id):
-    data = request.data
-    data_dict = json.loads(data)
-    feature_requests_dict = {}
-    feature_request = FeatureRequest(test=test_mode)
-    feature_request.find_by_id(feature_request_id)
     try:
-        feature_request.title = data_dict['title']
-    except KeyError:
-        pass
-    try:
-        feature_request.description = data_dict['description']
-    except KeyError:
-        pass
-    try:
-        feature_request.client_name = data_dict['client_name']
-    except KeyError:
-        pass
-    try:
-        feature_request.client_priority = data_dict['client_priority']
-    except KeyError:
-        pass
-    try:
-        feature_request.target_date = data_dict['target_date']
-    except KeyError:
-        pass
-    try:
-        feature_request.product_area = data_dict['product_area']
-    except KeyError:
-        pass
-    try:
-        feature_request.agent_name = data_dict['agent_name']
-    except KeyError:
-        pass
-    try:
-        feature_request.is_open = data_dict['is_open']
-    except KeyError:
-        pass
+        data = request.data
+        data_dict = json.loads(data)
+        feature_requests_dict = {}
+        feature_request = FeatureRequest(test=test_mode)
+        feature_request.find_by_id(feature_request_id)
+        try:
+            feature_request.title = data_dict['title']
+        except KeyError:
+            pass
+        try:
+            feature_request.description = data_dict['description']
+        except KeyError:
+            pass
+        try:
+            feature_request.client_name = data_dict['client_name']
+        except KeyError:
+            pass
+        try:
+            feature_request.client_priority = data_dict['client_priority']
+        except KeyError:
+            pass
+        try:
+            feature_request.target_date = data_dict['target_date']
+        except KeyError:
+            pass
+        try:
+            feature_request.product_area = data_dict['product_area']
+        except KeyError:
+            pass
+        try:
+            feature_request.agent_name = data_dict['agent_name']
+        except KeyError:
+            pass
+        try:
+            feature_request.is_open = data_dict['is_open']
+        except KeyError:
+            pass
+    except Exception, e:
+        return e
 
     feature_request.save()
     return jsonify({
@@ -144,4 +155,4 @@ if __name__ == '__main__':
     if args['public'] == 'true':
         app.run('0.0.0.0')
     else:
-        app.run()
+        app.run(debug=True)

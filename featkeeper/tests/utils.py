@@ -17,7 +17,6 @@ class FeatkeeperTestUtils:
         client = MongoClient()
         db = client.featkeeper_test
         collection = db.feature_requests
-        client.drop_database('featkeeper_test')
         feature_request = FeatureRequest(test=True)
         FeatureRequestModel = feature_request.FeatureRequestModel
         feature_request_1 = FeatureRequestModel({
@@ -55,7 +54,6 @@ class FeatkeeperTestUtils:
         client = MongoClient()
         db = client.featkeeper_test
         collection = db.users
-        client.drop_database('featkeeper_test')
         user = User(test=True)
         UserModel = user.UserModel
         admin_user = UserModel({
