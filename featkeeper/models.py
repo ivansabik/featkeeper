@@ -35,10 +35,16 @@ class User:
             self.user_schema(), self.collection
         )
 
-    # Using encrypted tokens with expiration time
-    @classmethod
-    def auth(cls, username, password):
-        pass
+    # Returns user type (agent or admin) or false in case failed auth
+    def auth(self, username, password):
+        try:
+            user = self.find_by_username(username)
+            if user.username == username and check_password_hash(user.hashim, password) and user.access_is_enabled:
+                return user.type
+        except Exception, e:
+            print '\n' + str(e) + '\n'
+            return False
+        return False
 
     # http://flask.pocoo.org/snippets/54/
     def set_password(self, password):
@@ -46,11 +52,11 @@ class User:
 
     # http://flask.pocoo.org/snippets/54/
     def verify_password(self, password):
-        return check_password_hash(self._hashim, password)
+        return check_password_hash(self.hashim, password)
 
     # http://flask.pocoo.org/snippets/54/
     def verify_password(self, password):
-        return check_password_hash(self._hashim, password)
+        return check_password_hash(self.hashim, password)
 
     def get_token(self):
         if self.test:
@@ -90,7 +96,6 @@ class User:
             user_object.modified_at = user_dict['modified_at']
         except KeyError:
             pass
-
         return user_object
 
     def save(self):

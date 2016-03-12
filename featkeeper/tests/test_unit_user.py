@@ -87,35 +87,49 @@ class UserUnitTest(unittest.TestCase):
         self.assertRegexpMatches(user.hashim, 'pbkdf2:sha1:1000\$[a-zA-Z0-9_]{8}\$*[a-zA-Z0-9_]{40}')
 
     def test_verify_password(self):
-        pass
+        user = User(test=True)
+        user.set_password('1234') # setting makes dependant of previous test, remove!
+        self.assertFalse(user.verify_password('testSetPassword'))
 
     # Test user authentification for agents exiting username and pass
     def test_agent_auth_succesful(self):
         username = 'dondiablo@gmx.de'
-        password = ''
-        user_type = User.auth(username, password)
+        password = 'teufel'
+        user = User(test=True)
+        user_type = user.auth(username, password)
         self.assertEqual('agent', user_type)
 
     # Test user authentification for admins exiting username and pass
     def test_admin_auth_succesful(self):
         username = 'gary.host@ghost.com'
-        password = ''
-        user_type = User.auth(username, password)
+        password = 'boo'
+        user = User(test=True)
+        user_type = user.auth(username, password)
         self.assertEqual('admin', user_type)
 
-    # Test failed user authentification with wrong username and pass
-    def test_auth_failed_wrong_credentials(self):
+    # Test failed user authentification for non existing user
+    def test_auth_failed_nonexistent_user(self):
+        username = 'me@mo.mx'
+        password = 'userDoesntExistSoWhateverPass'
+        user = User(test=True)
+        user_type = user.auth(username, password)
+        self.assertFalse(user_type)
+
+    # Test failed user authentification for existing user wrong pass
+    def test_auth_failed_wrong_password(self):
         username = 'dondiablo@gmx.de'
         password = 'NotMyActualPassword'
-        user_type = User.auth(username, password)
-        self.assertEqual('', user_type)
+        user = User(test=True)
+        user_type = user.auth(username, password)
+        self.assertFalse(user_type)
 
     # Test failed user authentification with valid creds but access disabled
     def test_auth_failed_user_disabled(self):
         username = 'mandel@muddypaws.org'
-        password = ''
-        user_type = User.auth(username, password)
-        self.assertEqual('', user_type)
+        password = 'katzendorf'
+        user = User(test=True)
+        user_type = user.auth(username, password)
+        self.assertFalse(user_type)
 
     @unittest.skip('')
     # Test find all agents

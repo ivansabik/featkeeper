@@ -61,7 +61,7 @@ class FeatkeeperTestUtils:
         admin_user = UserModel({
             '_id': ObjectId('56d3d524402e5f1cfc123340'),
             'username': 'gary.host@ghost.com',
-            'hashim': '',
+            'hashim': 'pbkdf2:sha1:1000$jtKuDWVP$a5c1e9ec705182e4d6d8dcd301e0e718732cd88a',
             'type': 'admin',
             'created_at': '2016-03-02 23:35:19',
             'access_is_enabled': 1
@@ -70,7 +70,7 @@ class FeatkeeperTestUtils:
         agent_user_1 = UserModel({
             '_id': ObjectId('56d3d524402e5f1cfc124340'),
             'username': 'dondiablo@gmx.de',
-            'hashim': '',
+            'hashim': 'pbkdf2:sha1:1000$Y9kglHda$6a2190090d720c9ea929bb65818563fb22cfb026',
             'type': 'agent',
             'created_at': '2016-03-02 23:38:15',
             'access_is_enabled': 1
@@ -79,7 +79,7 @@ class FeatkeeperTestUtils:
         agent_user_2 = UserModel({
             '_id': ObjectId('56d3d524402e5f1cfc125340'),
             'username': 'mandel@muddypaws.org',
-            'hashim': '',
+            'hashim': 'pbkdf2:sha1:1000$B0mPc4td$4fdc169569d2beea30dba590c2bf053b8b4e42fa',
             'type': 'agent',
             'created_at': '2016-02-28 23:40:10',
             'access_is_enabled': 0
