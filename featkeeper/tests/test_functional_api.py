@@ -20,6 +20,7 @@ from utils import FeatkeeperTestUtils
 API_ROOT_URL = '/api/v1'
 
 class FeatkeeperApiTest(unittest.TestCase):
+    maxDiff = 5000
     # Create client, db and collection for tests
     def setUp(self):
         app.test_mode = True
@@ -106,7 +107,7 @@ class FeatkeeperApiTest(unittest.TestCase):
             'created_at': '2016-02-28 23:35:19',
             'is_open': 1
         }
-        response = self.app.get(API_ROOT_URL + '/feature-request')
+        response = self.app.get(API_ROOT_URL + '/feature-request/56d3d524402e5f1cfc273340')
         response_test = json.loads(response.data)
         self.assertEqual(expected, response_test)
 
